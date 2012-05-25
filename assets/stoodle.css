@@ -1,0 +1,118 @@
+.clearfix { *zoom:1; }
+.clearfix:before, .clearfix:after {
+  display:table;
+  content:"";
+}
+.clearfix:after { clear:both; }
+.hide-text {
+  font:0 / 0 a;
+  color:transparent;
+  text-shadow:none;
+  background-color:transparent;
+  border:0;
+}
+.input-block-level {
+  display:block;
+  width:100%;
+  min-height:28px;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  box-sizing:border-box;
+}
+#stoodle-plugin table td, #stoodle-plugin table th { vertical-align:top; }
+#stoodle-plugin table.stoodle-list thead th, #stoodle-plugin table.stoodle-list tfoot td { text-align:center; }
+#stoodle-plugin table.stoodle-list tbody td:not(:nth-child(2)) { text-align:center; }
+#stoodle-plugin table.stoodle-list tbody tr:last-child td { border-top:1px solid #888888; }
+#stoodle-plugin table.stoodle-list tbody tr:last-child td:nth-child(2) {
+  background:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images//icons/16/red/arr_1right.png") right 5px no-repeat;
+  font-weight:bold;
+  padding-right:20px;
+  text-align:right;
+}
+#stoodle-plugin table.stoodle-list label {
+  border-top:1px dotted #aaaaaa;
+  display:block;
+  padding-right:20px;
+}
+#stoodle-plugin table.stoodle-list label:first-child { border-top:0; }
+#stoodle-plugin table.stoodle-list label:hover { background-color:rgba(255,255,255,0.5); }
+#stoodle-plugin table .actions button {
+  background:inherit;
+  border:0;
+  cursor:pointer;
+  margin:0;
+  padding:0;
+}
+#stoodle-plugin .maybe-count { color:#888888; }
+#stoodle-plugin .private {
+  color:transparent;
+  overflow:hidden;
+  vertical-align:middle;
+}
+#stoodle-plugin .private:hover { color:#888888; }
+#stoodle-plugin .sum td { border-top:1px solid #888888; }
+#stoodle-plugin .sum td:not(:first-child):not(:last-child) { border-right:1px solid #888888; }
+#stoodle-plugin input, #stoodle-plugin select, #stoodle-plugin textarea {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  box-sizing:border-box;
+}
+#stoodle-plugin input[type=datetime], #stoodle-plugin input[type=date], #stoodle-plugin input[type=time] {
+  position:relative;
+  z-index:10;
+}
+#stoodle-plugin input[type=datetime][disabled], #stoodle-plugin select#type option[value=""] { color:#888888; }
+#stoodle-plugin #comments h3 {
+  border-top:1px dotted #cccccc;
+  margin:1em 0 0;
+}
+#stoodle-plugin #comments fieldset, #stoodle-plugin #comments legend {
+  border:0;
+  margin:0;
+  padding:0;
+}
+#stoodle-plugin #comments legend {
+  background:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/blue/arr_1down.png") left center no-repeat;
+  cursor:pointer;
+  padding-left:20px;
+}
+#stoodle-plugin #comments fieldset.closed > * { display:none; }
+#stoodle-plugin #comments fieldset.closed legend {
+  background-image:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/blue/arr_1right.png");
+  display:block;
+}
+#stoodle-plugin #comments textarea[name=comment] { width:100%; }
+#stoodle-plugin #comments ul.details {
+  border-top:1px solid #cccccc;
+  list-style:none;
+  margin:0.5em 0 0;
+  padding:0.5em 0 0;
+}
+#stoodle-plugin #comments ul.details li {
+  border-left:1px solid #888888;
+  color:#666666;
+  display:inline-block;
+  padding:0 0.5em;
+}
+#stoodle-plugin #comments ul.details li:first-child {
+  border-left:0;
+  padding-left:0;
+}
+#stoodle-plugin #comments ul.details li:last-child { padding-right:0; }
+#stoodle-plugin .ui-datepicker-div { z-index:100 !important; }
+#stoodle-plugin .ui-datepicker-div .ui-widget-header { margin-bottom:8px; }
+#stoodle-plugin .ui-datepicker-div td { font-size:90%; }
+#stoodle-plugin .ui-datepicker-div dl { text-align:left; }
+#stoodle-plugin .ui-datepicker-div dd { margin:0 10px 10px 65px; }
+#stoodle-plugin .ui-datepicker-div dt {
+  height:25px;
+  margin-bottom:-25px;
+}
+#stoodle-plugin .ui-tpicker-grid-label {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+}

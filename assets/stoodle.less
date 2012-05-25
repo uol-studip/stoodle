@@ -1,0 +1,127 @@
+#stoodle-plugin {
+    table {
+        td, th { vertical-align: top; }
+        
+        &.stoodle-list {
+            thead th, tfoot td { text-align: center; }
+            tbody td:not(:nth-child(2)) { text-align: center; }
+            tbody tr:last-child td {
+                border-top: 1px solid #888;
+                &:nth-child(2) {
+                    background: url("@{image-path}/icons/16/red/arr_1right.png") right 5px no-repeat;
+                    font-weight: bold;
+                    padding-right: 20px;
+                    text-align: right;
+                }
+            }
+            label { 
+                border-top: 1px dotted #aaa;
+                display: block;
+                padding-right: 20px;
+
+                &:first-child { border-top: 0; }
+                &:hover { background-color: fade(#fff, 50%); }
+            }
+        }
+
+        .actions button {
+            background: inherit;
+            border: 0;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    .maybe-count { color: #888; }
+    .private {
+        color: transparent;
+        overflow: hidden;
+        vertical-align: middle;
+        &:hover { color: #888; }
+    }
+    .sum td {
+        border-top: 1px solid #888;
+        &:not(:first-child):not(:last-child) {
+            border-right: 1px solid #888;
+        }
+    }
+
+    input, select, textarea {
+        .box-sizing(border-box);
+    }
+
+    input[type=datetime], input[type=date], input[type=time] {
+        position: relative;
+        z-index: 10;
+    }
+    input[type=datetime][disabled], select#type option[value=""] {
+        color: #888;
+    }
+
+    #comments {
+        h3 {
+            border-top: 1px dotted #ccc;
+            margin: 1em 0 0;
+        }
+        fieldset, legend {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+        legend {
+            background: url("@{image-path}icons/16/blue/arr_1down.png") left center no-repeat;
+            cursor: pointer;
+            padding-left: 20px;
+        }
+        fieldset.closed {
+            > * { display: none; }
+            legend {
+                background-image: url("@{image-path}icons/16/blue/arr_1right.png");
+                display: block;
+            }
+        }
+        textarea[name=comment] { width: 100%; }
+
+        ul.details {
+            border-top: 1px solid #ccc;
+            list-style: none;
+            margin: 0.5em 0 0;
+            padding: 0.5em 0 0;
+
+            li {
+                border-left: 1px solid #888;
+                color: #666;
+                display: inline-block;
+                padding: 0 0.5em;
+
+                &:first-child {
+                    border-left: 0;
+                    padding-left: 0;
+                }
+                &:last-child { padding-right: 0; }
+            }
+        }
+    }
+
+    /* css for timepicker, see http://trentrichardson.com/examples/timepicker/ */
+    .ui-datepicker-div {
+        z-index: 100 !important;
+
+        .ui-widget-header { margin-bottom: 8px; }
+
+        td { font-size: 90%; }
+
+        dl { text-align: left; }
+        dd { margin: 0 10px 10px 65px; }
+        dt {
+            height: 25px;
+            margin-bottom: -25px;
+        }
+    }
+    .ui-tpicker-grid-label {
+        background: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+}
