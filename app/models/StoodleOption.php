@@ -11,6 +11,20 @@ class StoodleOption extends SimpleORMap
         parent::__construct($id);
     }
 
+    public function getNewId()
+    {
+        return md5(uniqid('stoodle-option', true));
+    }
+
+    public function setResult($state)
+    {
+        $query = "UPDATE stoodle_options SET result = ? WHERE option_id = ?";
+        $statement = DBManager::get()->prepare($query);
+        $statement->execute(array(
+            (int)$state, $this->option_id
+        ));
+    }
+
     /**
      * returns new Stoodle instance for given id when found in db, else null
      * @param  string $id a stoodle id

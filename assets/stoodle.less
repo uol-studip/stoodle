@@ -54,7 +54,7 @@
         position: relative;
         z-index: 10;
     }
-    input[type=datetime][disabled], select#type option[value=""] {
+    input[type=datetime][disabled], input[type=date][disabled], input[type=text][disabled], select#type option[value=""] {
         color: #888;
     }
 
@@ -101,6 +101,18 @@
                 &:last-child { padding-right: 0; }
             }
         }
+        .more-comments a {
+            color: #fff;
+            display: block;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    .stoodle-info {
+        list-style: none;
+        margin: 0;
+        padding: 0;
     }
 
     /* css for timepicker, see http://trentrichardson.com/examples/timepicker/ */
@@ -124,4 +136,36 @@
         margin: 0;
         padding: 0;
     }
+    
+    .bars {
+        .clearfix;
+        .bar {
+            .box-sizing(border-box);
+            #gradient > .vertical(#1E9FC2, fade(#1E9FC2, 50%));
+            float: left;
+            opacity: 0.5;
+            padding: 0 1em;
+            text-align: right;
+
+            &.max {
+                #gradient > .vertical(#3DC33B, fade(#3DC33B, 50%));
+                opacity: 1;
+            }
+            &.maybe {
+                #gradient > .vertical(#FEB313, fade(#FEB313, 50%));
+            }
+        }
+    }
+    tr:hover > .bars .bar { opacity: 1; }
+}
+
+dl.evaluation {
+    .clearfix;
+    dt {
+        float: left;
+        width: 100px;
+        
+        &:after { content:":"; }
+    }
+    dd { margin-left: 100px; }
 }

@@ -1,3 +1,5 @@
+<? $limit = $comments ? count($stoodle->comments) : 5; ?>
+
 <div id="comments">
     <h3>
     <? if (empty($stoodle->comments)): ?>
@@ -27,7 +29,7 @@
                 <col>
             </colgroup>
             <tbody>
-            <? foreach ($stoodle->comments as $comment): ?>
+            <? foreach (array_slice($stoodle->comments, 0, $limit) as $comment): ?>
                 <tr>
                     <td>
                         <a href="<?= URLHelper::getLink('about.php?username=' . $users[$comment->user_id]->username, array('cid' => null)) ?>">
@@ -59,6 +61,20 @@
                     </td>
                 </tr>
             <? endforeach; ?>
+            <? if (($spillover = count($stoodle->comments) - $limit) > 0): ?>
+                <tr class="more-comments">
+                    <td colspan="2" class="topic">
+                        <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id, 'all') ?>#comments">
+                            <?= Assets::img('icons/16/white/arr_1down') ?>
+                            <? if ($spillover == 1): ?>
+                                <?= _('1 weiterer Kommentar') ?>
+                            <? else: ?>
+                                <?= sprintf(_('%u weitere Kommentare...'), $spillover) ?> 
+                            <? endif; ?>
+                        </a>
+                    </td>
+                </tr>
+            <? endif; ?>
             </tbody>
         </table>
     <? endif; ?>

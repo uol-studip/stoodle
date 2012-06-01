@@ -1,17 +1,3 @@
-<?
-    $formatOption = function ($value) use ($stoodle) {
-        switch ($stoodle->type) {
-            case 'date':
-                return strftime(_('%d.%m.'), $value);
-            case 'time':
-                return strftime(_('%H:%M Uhr'), $value);
-            case 'datetime':
-                return strftime(_('%d.%m. %H:%M Uhr'), $value);
-            default:
-                return $value;
-        }
-    }
-?>
 <h2 class="topic" style="padding: .5em;">
     <?= _('Umfrage') ?>:
     <?= htmlReady($stoodle->title) ?>
@@ -28,8 +14,8 @@
         <thead>
             <tr>
                 <td colspan="2">&nbsp;</td>
-            <? foreach (array_values($stoodle->options) as $option): ?>
-                <th><?= $formatOption($option) ?></th>
+            <? foreach ($stoodle->options as $id => $option): ?>
+                <th><?= $stoodle->formatOption($id) ?></th>
             <? endforeach; ?>
             </tr>
         </thead>

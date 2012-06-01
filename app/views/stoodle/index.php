@@ -47,12 +47,12 @@
     </tbody>
 </table>
 
-<? if (!empty($stoodles['past'])): ?>
+<? if (!empty($evaluated)): ?>
 <br>
 <table class="default zebra-hover">
     <thead>
         <tr>
-            <th class="topic" colspan="4"><?= _('Beendete Umfragen') ?></th>
+            <th class="topic" colspan="4"><?= _('Ausgewertete Umfragen') ?></th>
         </tr>
         <tr>
             <th><?= _('Datum') ?></th>
@@ -62,7 +62,7 @@
         </tr>
     </thead>
     <tbody>
-    <? foreach ($stoodles['past'] as $stoodle): ?>
+    <? foreach ($evaluated as $stoodle): ?>
         <tr>
             <td><?= date('d.m.Y', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
             <td><?= htmlReady($stoodle->title) ?></td>

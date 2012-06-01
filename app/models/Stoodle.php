@@ -68,22 +68,32 @@ class Stoodle extends SimpleORMap
         parent::delete();
     }
 
+    protected $answers = null;
     public function getAnswers()
     {
-        static $answers = null;
-
-        if ($answers === null) {
-            $answers = StoodleAnswer::getByStoodleId($this->stoodle_id);
+        if ($this->isNew()) {
+            return array();
+        }
+        
+        if ($this->answers === null) {
+            $this->answers = StoodleAnswer::getByStoodleId($this->stoodle_id);
         }
 
-        return $answers;
+        return $this->answers;
     }
     
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);
         foreach (self::getAnswers() as $user_id => $options) {
-            foreach ($options[$maybe ? 'maybes' : 'selection'] as $option_id) {
+            if ($maybe === null) {
+                $options = array_merge($options['maybes'], $options['selection']);
+            } else if ($maybe) {
+                $options = $options['maybes'];
+            } else {
+                $options = $options['selection'];
+            }
+            foreach ($options as $option_id) {
                 $count[$option_id] += 1;
             }
         }
@@ -99,6 +109,22 @@ class Stoodle extends SimpleORMap
         return isset($answers[$user_id]);
     }
 
+    public function formatOption($option_id, $raw = false)
+    {
+        $value = $this->options[$option_id];
+        
+        switch ($raw ?: $this->type) {
+            case 'date':
+                return strftime(_('%d.%m.'), $value);
+            case 'time':
+                return strftime(_('%H:%M Uhr'), $value);
+            case 'datetime':
+                return strftime(_('%d.%m. %H:%M Uhr'), $value);
+            default:
+                return $value;
+        }
+    }
+
     /**
      * returns new Stoodle instance for given id when found in db, else null
      * @param  string $id a stoodle id
@@ -111,9 +137,27 @@ class Stoodle extends SimpleORMap
 
     public static function findByRange($range_id)
     {
-        $query = "SELECT stoodle_id FROM stoodle WHERE range_id = ? ORDER BY start_date, end_date";
+        $query = "SELECT stoodle_id FROM stoodle WHERE range_id = ? AND evaluated IS NULL ORDER BY start_date, end_date";
         $statement = DBManager::get()->prepare($query);
         $statement->execute(array($range_id));
+        $ids = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+        return array_map('self::find', $ids);
+    }
+
+    public static function findEvaluatedByRange($range_id, $filters = array())
+    {
+        $conditions = '';
+        foreach ($filters as $column => $value) {
+            $conditions .= " AND $column = ?";
+        }
+        
+        $query = "SELECT stoodle_id
+                  FROM stoodle
+                  WHERE range_id = ? AND evaluated IS NOT NULL {$conditions}
+                  ORDER BY start_date, end_date";
+        $statement = DBManager::get()->prepare($query);
+        $statement->execute(array_merge(array($range_id), array_values($filters)));
         $ids = $statement->fetchAll(PDO::FETCH_COLUMN);
 
         return array_map('self::find', $ids);

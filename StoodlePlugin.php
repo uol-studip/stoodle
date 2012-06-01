@@ -19,7 +19,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 
             if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
                 $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
-                $navigation->addSubNavigation('configuration', new Navigation(_('Konfiguration'), PluginEngine::GetLink('stoodleplugin/config')));
+                $navigation->addSubNavigation('administration', new Navigation(_('Konfiguration'), PluginEngine::GetLink('stoodleplugin/admin')));
             }
         }
     }

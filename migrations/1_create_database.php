@@ -35,6 +35,7 @@ class CreateDatabase extends DBMigration
             `position` INT(11) UNSIGNED NOT NULL DEFAULT 0,
             `mkdate` INT(11) UNSIGNED NOT NULL,
             `chdate` INT(11) UNSIGNED NOT NULL,
+            `result` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
             PRIMARY KEY (`option_id`)
         )");
 

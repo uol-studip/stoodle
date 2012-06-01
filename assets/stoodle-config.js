@@ -91,7 +91,10 @@ jQuery(function ($) {
         $(this).parent().siblings('[type=datetime]').attr('disabled', true);
     });
 
-    $('form[action*="config/edit"]').on('click', 'button[name=add]', function () {
+/*
+    $('form[action*="admin/edit"]').on('click', 'button[name=add]', function () {
+        console.log('foo');
+
         var row   = $('tbody.options tr:last').prev(),
             clone = row.clone(false, false),
             input = $('input:not([type=hidden])', clone),
@@ -109,8 +112,9 @@ jQuery(function ($) {
 
         return false;
     });
+*/
     
-    $('form[action*="config/edit"]').on('click', 'button[name=remove]', function () {
+    $('form[action*="admin/edit"]').on('click', 'button[name=remove]', function () {
         var row = $(this).closest('tr');
         row.nextAll().not(':last').toggleClass('cycle_even cycle_odd').each(function () {
             var index = parseInt($.trim($('td:first', this).text()).substr(1), 10) - 1;

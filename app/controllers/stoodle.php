@@ -39,18 +39,20 @@ class StoodleController extends StudipController
      */
     public function index_action()
     {
-        $this->stoodles = Stoodle::loadByRange($this->range_id);
+        $this->stoodles  = Stoodle::loadByRange($this->range_id);
+        $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id, array('is_public' => 1));
 
         $this->setInfoboxImage('infobox/administration');
-        $this->addToInfobox(_('Aktionen:'), 'Keine');
+        $this->addToInfobox(_('Informationen:'), _('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'), 'icons/16/black/info-circle');
     }
 
     /**
      *
      */
-    public function display_action($id)
+    public function display_action($id, $comments = null)
     {
-        $this->stoodle = new Stoodle($id);
+        $this->stoodle  = new Stoodle($id);
+        $this->comments = ($comments === 'all');
 
         if ($stoodle->start_date && $stoodle->state > time()) {
             PageLayout::postMessage(Messagebox::error(_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.')));
@@ -61,7 +63,9 @@ class StoodleController extends StudipController
             PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen.')));
             $this->redirect('stoodle');
             return;
-        } 
+        }
+
+        PageLayout::setTitle('Stoodle: ' . $this->stoodle->title);
 
         // extract users from stoodle and comments in order to avoid
         // unneccessary db traffic
@@ -86,7 +90,7 @@ class StoodleController extends StudipController
 
         $infos = $this->get_template_factory()->render('stoodle/infobox', array('stoodle' => $this->stoodle));
         $this->addToInfobox(_('Informationen'), $infos, 'icons/16/black/info');
-        
+
         $this->addToInfobox(_('Legende'), _('Zusage'), 'icons/16/green/accept');
         if ($this->stoodle->allow_maybe) {
             $this->addToInfobox(_('Legende'), _('Ungewiss'), 'icons/16/blue/question');
@@ -141,7 +145,7 @@ class StoodleController extends StudipController
         $comment = new StoodleComment($id);
         $stoodle_id = $comment->stoodle_id;
 
-        if ($comment->user_id != $GLOBALS['user']->i
+        if ($comment->user_id != $GLOBALS['user']->id
             && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id))
         {
             $message = Messagebox::error(_('Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist'));
@@ -154,5 +158,30 @@ class StoodleController extends StudipController
 
         PageLayout::postMessage($message);
         $this->redirect('stoodle/' . $stoodle_id . '#comments');
+    }
+
+    /**
+     *
+     */
+    public function result_action($id)
+    {
+        $this->stoodle = new Stoodle($id);
+        if (!$this->stoodle) {
+            PageLayout::postMessage(Messagebox::error(_('Ungültige Stoodle-ID.')));
+            $this->redirect('stoodle');
+            return;
+        }
+
+        if (!$this->stoodle->evaluated) {
+            PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist noch nicht ausgewertet.')));
+            $this->redirect('stoodle');
+            return;
+        }
+
+        if (!$this->stoodle->is_public && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
+            PageLayout::postMessage(Messagebox::error(_('DIie Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')));
+            $this->redirect('stoodle');
+            return;
+        }
     }
 }
