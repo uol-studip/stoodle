@@ -91,7 +91,7 @@
 
     <tbody class="dates">
         <tr>
-            <th colspan="3"><?= _('Zeiten') ?></th>
+            <th colspan="3"><?= _('Laufzeit der Umfrage') ?></th>
         </tr>
         <tr>
             <td>
