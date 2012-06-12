@@ -5,7 +5,7 @@
  * Shameless doodle clone
  *
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
- * @version 0.1a
+ * @version 0.8
  **/
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
@@ -14,7 +14,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         parent::__construct();
 
         if (Navigation::hasItem('/course') and $this->isActivated()) {
-            $navigation = new AutoNavigation(_('Stoodle'), PluginEngine::getLink('stoodleplugin/stoodle/index'));
+            $navigation = new Navigation(_('Stoodle'), PluginEngine::getLink('stoodleplugin/stoodle/index'));
             Navigation::addItem('/course/stoodle', $navigation);
 
             if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
@@ -46,13 +46,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     function getIconNavigation($course_id, $last_visit)
     {
         return null;
-
-/*
-        $navigation = new Navigation(_('Stoodle'));
-        $navigation->setImage('icons/16/blue/mail');
-        $navigation->setURL(PluginEngine::getLink('stoodle/stoodle/index'));
-        return $navigation;
-*/
     }
 
     function getInfoTemplate($course_id)

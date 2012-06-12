@@ -1,4 +1,5 @@
-<h2 style="margin: 0;"><?= _('Auswertung der Umfrage') ?>: <?= $stoodle->title ?></h2>
+<h2 class="topic"><?= _('Auswertung der Umfrage') ?>: <?= $stoodle->title ?></h2>
+<blockquote><?= formatReady($stoodle->description) ?></blockquote>
 
 <dl class="evaluation">
     <dt><?= _('Teilnehmer') ?></dt>

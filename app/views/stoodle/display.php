@@ -1,4 +1,4 @@
-<h2 class="topic" style="padding: .5em;">
+<h2 class="topic">
     <?= _('Umfrage') ?>:
     <?= htmlReady($stoodle->title) ?>
 </h2>

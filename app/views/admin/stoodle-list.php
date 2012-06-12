@@ -1,4 +1,15 @@
-<table class="default">
+<table class="default stoodles">
+    <colgroup>
+        <col>
+        <col width="130px">
+        <col width="130px">
+        <col width="20px">
+        <col width="20px">
+        <col width="20px">
+        <col width="20px">
+        <col width="20px">
+        <col width="100px">
+    </colgroup>
     <thead>
         <tr>
             <th class="topic" colspan="9"><?= $title ?: '???' ?></th>
@@ -7,11 +18,11 @@
             <th><?= _('Titel') ?></th>
             <th><?= _('Start') ?></th>
             <th><?= _('Ende') ?></th>
-            <th><?= _('Teilnehmer') ?></th>
-            <th><?= _('Kommentare') ?>
-            <th><?= _('Öffentlich') ?></th>
-            <th><?= _('Anonym') ?></th>
-            <th><?= _('Vielleicht') ?></th>
+            <th><abbr title="<?= _('Anzahl der Teilnehmer') ?>">#</abbr></th>
+            <th><?= Assets::img('icons/16/black/comment', tooltip2(_('Anzahl der Kommentare'))) ?></th>
+            <th><?= Assets::img('icons/16/black/visibility-visible', tooltip2(_('Öffentlich'))) ?></th>
+            <th><?= Assets::img('icons/16/black/visibility-invisible', tooltip2(_('Anonym'))) ?></th>
+            <th><?= Assets::img('icons/16/black/question', tooltip2(_('Vielleicht'))) ?></th>
             <th>&nbsp;</th>
     </thead>
     <tbody>
@@ -30,10 +41,12 @@
             <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked')) ?></td>
             <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked')) ?></td>
             <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked')) ?></td>
-        <? if ($stoodle->evaluated): ?>
-            <td>&nbsp;</td>
-        <? else: ?>
             <td style="text-align: right;">
+        <? if ($stoodle->evaluated): ?>
+                <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
+                    <?= Assets::img('icons/16/blue/stat', tooltip2(_('Ergebnisse ansehen'))) ?>
+                </a>
+        <? else: ?>
             <? if ($stoodle->end_date && $stoodle->end_date < time()): ?>
                 <a href="<?= $controller->url_for('admin/evaluate', $stoodle->stoodle_id) ?>">
                     <?= Assets::img('icons/16/blue/test', tooltip2(_('Umfrage auswerten'))) ?>
@@ -52,8 +65,8 @@
                 <a href="<?= $controller->url_for('admin/delete', $stoodle->stoodle_id) ?>">
                     <?= Assets::img('icons/16/blue/trash', tooltip2(_('Umfrage löschen'))) ?>
                 </a>
-            </td>
         <? endif; ?>
+            </td>
         </tr>
     <? endforeach; ?>
     </tbody>

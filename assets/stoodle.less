@@ -1,7 +1,7 @@
 #stoodle-plugin {
     table {
         td, th { vertical-align: top; }
-        
+
         &.stoodle-list {
             thead th, tfoot td { text-align: center; }
             tbody td:not(:nth-child(2)) { text-align: center; }
@@ -14,7 +14,7 @@
                     text-align: right;
                 }
             }
-            label { 
+            label {
                 border-top: 1px dotted #aaa;
                 display: block;
                 padding-right: 20px;
@@ -32,6 +32,10 @@
             padding: 0;
         }
     }
+    .stoodles ~ .stoodles {
+        margin-top: 1em;
+    }
+
     .maybe-count { color: #888; }
     .private {
         color: transparent;
@@ -136,7 +140,7 @@
         margin: 0;
         padding: 0;
     }
-    
+
     .bars {
         .clearfix;
         .bar {
@@ -157,6 +161,14 @@
         }
     }
     tr:hover > .bars .bar { opacity: 1; }
+
+    h2.topic { padding: 0.5em; }
+    blockquote {
+        background: #eee;
+        border: 1px solid #aaa;
+        margin: 0;
+        padding: 1em;
+    }
 }
 
 dl.evaluation {
@@ -164,7 +176,7 @@ dl.evaluation {
     dt {
         float: left;
         width: 100px;
-        
+
         &:after { content:":"; }
     }
     dd { margin-left: 100px; }

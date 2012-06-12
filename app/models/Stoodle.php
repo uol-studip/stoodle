@@ -2,6 +2,7 @@
 class Stoodle extends SimpleORMap
 {
     public $options  = array();
+    public $results  = array();
     public $comments = array();
 
     public function __construct($id = null)
@@ -11,6 +12,9 @@ class Stoodle extends SimpleORMap
         if (!$this->isNew()) {
             foreach (StoodleOption::findByStoodle($id) as $option) {
                 $this->options[$option->option_id] = $option->value;
+                if ($option->result) {
+                    $this->results[$option->option_id] = $option->value;
+                }
             }
             $this->comments = StoodleComment::findByStoodle($id);
         }

@@ -179,9 +179,55 @@ class StoodleController extends StudipController
         }
 
         if (!$this->stoodle->is_public && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
-            PageLayout::postMessage(Messagebox::error(_('DIie Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')));
+            PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')));
             $this->redirect('stoodle');
             return;
         }
+
+        $this->selections     = $this->stoodle->getOptionsCount();
+        $this->maybes         = $this->stoodle->getOptionsCount(true);
+        $this->max            = max($this->stoodle->getOptionsCount(null));
+
+        $this->selections_max = max($this->selections);
+        $this->maybes_max     = max($this->maybes);
+
+        foreach ($this->stoodle->comments as $comment) {
+            if (isset($users[$comment->user_id])) {
+                continue;
+            }
+            $users[$comment->user_id] = User::find($comment->user_id);
+        }
+        $this->users    = $users;
+        $this->comments = true;
+
+        $answers      = count($this->stoodle->getAnswers());
+        $participants = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
+        $this->addToInfobox(_('Informationen'),
+                            _('Laufzeit') . ': ' .
+                            spoken_time($this->stoodle->end_date - ($this->stoodle->start_date ?: $this->stoodle->mkdate)),
+                            'icons/16/black/date');
+        $this->addToInfobox(_('Informationen'),
+                            _('Start') . ': ' . date('d.m.Y H:i', $this->stoodle->start_date ?: $this->stoodle->mkdate));
+        $this->addToInfobox(_('Informationen'),
+                            _('Ende') . ': ' . date('d.m.Y H:i', $this->stoodle->end_date));
+        $this->addToInfobox(_('Informationen'),
+                            _('Teilnehmer') . ': ' . $answers . ' (' . round($participants ? 100 * $answers / $participants : 0, 2) . '%)',
+                            'icons/16/black/stat');
+        $this->addToInfobox(_('Informationen'),
+                            sprintf(_('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
+                                    $this->stoodle->is_public ? _('öffentlich') : _('nicht öffentlich'),
+                                    $this->stoodle->is_anonymous ? _('anonym') : _('nicht anonym')),
+                            'icons/16/black/visibility-visible');
+        if ($this->stoodle->allow_maybe) {
+            $this->addToInfobox(_('Informationen'),
+                                _('Eine Angabe von "vielleicht" war erlaubt.'),
+                                'icons/16/black/question');
+        }
+        if ($this->stoodle->allow_comments) {
+            $this->addToInfobox(_('Informationen'),
+                                _('Kommentare waren erlaubt.'),
+                                'icons/16/black/comment');
+        }
+        $this->setInfoboxImage('infobox/evaluation.jpg');
     }
 }
