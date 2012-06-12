@@ -24,13 +24,14 @@ class CreateDatabase extends DBMigration
             `is_anonymous` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
             `allow_maybe` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
             `allow_comments` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
+            `evaluated` INT(11) UNSIGNED NULL DEFAULT NULL,
+            `evaluated_uid` CHAR(32) NULL DEFAULT NULL,
             PRIMARY KEY (`stoodle_id`)
         )");
 
         DBManager::get()->exec("CREATE TABLE IF NOT EXISTS `stoodle_options` (
             `option_id` CHAR(32) NOT NULL,
             `stoodle_id` CHAR(32) NOT NULL,
-            `title` VARCHAR(255) NOT NULL,
             `value` VARCHAR(255) NOT NULL,
             `position` INT(11) UNSIGNED NOT NULL DEFAULT 0,
             `mkdate` INT(11) UNSIGNED NOT NULL,
@@ -40,7 +41,7 @@ class CreateDatabase extends DBMigration
         )");
 
         DBManager::get()->exec("CREATE TABLE IF NOT EXISTS `stoodle_answers` (
-            `option_id` CHAR(32) NOT NULL,
+            `stoodle_id` CHAR(32) NOT NULL,
             `user_id` CHAR(32) NOT NULL,
             `mkdate` INT(11) UNSIGNED NOT NULL,
             PRIMARY KEY (`option_id`, `user_id`)
