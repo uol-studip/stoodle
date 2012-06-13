@@ -105,6 +105,9 @@
                            <? if (!$start_date) echo 'checked'; ?>>
                     <?= _('Offen') ?>
                 </label>
+                <?= tooltipicon(_('Wenn Sie keinen festen Startzeitpunkt angeben möchten, '
+                                 .'können Sie den Haken bei "offen" setzen, um die '
+                                 .'Umfrage unverzüglich zu starten.')) ?>
             </td>
         </tr>
         <tr>
@@ -119,6 +122,10 @@
                            <? if (!$end_date) echo 'checked'; ?>>
                     <?= _('Offen') ?>
                 </label>
+                <?= tooltipicon(_('Wenn Sie keinen festen Endzeitpunkt angeben möchten, '
+                                 .'können Sie den Haken bei "offen" setzen, um die '
+                                 .'Umfrage unbegrenzt laufen zu lassen. Sie muss dann '
+                                 .'manuell in der Verwaltung beendet werden.')) ?>
             </td>
         </tr>
     </tbody>
@@ -140,34 +147,36 @@
         <tr>
             <td>
                 <label for="is_public"><?= _('Für alle einsehbar') ?></label>
-                <?= tooltipicon(_('Die gegebenen Antworten der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
             </td>
             <td colspan="2">
                 <input type="hidden" name="is_public" value="0">
                 <input type="checkbox" name="is_public" id="is_public" value="1"
                        <? if ($is_public) echo 'checked'; ?>>
+                <?= tooltipicon(_('Die gegebenen Antworten der Teilnehmer sowie '
+                                 .'das Ergebnis der Umfrage sind für andere Teilnehmer '
+                                 .'sichtbar.')) ?>
             </td>
         </tr>
         <tr>
             <td>
                 <label for="is_anonymous"><?= _('Anonyme Teilnahme') ?></label>
-                <?= tooltipicon(_('Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
             </td>
             <td colspan="2">
                 <input type="hidden" name="is_anonymous" value="0">
                 <input type="checkbox" name="is_anonymous" id="is_anonymous" value="1"
                        <? if ($is_anonymous) echo 'checked'; ?>>
+                <?= tooltipicon(_('Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
             </td>
         </tr>
         <tr>
             <td>
                 <label for="allow_maybe"><?= _('"Vielleicht"') ?></label>
-                <?= tooltipicon(_('Teilnehmer können auch "Vielleicht" als Antwort geben.')) ?>
             </td>
             <td colspan="2">
                 <input type="hidden" name="allow_maybe" value="0">
                 <input type="checkbox" name="allow_maybe" id="allow_maybe" value="1"
                        <? if ($allow_maybe) echo 'checked'; ?>>
+                <?= tooltipicon(_('Teilnehmer können auch "Vielleicht" als Antwort geben.')) ?>
             </td>
         </tr>
     </tbody>
