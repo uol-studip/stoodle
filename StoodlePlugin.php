@@ -34,11 +34,9 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         require 'app/models/StoodleAnswer.php';
 
         $this->addStylesheet('assets/stoodle.less');
-        if (Studip\ENV === 'development') {
-            PageLayout::addScript($this->getPluginURL() . '/assets/jquery-ui-timepicker-0.9.9.js');
-        } else {
-            PageLayout::addScript($this->getPluginURL() . '/assets/jquery-ui-timepicker-0.9.9.min.js');
-        }
+        $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
+        
+        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
     }
