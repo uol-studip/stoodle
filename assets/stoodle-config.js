@@ -8,11 +8,11 @@
     }
     
     $.timepicker.regional['de'] = {
-        closeText: 'Schliessen'.toLocaleString(),
-        currentText: 'Jetzt'.toLocaleString(),
-        hourText: 'Stunde'.toLocaleString(),
-        minuteText: 'Minute'.toLocaleString(),
-        timeText: 'Uhrzeit'.toLocaleString()
+        closeText: 'Schliessen',
+        currentText: 'Jetzt',
+        hourText: 'Stunde',
+        minuteText: 'Minute',
+        timeText: 'Uhrzeit'
     }
     $.timepicker.setDefaults($.timepicker.regional['de']);
     $.datepicker.setDefaults($.datepicker.regional['de']);
