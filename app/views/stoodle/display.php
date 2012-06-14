@@ -66,7 +66,7 @@
         <? endif; ?>
             </tr>
         <? endforeach; ?>
-            <tr class="steel">
+            <tr>
                 <td>
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>

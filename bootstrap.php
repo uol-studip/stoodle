@@ -39,3 +39,21 @@ if (!function_exists('spoken_time')) {
         return implode(', ', array_slice(array_reverse($result), 0, $max_displayed));
     }
 }
+
+if (!function_exists('tooltipIcon')) {
+    /**
+     * returns a html-snippet with an icon and a tooltip on it
+     *
+     * @param type $text
+     */
+    function tooltipIcon($text)
+    {
+        // prepare text
+        $text = preg_replace("/(\n\r|\r\n|\n|\r)/", " ", $text);
+        $text = htmlReady($text);
+
+        return sprintf('<a class="tooltip">%s<span>%s</span></a>',
+                       Assets::img('icons/16/grey/info-circle'),
+                       $text);
+    }
+}

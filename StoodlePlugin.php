@@ -27,15 +27,22 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     public function initialize()
     {
         require 'bootstrap.php';
-        
+
+        require 'classes/Interactable.class.php';
+        require 'classes/Button.class.php';
+        require 'classes/LinkButton.class.php';
+
         require 'app/models/Stoodle.php';
         require 'app/models/StoodleOption.php';
         require 'app/models/StoodleComment.php';
         require 'app/models/StoodleAnswer.php';
 
-        $this->addStylesheet('assets/stoodle.less');
-        $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
-        
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/buttons.css');
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/tooltipicon.css');
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/zebra.css');
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/stoodle.css');
+
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');

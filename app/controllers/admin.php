@@ -1,11 +1,11 @@
 <?
 /**
- * 
+ *
  */
 class AdminController extends StudipController
 {
     /**
-     * 
+     *
      */
     public function before_filter(&$action, &$args)
     {
@@ -22,7 +22,7 @@ class AdminController extends StudipController
     }
 
     /**
-     * 
+     *
      */
     public function index_action()
     {
@@ -38,7 +38,7 @@ class AdminController extends StudipController
     }
 
     /**
-     * 
+     *
      */
     public function edit_action($id = null)
     {
@@ -47,7 +47,7 @@ class AdminController extends StudipController
         $this->set_layout($layout);
 
         $this->id = $id;
-        
+
         $stoodle = new Stoodle($id);
 
         $this->title          = trim(Request::get('title', $stoodle->title));
@@ -73,7 +73,7 @@ class AdminController extends StudipController
             $values = array_values($this->options);
             $value = array_splice($values, $index, 1);
             array_splice($values, $direction == 'up' ? $index - 1 : $index + 1, 0, $value);
-            
+
             $this->options = array_combine($keys, $values);
         } else if (Request::submitted('remove')) {
             $index = Request::int('remove');
@@ -97,7 +97,7 @@ class AdminController extends StudipController
 
             if (empty($errors)) {
                 $new = $stoodle->isNew();
-                
+
                 $stoodle->title          = $this->title;
                 $stoodle->description    = $this->description;
                 $stoodle->type           = $this->type;
@@ -128,13 +128,13 @@ class AdminController extends StudipController
             $this->options = array('');
         }
     }
-    
+
     public function stop_action($id)
     {
         $stoodle = new Stoodle($id);
         $stoodle->end_date = time() - 1;
         $stoodle->store();
-        
+
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde beendet.')));
         $this->redirect('admin');
     }
@@ -144,7 +144,7 @@ class AdminController extends StudipController
         $stoodle = new Stoodle($id);
         $stoodle->end_date = null;
         $stoodle->store();
-        
+
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde fortgesetzt.')));
         $this->redirect('admin');
     }
@@ -170,7 +170,7 @@ class AdminController extends StudipController
             Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.'));
             $this->redirect('admin');
         }
-        
+
         $this->stoodle        = $stoodle;
         $this->selections     = $stoodle->getOptionsCount();
         $this->maybes         = $stoodle->getOptionsCount(true);
@@ -182,7 +182,7 @@ class AdminController extends StudipController
     }
 
     /**
-     * 
+     *
      */
     public function delete_action($id)
     {
@@ -191,5 +191,60 @@ class AdminController extends StudipController
 
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
         $this->redirect('admin');
+    }
+
+/** from Stud.IP 2.3 **/
+
+    /**
+     * Spawns a new infobox variable on this object, if neccessary.
+     *
+     * @since Stud.IP 2.3
+     **/
+    private function populateInfobox() {
+        if (!isset($this->infobox)) {
+            $this->infobox = array(
+                'picture' => 'blank.gif',
+                'content' => array()
+            );
+        }
+    }
+
+    /**
+     * Sets the header image for the infobox.
+     *
+     * @param String $image Image to display, path is relative to :assets:/images
+     *
+     * @since Stud.IP 2.3
+     **/
+    function setInfoBoxImage($image) {
+        $this->populateInfobox();
+        $this->infobox['picture'] = $image;
+    }
+
+    /**
+     * Adds an item to a certain category section of the infobox. Categories
+     * are created in the order this method is invoked. Multiple occurences of
+     * a category will add items to the category.
+     *
+     * @param String $category The item's category title used as the header
+     * above displayed category - write spoken not
+     * tech language ^^
+     * @param String $text The content of the item, may contain html
+     * @param String $icon Icon to display in front the item, path is
+     * relative to :assets:/images
+     *
+     * @since Stud.IP 2.3
+     **/
+    function addToInfobox($category, $text, $icon = 'blank.gif') {
+        $this->populateInfobox();
+        $infobox = $this->infobox;
+        if (!isset($infobox['content'][$category])) {
+            $infobox['content'][$category] = array(
+                'kategorie' => $category,
+                'eintrag' => array(),
+            );
+        }
+        $infobox['content'][$category]['eintrag'][] = compact('icon', 'text');
+        $this->infobox = $infobox;
     }
 }
