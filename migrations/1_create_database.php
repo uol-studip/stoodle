@@ -44,7 +44,7 @@ class CreateDatabase extends DBMigration
             `stoodle_id` CHAR(32) NOT NULL,
             `user_id` CHAR(32) NOT NULL,
             `mkdate` INT(11) UNSIGNED NOT NULL,
-            PRIMARY KEY (`option_id`, `user_id`)
+            PRIMARY KEY (`stoodle_id`, `user_id`)
         )");
 
         DBManager::get()->exec("CREATE TABLE IF NOT EXISTS `stoodle_comments` (
