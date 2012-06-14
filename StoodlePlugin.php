@@ -22,6 +22,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
                 $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
             }
         }
+	$navigation->setImage('icons/16/grey/assessment.png');
+        $navigation->setActiveImage('icons/16/white/assessment.png');
     }
 
     public function initialize()
