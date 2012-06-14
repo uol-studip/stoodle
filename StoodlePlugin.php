@@ -15,6 +15,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 
         if (Navigation::hasItem('/course') and $this->isActivated()) {
             $navigation = new Navigation(_('Stoodle'), PluginEngine::getLink('stoodleplugin/stoodle/index'));
+            $navigation->setImage('icons/16/grey/assessment.png');
+            $navigation->setActiveImage('icons/16/white/assessment.png');
             Navigation::addItem('/course/stoodle', $navigation);
 
             if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
@@ -22,8 +24,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
                 $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
             }
         }
-	$navigation->setImage('icons/16/grey/assessment.png');
-        $navigation->setActiveImage('icons/16/white/assessment.png');
     }
 
     public function initialize()
