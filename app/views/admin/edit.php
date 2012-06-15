@@ -3,20 +3,25 @@
         'date'     => _('Datum'),
         'time'     => _('Uhrzeit'),
         'datetime' => _('Datum und Uhrzeit'),
+        'range'    => _('Zeitspanne'),
         'text'     => _('Freitext'),
     );
-    
+
     $formatValue = function ($type, $value) {
         if ($type === 'text') {
             return $value;
         }
-        
+
         $templates = array(
-            'date'     => '%d.%m.%Y',
-            'time'     => '%H:%M',
-            'datetime' => '%d.%m.%Y %H:%M',
+            'date'     => _('%d.%m.%Y'),
+            'time'     => _('%H:%M Uhr'),
+            'datetime' => _('%d.%m.%Y %H:%M'),
         );
-        
+
+        if ($type === 'range') {
+            $type = 'datetime';
+        }
+
         return $value ? 'value="' . strftime($templates[$type], $value) . '"' : '';
     };
 ?>
@@ -185,7 +190,11 @@
         <tr>
             <th colspan="3"><?= _('Antwortmöglichkeiten') ?></th>
         </tr>
-    <? $index = 0; foreach ($options as $id => $value): ?>
+    <? $index = 0; foreach ($options as $id => $value):
+           if ($type === 'range') {
+               list($value, $additional) = explode('-', $value);
+           }
+    ?>
         <tr>
             <td>
                 #<?= $index + 1 ?>
@@ -198,6 +207,12 @@
                     <? if ($options_count[$id]) echo 'disabled'; ?>
                     <?= $formatValue($type, $value) ?>
                     <? if (isset($focussed) && $focussed == $index) echo 'autofocus'; ?>>
+                <span class="type-range">
+                    <?= _('bis') ?>
+                    <input type="<?= $type ?>" name="additional[<?= $id ?>]"
+                        <? if ($options_count[$id]) echo 'disabled'; ?>
+                        <?= $formatValue($type, $additional) ?>>
+                </span>
             </td>
             <td style="text-align: right;" class="actions">
             <? if ($index > 0): ?>

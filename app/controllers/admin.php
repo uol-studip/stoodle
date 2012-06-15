@@ -47,7 +47,6 @@ class AdminController extends StudipController
         $this->set_layout($layout);
 
         $this->id = $id;
-
         $stoodle = new Stoodle($id);
 
         $this->title          = trim(Request::get('title', $stoodle->title));
@@ -59,7 +58,8 @@ class AdminController extends StudipController
         $this->is_anonymous   = Request::int('is_anonymous', $stoodle->isNew() ? 0 : $stoodle->is_anonymous);
         $this->allow_maybe    = Request::int('allow_maybe', $stoodle->isNew() ? 0 : $stoodle->allow_maybe);
         $this->allow_comments = Request::int('allow_comments', $stoodle->isNew() ? 1 : $stoodle->allow_comments);
-        $this->options        = array_filter(Request::getArray('options')) ?: $stoodle->options ?: array(StoodleOption::getNewId() => '');
+        // Integrate addiotional
+        $this->options        = $this->extractOptions($stoodle->options);
         $this->options_count  = $stoodle->getOptionsCount(null);
         $this->answers        = $stoodle->getAnswers();
 
@@ -110,6 +110,9 @@ class AdminController extends StudipController
                 $stoodle->range_id       = $this->range_id;
                 $stoodle->user_id        = $GLOBALS['user']->id;
 
+                // echo '<pre>';
+                // var_dump($this->options);
+                // die;
                 $stoodle->store();
                 $stoodle->setOptions($this->options);
 
@@ -127,6 +130,29 @@ class AdminController extends StudipController
         if (empty($this->options)) {
             $this->options = array('');
         }
+    }
+
+    private function extractOptions($defaults = array())
+    {
+        $random_id = StoodleOption::getNewId();
+
+        if (isset($_REQUEST['options'])) {
+            $options = array();
+
+            $additional = Request::getArray('additional');
+            foreach (Request::getArray('options') as $id => $value) {
+                if (isset($additional[$id]) and $additional[$id] < $value) {
+                    $value = $additional[$id] . '-' . $value;
+                } else {
+                    $value .= '-' . $additional[$id];
+                }
+                $options[$id] = $value;
+            }
+        } else {
+            $options = $defaults ?: array(StoodleOption::getNewId() => '');
+        }
+
+        return $options;
     }
 
     public function stop_action($id)

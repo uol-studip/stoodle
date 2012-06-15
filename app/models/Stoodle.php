@@ -115,15 +115,24 @@ class Stoodle extends SimpleORMap
 
     public function formatOption($option_id, $raw = false)
     {
+        $templates = array(
+            'date'     => _('%d.%m.'),
+            'datetime' => _('%d.%m. %H:%M Uhr'),
+            'time'     => _('%H:%M Uhr'),
+        );
+        
         $value = $this->options[$option_id];
         
         switch ($raw ?: $this->type) {
+            case 'range':
+                list($start, $end) = explode('-', $value);
+                return strftime($templates['datetime'], $start)
+                     . ' - '
+                     . strftime(date('Ymd', $start) === date('Ymd', $end) ? $templates['time'] : $templates['datetime'], $end);
             case 'date':
-                return strftime(_('%d.%m.'), $value);
             case 'time':
-                return strftime(_('%H:%M Uhr'), $value);
             case 'datetime':
-                return strftime(_('%d.%m. %H:%M Uhr'), $value);
+                return strftime($templates[$this->type], $value);
             default:
                 return $value;
         }

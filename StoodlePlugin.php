@@ -46,6 +46,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/stoodle.css');
 
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
+//        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-ui-sliderAccess.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
     }
