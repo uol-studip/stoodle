@@ -36,32 +36,43 @@
                     minDate: new Date(),
                     numberOfMonths: 2,
                     onSelect: function (picker) {
-                        var date, time;
+                        var date, additional, time;
                         if ($(this).attr('type') === 'time') {
                             date = getTime(picker);
                         } else {
-                            date = $(this)[type + 'picker']('getDate')
+                            date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate')
+                        }
+                        if ($(this).is('[name^=option]') && type === 'range') {
+                            additional = $(this).siblings('span').find('input.hasDatepicker');
+                            if (!additional.data('changed')) {
+                                additional.datepicker('setDate', new Date(date.getTime() + 2 * 60 * 60 * 1000));
+                                additional.datepicker('option', 'minDate', date);
+                            }
                         }
 
                         time = Math.floor(date.getTime() / 1000);
                         $(this).next().val(time);
+                        
+                        $(this).data('changed', true);
                     },
-                    timeOnly: false
+                    timeOnly: type === 'time'
+                    // ,
+                    // addSliderAccess: true,
+                    // sliderAccessArgs: { touchonly: false }
                 };
 
             if (type === 'time') {
                 delete options.minDate;
-                options.timeOnly = true;
-            } else if (type !== 'date' && type !== 'datetime') {
+            } else if (type !== 'date' && type !== 'datetime' && type !== 'range') {
                 throw 'Invalid type argument: ' + type;
             }
 
-            $(this)[type + 'picker'](options);
+            $(this)[(type === 'range' ? 'datetime' : type) + 'picker'](options);
 
             if ($(this).val()) {
                 time = type === 'time'
                      ? getTime($(this).val())
-                     : $(this)[type + 'picker']('getDate');
+                     : $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate');
 
                 if (time) {
                     time = Math.floor(time.getTime() / 1000);
@@ -139,28 +150,28 @@ jQuery(function ($) {
             elements = $('tbody.options tr:not(:last):not(:first)');
 
         elements.each(function (index) {
-            var original     = $('input:not([type=hidden])', this),
+            var original     = $('input:not([type=hidden])', this).first(),
                 orig_type    = original.attr('type'),
                 value        = original.val(),
                 clone, temp,
                 defaultValue = $('input[type=hidden]', this).val();
             
             try {
-                original[orig_type + 'picker']('destroy');
+                original[(orig_type === 'range' ? 'datetime' : orig_type) + 'picker']('destroy');
             } catch (e) {}
 
             clone = original.clone(false, false);
             clone.attr('type', type);
             
-            if (value && orig_type === 'datetime' && type === 'date') {
+            if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'date') {
                 clone.val(value.split(' ')[0]);
-            } else if (value && orig_type === 'datetime' && type === 'time') {
+            } else if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'time') {
                 clone.val(value.split(' ')[1]);
-            } else if (value && orig_type === 'time' && type === 'datetime') {
+            } else if (value && orig_type === 'time' && (type === 'datetime' || type === 'range')) {
                 temp = new Date();
                 temp = pad(temp.getDate()) + '.' + pad(temp.getMonth() + 1) + '.' + (2000 + temp.getYear() % 100);
                 clone.val(temp + ' ' + value);
-            } else if (value && orig_type === 'date' && type === 'datetime') {
+            } else if (value && orig_type === 'date' && (type === 'datetime' || type === 'range')) {
                 temp = new Date();
                 temp = pad(temp.getHours()) + ':' + pad(temp.getMinutes());
                 clone.val(value + ' ' + temp);
@@ -170,6 +181,11 @@ jQuery(function ($) {
 
             original.replaceWith(clone);
             clone.init_input(type);
+
+            if (!$('.type-range', this).toggle(type === 'range').data('stoodled')) {
+                $('.type-range', this).data('stoodled', true);
+                $('.type-range input:not([type=hidden])', this).init_input('datetime');
+            }
         });
     }).change();
 });
