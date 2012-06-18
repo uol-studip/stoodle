@@ -60,7 +60,7 @@
                 </td>
             <? endforeach; ?>
         <? else: ?>
-                <td colspan="<?= count($this->options) ?>" class="private">
+                <td colspan="<?= count($stoodle->options) ?>" class="private">
                     <?= _('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.') ?>
                 </td>
         <? endif; ?>
@@ -71,7 +71,9 @@
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
                 <td>
-                    <?= _('Ihre Auswahl') ?>
+                    <a href="<?= URLHelper::getLink('about.php?username=' . $GLOBALS['user']->username, array('cid' => null)) ?>">
+                        <?= $GLOBALS['user']->getFullName() ?>
+                    </a>
                 </td>
             <?  $answer = $answers[$GLOBALS['user']->id] ?: false;
                 foreach (array_keys($stoodle->options) as $id): ?>
