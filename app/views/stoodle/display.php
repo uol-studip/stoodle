@@ -3,9 +3,7 @@
     <?= htmlReady($stoodle->title) ?>
 </h2>
 <? if (!empty($stoodle->description)): ?>
-<p>
-    <?= formatReady($stoodle->description) ?>
-</p>
+<blockquote><?= formatReady($stoodle->description) ?></blockquote><br>
 <? endif; ?>
 
 <form action="<?= $controller->url_for('stoodle/participate', $stoodle->stoodle_id) ?>" method="post">
