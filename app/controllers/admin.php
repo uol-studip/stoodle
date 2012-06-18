@@ -59,7 +59,7 @@ class AdminController extends StudipController
         $this->allow_maybe    = Request::int('allow_maybe', $stoodle->isNew() ? 0 : $stoodle->allow_maybe);
         $this->allow_comments = Request::int('allow_comments', $stoodle->isNew() ? 1 : $stoodle->allow_comments);
         // Integrate addiotional
-        $this->options        = $this->extractOptions($stoodle->options);
+        $this->options        = $this->extractOptions($stoodle->options, $this->type === 'range');
         $this->options_count  = $stoodle->getOptionsCount(null);
         $this->answers        = $stoodle->getAnswers();
 
@@ -132,24 +132,20 @@ class AdminController extends StudipController
         }
     }
 
-    private function extractOptions($defaults = array())
+    private function extractOptions($defaults = array(), $include_additional = false)
     {
-        $random_id = StoodleOption::getNewId();
+        $options = Request::getArray('options') ?: $defaults ?: array(StoodleOption::getNewId() => '');
 
-        if (isset($_REQUEST['options'])) {
-            $options = array();
-
+        if ($include_additional && isset($_REQUEST['options'], $_REQUEST['additional'])) {
             $additional = Request::getArray('additional');
-            foreach (Request::getArray('options') as $id => $value) {
-                if (isset($additional[$id]) and $additional[$id] < $value) {
+            foreach ($options as $id => $value) {
+                if (isset($additional[$id]) and $additional[$id] and $additional[$id] < $value) {
                     $value = $additional[$id] . '-' . $value;
                 } else {
                     $value .= '-' . $additional[$id];
                 }
                 $options[$id] = $value;
             }
-        } else {
-            $options = $defaults ?: array(StoodleOption::getNewId() => '');
         }
 
         return $options;
@@ -191,6 +187,7 @@ class AdminController extends StudipController
             }
 
             if (Request::int('create_appointments') && in_array($stoodle->type, words('datetime range'))) {
+                
             }
 
             Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.'));
