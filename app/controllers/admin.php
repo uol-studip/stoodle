@@ -232,7 +232,7 @@ class AdminController extends StudipController
                     list($start, $end) = explode('-', $option);
 
                     foreach ($targets as $user_id) {
-                        $calendar = Calendar::getInstance($user_id);
+                        $calendar = new SingleCalendar($user_id, Calendar::PERMISSION_WRITABLE);
                         $calendar->addEvent();
                         $calendar->event->setProperty('DTSTART', $start);
                         $calendar->event->setProperty('DTEND', $end);
