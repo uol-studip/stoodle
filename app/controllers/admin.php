@@ -1,11 +1,11 @@
 <?
 /**
- * 
+ *
  */
 class AdminController extends StudipController
 {
     /**
-     * 
+     *
      */
     public function before_filter(&$action, &$args)
     {
@@ -14,15 +14,22 @@ class AdminController extends StudipController
         PageLayout::setTitle(_('Stoodle'));
         Navigation::activateItem('/course/stoodle/administration');
 
-        $layout = $GLOBALS['template_factory']->open('layouts/base');
+        $layout_file = in_array($action, words('edit evaluate'))
+                     ? 'layouts/base_without_infobox'
+                     : 'layouts/base';
+        $layout = $GLOBALS['template_factory']->open($layout_file);
         $layout->body_id = 'stoodle-plugin';
         $this->set_layout($layout);
 
         $this->range_id = $this->dispatcher->range_id;
+
+        if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
+            throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
+        }
     }
 
     /**
-     * 
+     *
      */
     public function index_action()
     {
@@ -38,14 +45,10 @@ class AdminController extends StudipController
     }
 
     /**
-     * 
+     *
      */
     public function edit_action($id = null)
     {
-        $layout = $GLOBALS['template_factory']->open('layouts/base_without_infobox');
-        $layout->body_id = 'stoodle-plugin';
-        $this->set_layout($layout);
-
         $this->id = $id;
         $stoodle = new Stoodle($id);
 
@@ -73,7 +76,7 @@ class AdminController extends StudipController
             $values = array_values($this->options);
             $value = array_splice($values, $index, 1);
             array_splice($values, $direction == 'up' ? $index - 1 : $index + 1, 0, $value);
-            
+
             $this->options = array_combine($keys, $values);
         } else if (Request::submitted('remove')) {
             $index = Request::int('remove');
@@ -97,7 +100,7 @@ class AdminController extends StudipController
 
             if (empty($errors)) {
                 $new = $stoodle->isNew();
-                
+
                 $stoodle->title          = $this->title;
                 $stoodle->description    = $this->description;
                 $stoodle->type           = $this->type;
@@ -121,7 +124,6 @@ class AdminController extends StudipController
                          : _('Der Eintrag wurde erfolgreich bearbeitet.');
                 PageLayout::postMessage(Messagebox::success($message));
                 $this->redirect('admin');
-                return;
             } else {
                 PageLayout::postMessage(Messagebox::error(_('Es sind Fehler aufgetreten:'), $errors));
             }
@@ -156,7 +158,7 @@ class AdminController extends StudipController
         $stoodle = new Stoodle($id);
         $stoodle->end_date = time() - 1;
         $stoodle->store();
-        
+
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde beendet.')));
         $this->redirect('admin');
     }
@@ -166,7 +168,7 @@ class AdminController extends StudipController
         $stoodle = new Stoodle($id);
         $stoodle->end_date = null;
         $stoodle->store();
-        
+
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde fortgesetzt.')));
         $this->redirect('admin');
     }
@@ -175,7 +177,14 @@ class AdminController extends StudipController
     {
         $stoodle = new Stoodle($id);
 
+        if ($stoodle->evaluated !== null) {
+            PageLayout::postMessage(Messagebox::error(_('Die Umfrage wurde bereits ausgewertet.')));
+            $this->redirect('admin');
+        }
+
         if (Request::submitted('evaluate')) {
+            $details = array();
+
             $stoodle->evaluated     = time();
             $stoodle->evaluated_uid = $GLOBALS['user']->id;
             $stoodle->store();
@@ -186,14 +195,68 @@ class AdminController extends StudipController
                 $option->setResult(in_array($option_id, $results));
             }
 
-            if (Request::int('create_appointments') && in_array($stoodle->type, words('datetime range'))) {
-                
+            if (!empty($results) && Request::int('create_appointments')
+                && in_array($stoodle->type, words('datetime range')))
+            {
+                $target = Request::option('appointments_for');
+                if ($target === 'valid') {
+                    $answers = $stoodle->getAnswers();
+                    $targets = array();
+
+                    foreach ($answers as $user_id => $answer) {
+                        $temp = array_merge($answer['selection'], $answer['maybes']);
+                        if (count(array_intersect($temp, $results))) {
+                            $targets[] = $user_id;
+                        }
+                    }
+                } elseif ($target === 'stoodle') {
+                    $answers = $stoodle->getAnswers();
+                    $targets = array_keys($answers);
+                } else {
+                    $seminar = Seminar::GetInstance($this->range_id);
+                    $targets = array();
+                    foreach (words('autor tutor dozent') as $type) {
+                        $temp    = $seminar->getMembers($type);
+                        $ids     = array_keys($temp);
+                        $targets = array_merge($targets, $ids);
+                    }
+                }
+
+                $duration = round(Request::float('appointment_duration') * 60 * 60);
+
+                foreach ($results as $option_id) {
+                    $option = $stoodle->options[$option_id];
+                    if ($stoodle->type !== $range) {
+                        $option .= '-' . ($option + $duration);
+                    }
+                    list($start, $end) = explode('-', $option);
+
+                    foreach ($targets as $user_id) {
+                        $calendar = Calendar::getInstance($user_id);
+                        $calendar->addEvent();
+                        $calendar->event->setProperty('DTSTART', $start);
+                        $calendar->event->setProperty('DTEND', $end);
+                        $calendar->event->setProperty('SUMMARY', $stoodle->title);
+                        $calendar->event->setProperty('STUDIP_CATEGORY', 1);
+                        $calendar->event->setProperty('CATEGORIES', '');
+                        $calendar->event->setProperty('CLASS', 'PRIVATE');
+                        $calendar->event->setRepeat(array('rtype' => 'SINGLE', 'expire' => Calendar::CALENDAR_END));
+                        $calendar->event->save();
+                    }
+                }
+
+                // Rebind course parameter since Calendar::getInstance() removes it
+                URLHelper::addLinkParam('cid', $this->range_id);
+
+                $details[] = sprintf(_('Es wurden %u Termin(e) für %u Person(en) eingetragen.'),
+                                     count($targets) * count($results), count($results));
             }
 
-            Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.'));
+            Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.', $details));
             $this->redirect('admin');
+            return;
         }
-        
+
         $this->stoodle        = $stoodle;
         $this->selections     = $stoodle->getOptionsCount();
         $this->maybes         = $stoodle->getOptionsCount(true);
@@ -205,7 +268,7 @@ class AdminController extends StudipController
     }
 
     /**
-     * 
+     *
      */
     public function delete_action($id)
     {

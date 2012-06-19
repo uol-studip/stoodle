@@ -1,4 +1,7 @@
 <?
+$RELATIVE_PATH_CALENDAR = $GLOBALS['RELATIVE_PATH_CALENDAR']; // Weird hack
+require_once 'lib/calendar/lib/DbCalendarEvent.class.php';
+
 if (!function_exists('spoken_time')) {
     function spoken_time($time, $max_displayed = 2)
     {
