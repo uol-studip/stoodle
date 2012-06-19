@@ -1,12 +1,13 @@
 <table class="default zebra-hover">
     <thead>
         <tr>
-            <th class="topic" colspan="5"><?= _('Aktuelle Umfragen') ?></th>
+            <th class="topic" colspan="6"><?= _('Aktuelle Umfragen') ?></th>
         </tr>
         <tr>
             <th><?= _('Datum') ?></th>
             <th><?= _('Titel') ?></th>
             <th><?= _('Verbleibende Zeit') ?></th>
+            <th><?= _('Teilnehmer') ?></th>
             <th><?= _('Teilgenommen?') ?></th>
             <th>&nbsp;</th>
         </tr>
@@ -14,7 +15,7 @@
     <tbody>
     <? if (empty($stoodles['present'])): ?>
         <tr class="blank">
-            <td colspan="5"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
+            <td colspan="6"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
         </tr>
     <? endif; ?>
     <? foreach ($stoodles['present'] as $stoodle): ?>
@@ -30,16 +31,18 @@
                 <?= _('unbegrenzt') ?>
             <? endif; ?>
             </td>
+            <td><?= count($stoodle->getAnswers()) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
-                <?= Assets::img('icons/16/blue/checkbox-checked') ?>
+                <?= Assets::img('icons/16/black/checkbox-checked') ?>
             <? else: ?>
-                <?= Assets::img('icons/16/blue/checkbox-unchecked') ?>
+                <?= Assets::img('icons/16/black/checkbox-unchecked') ?>
             <? endif; ?>
             </td>
             <td style="text-align: right;">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
-                    <?= Assets::img('icons/16/blue/vote', tooltip2(_('An der Umfrage teilnehmen'))) ?>
+                    <?= Assets::img('icons/16/blue/' . ($stoodle->userParticipated() ? 'test' : 'vote'),
+                                    tooltip2(_('An der Umfrage teilnehmen'))) ?>
                 </a>
             </td>
         </tr>

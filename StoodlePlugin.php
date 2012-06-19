@@ -30,9 +30,15 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         require 'bootstrap.php';
 
-        require 'classes/Interactable.class.php';
-        require 'classes/Button.class.php';
-        require 'classes/LinkButton.class.php';
+        if (!class_exists('Studip\Interactable')) {
+            require 'classes/Interactable.class.php';
+        }
+        if (!class_exists('Studip\Button')) {
+            require 'classes/Button.class.php';
+        }
+        if (!class_exists('Studip\LinkButton')) {
+            require 'classes/LinkButton.class.php';
+        }
 
         require 'app/models/Stoodle.php';
         require 'app/models/StoodleOption.php';

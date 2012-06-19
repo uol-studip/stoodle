@@ -21,16 +21,24 @@
         <? if ($stoodle->allow_maybe): ?>
             <col width="30px">
         <? endif; ?>
+            <col width="30px">
             <col width="40%">
         </colgroup>
         <thead>
             <tr>
                 <th>&nbsp;</th>
                 <th><?= _('Antwort') ?></th>
-                <th style="text-align: center;"><abbr title="<?= _('Kopfzahl') ?>">#</abbr></th>
+                <th style="text-align: center;">
+                    <?= Assets::img('icons/16/black/accept', tooltip2(_('Kopfzahl: Zugesagt'))) ?>
+                </th>
             <? if ($stoodle->allow_maybe): ?>
-                <th style="text-align: center; white-space: nowrap;"><abbr title="<?= _('Kopfzahl: Vielleicht') ?>"># ?</abbr></th>
+                <th style="text-align: center;">
+                    <?= Assets::img('icons/16/black/question', tooltip2(_('Kopfzahl: Vielleicht'))) ?>
+                </th>
             <? endif; ?>
+                <th style="text-align: center;">
+                    <?= Assets::img('icons/16/black/decline', tooltip2(_('Kopfzahl: Abgesagt'))) ?>
+                </th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -43,8 +51,11 @@
                 <td><?= $stoodle->formatOption($id) ?></td>
                 <td style="text-align: center;border-left: 1px solid #ccc;"><?= 0 + $selections[$id] ?></td>
             <? if ($stoodle->allow_maybe): ?>
-                <td style="text-align: center;border-left: 1px solid #ccc;border-right: 1px solid #ccc;"><?= 0 + $maybes[$id] ?></td>
+                <td style="text-align: center;border-left: 1px solid #ccc;"><?= 0 + $maybes[$id] ?></td>
             <? endif; ?>
+                <td style="text-align: center;border-left: 1px solid #ccc;border-right: 1px solid #ccc;">
+                    <?= $answers - @$maybes[$id] - $selections[$id] ?>
+                </td>
                 <td class="bars">
                 <? if ($selections[$id]): ?>
                     <div class="bar <?= $selections[$id] == $selections_max ? 'max' : '' ?>" style="width:<?= round(100 * $selections[$id] / $max, 2) ?>%;"><?= $selections[$id] ?></div>
@@ -57,17 +68,53 @@
         <? endforeach; ?>
         </tbody>
     </table>
+    
+    <h3 class="topic stoodle-participants">
+        <?= _('Teilnehmerliste') ?>
+    </h3>
+    <table class="collapsed default zebra-hover stoodle-list">
+        <thead>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            <? foreach ($stoodle->options as $id => $option): ?>
+                <th><?= $stoodle->formatOption($id) ?></th>
+            <? endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?= $this->render_partial('stoodle-participants') ?>
+        </tbody>
+    </table>
 
 <? if (in_array($stoodle->type, words('range datetime'))): ?>
-    <div>
+    <h3 class="topic"><?= _('Optionen') ?></h3>
+    <div class="appointments">
         <label for="create_appointments">
-            Termine eintragen:
-            <?= ''; //tooltipicon(_('foo')) ?>
+            <?= _('Termine eintragen:') ?>
         </label>
         <input type="checkbox" name="create_appointments" id="create_appointments" value="1">
-    <? if ($stoodle->type !== 'range'): ?>
-        <br>TODO: Dauer?
-    <? endif; ?>
+        <div style="margin: 1em 0 0;">
+            <label>
+                <input type="radio" name="appointments_for" value="all" checked>
+                <?= _('für <u>alle</u> Teilnehmer dieser Veranstaltung') ?>
+                <?= tooltipIcon(_('Dies beinhaltet Tutoren und Dozenten')) ?>
+            </label>
+            <label>
+                <input type="radio" name="appointments_for" value="stoodle">
+                <?= _('für alle Teilnehmer dieser Umfrage') ?>
+            </label>
+            <label>
+                <input type="radio" name="appointments_for" value="valid">
+                <?= _('für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt') ?>
+            </label>
+        <? if ($stoodle->type !== 'range'): ?>
+            <label style="margin-top: 1em">
+                <?= _('Dauer in Stunden') ?>
+                <input type="text" name="appointment_duration" value="2">
+                <?= tooltipicon('Auch Werte wie "0.5" für eine halbe Stunde sind zulässig.') ?>
+            </label>
+        <? endif; ?>
+        </div>
     </div>
 <? endif; ?>
 

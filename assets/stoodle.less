@@ -5,13 +5,12 @@
         &.stoodle-list {
             thead th, tfoot td { text-align: center; }
             tbody td:not(:nth-child(2)) { text-align: center; }
-            tbody tr:last-child td {
+            tbody tr.self td {
                 border-top: 1px solid #888;
                 &:nth-child(2) {
                     background: url("@{image-path}/icons/16/red/arr_1right.png") right 5px no-repeat;
                     font-weight: bold;
                     padding-right: 20px;
-                    text-align: right;
                 }
             }
             label {
@@ -162,12 +161,25 @@
     }
     tr:hover > .bars .bar { opacity: 1; }
 
-    h2.topic { padding: 0.5em; }
+    h2.topic, h3.topic { padding: 0.5em; }
+    h3.topic {
+        margin-top: 1em;
+    }
     blockquote {
         background: #eee;
         border: 1px solid #aaa;
         margin: 0;
         padding: 1em;
+    }
+    .js & .stoodle-participants {
+        a {
+            background: url("@{image-path}icons/16/white/arr_1down.png") right center no-repeat;
+            color: inherit; 
+            padding-right: 20px;
+        }
+        &.collapsed a {
+            background-image: url("@{image-path}icons/16/white/arr_1right.png");
+        }
     }
 }
 
@@ -180,4 +192,18 @@ dl.evaluation {
         &:after { content:":"; }
     }
     dd { margin-left: 100px; }
+}
+
+.appointments > div {
+    display: none;
+    label {
+        display: block;
+        input[type=text] {
+            text-align: right;
+            width: 2em;
+        }
+    }
+}
+.appointments input[type=checkbox]:checked ~ div {
+    display: block;
 }

@@ -45,8 +45,10 @@
                         if ($(this).is('[name^=option]') && type === 'range') {
                             additional = $(this).siblings('span').find('input.hasDatepicker');
                             if (!additional.data('changed')) {
-                                additional.datepicker('setDate', new Date(date.getTime() + 2 * 60 * 60 * 1000));
+                                time = date.getTime() + 2 * 60 * 60 * 1000;
+                                additional.datepicker('setDate', new Date(time));
                                 additional.datepicker('option', 'minDate', date);
+                                additional.next().val(time / 1000)
                             }
                         }
 

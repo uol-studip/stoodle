@@ -47,3 +47,22 @@
 <? if ($stoodle->allow_comments && count($stoodle->comments)): ?>
 <?= $this->render_partial('stoodle/comments') ?>
 <? endif; ?>
+
+<? if ($GLOBALS['perm']->have_studip_perm('tutor', $range_id)): ?>
+<h3 class="topic stoodle-participants">
+    <?= _('Teilnehmerliste') ?>
+</h3>
+<table class="collapsed default zebra-hover stoodle-list">
+    <thead>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        <? foreach ($stoodle->options as $id => $option): ?>
+            <th><?= $stoodle->formatOption($id) ?></th>
+        <? endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?= $this->render_partial('stoodle-participants') ?>
+    </tbody>
+</table>
+<? endif; ?>
