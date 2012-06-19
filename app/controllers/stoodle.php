@@ -67,25 +67,6 @@ class StoodleController extends StudipController
 
         PageLayout::setTitle('Stoodle: ' . $this->stoodle->title);
 
-        // extract users from stoodle and comments in order to avoid
-        // unneccessary db traffic
-        $users = array();
-
-        foreach ($this->stoodle->getAnswers() as $user_id => $foo) {
-            if (isset($users[$user_id])) {
-                continue;
-            }
-            $users[$user_id] = User::find($user_id);
-        }
-
-        foreach ($this->stoodle->comments as $comment) {
-            if (isset($users[$comment->user_id])) {
-                continue;
-            }
-            $users[$comment->user_id] = User::find($comment->user_id);
-        }
-        $this->users = $users;
-
         $this->setInfoboxImage('infobox/administration');
 
         $infos = $this->get_template_factory()->render('stoodle/infobox', array('stoodle' => $this->stoodle));

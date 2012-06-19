@@ -28,7 +28,8 @@
                         <?= $GLOBALS['user']->getFullName() ?>
                     </a>
                 </td>
-            <?  $answer = $answers[$GLOBALS['user']->id] ?: false;
+            <? $answers = $stoodle->getAnswers();
+               $answer = $answers[$GLOBALS['user']->id] ?: false;
                 foreach (array_keys($stoodle->options) as $id): ?>
                 <td>
                 <? if ($stoodle->allow_maybe): ?>

@@ -31,10 +31,12 @@
             <col>
         </colgroup>
         <tbody>
-        <? foreach (array_slice($stoodle->comments, 0, $limit) as $comment): ?>
+        <? foreach (array_slice($stoodle->comments, 0, $limit) as $comment):
+            $user = User::find($comment->user_id);
+        ?>
             <tr>
                 <td>
-                    <a href="<?= URLHelper::getLink('about.php?username=' . $users[$comment->user_id]->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('about.php?username=' . $user->username, array('cid' => null)) ?>">
                         <?= Avatar::getAvatar($comment->user_id)->getImageTag(Avatar::SMALL) ?>
                     </a>
                 </td>
@@ -44,8 +46,8 @@
                     <ul class="details">
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
-                            <a href="<?= URLHelper::getURL('about.php?username=' . $users[$comment->user_id]->username, array('cid' => null)) ?>">
-                                <?= $users[$comment->user_id]->getFullName() ?>
+                            <a href="<?= URLHelper::getURL('about.php?username=' . $user->username, array('cid' => null)) ?>">
+                                <?= $user->getFullName() ?>
                             </a>
                         </li>
                     <? if ($comment->user_id == $GLOBALS['user']->id
