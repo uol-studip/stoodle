@@ -116,9 +116,10 @@ class Stoodle extends SimpleORMap
     public function formatOption($option_id, $raw = false)
     {
         $templates = array(
-            'date'     => _('%d.%m.'),
-            'datetime' => _('%d.%m. %H:%M Uhr'),
-            'time'     => _('%H:%M Uhr'),
+            'date'       => _('%d.%m.'),
+            'datetime'   => _('%d.%m. %H:%M Uhr'),
+            'time'       => _('%H:%M Uhr'),
+            'short-time' => _('%H:%M')
         );
         
         $value = $this->options[$option_id];
@@ -126,9 +127,10 @@ class Stoodle extends SimpleORMap
         switch ($raw ?: $this->type) {
             case 'range':
                 list($start, $end) = explode('-', $value);
-                return strftime($templates['datetime'], $start)
+                $same_day = (date('Ymd', $start) === date('Ymd', $end));
+                return strftime($same_day ? $templates['date'] . ' ' . $templates['short-time'] : $templates['datetime'], $start)
                      . ' - '
-                     . strftime(date('Ymd', $start) === date('Ymd', $end) ? $templates['time'] : $templates['datetime'], $end);
+                     . strftime($same_day ? $templates['time'] : $templates['datetime'], $end);
             case 'date':
             case 'time':
             case 'datetime':
