@@ -5,7 +5,7 @@
  * Shameless doodle clone
  *
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
- * @version 0.8
+ * @version 0.9.5.3
  **/
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
@@ -30,11 +30,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         require 'bootstrap.php';
         
-        require 'app/models/Stoodle.php';
-        require 'app/models/StoodleOption.php';
-        require 'app/models/StoodleComment.php';
-        require 'app/models/StoodleAnswer.php';
-
         $this->addStylesheet('assets/stoodle.less');
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
         
