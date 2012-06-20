@@ -336,7 +336,7 @@ class AdminController extends StudipController
         $parameters = array(
             'rec_uname' => $recipients,
             'subject'   => sprintf('Stoodle "%s"', $stoodle->title),
-            'sms_source_page' => str_replace(dirname($_SERVER['SCRIPT_NAME']) . '/', '', $this->url_for('admin/edit', $id)),
+            'sms_source_page' => ltrim(str_replace(dirname($_SERVER['SCRIPT_NAME']), '', $this->url_for('admin/edit', $id)), '/'),
         );
         $url = URLHelper::getURL('sms_send.php', $parameters);
         $this->redirect($url);

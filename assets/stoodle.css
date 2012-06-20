@@ -25,7 +25,7 @@
 #stoodle-plugin table.stoodle-list tbody td:not(:nth-child(2)) { text-align:center; }
 #stoodle-plugin table.stoodle-list tbody tr.self td { border-top:1px solid #888888; }
 #stoodle-plugin table.stoodle-list tbody tr.self td:nth-child(2) {
-  background:url("../../../../assets/images//icons/16/red/arr_1right.png") right 5px no-repeat;
+  background:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images//icons/16/red/arr_1right.png") right 5px no-repeat;
   font-weight:bold;
   padding-right:20px;
 }
@@ -36,6 +36,7 @@
 }
 #stoodle-plugin table.stoodle-list label:first-child { border-top:0; }
 #stoodle-plugin table.stoodle-list label:hover { background-color:rgba(255,255,255,0.5); }
+#stoodle-plugin table.stoodle-list label.plain:hover { background-color:transparent; }
 #stoodle-plugin table .actions button {
   background:inherit;
   border:0;
@@ -71,13 +72,13 @@
   padding:0;
 }
 #stoodle-plugin #comments legend {
-  background:url("../../../../assets/images/icons/16/blue/arr_1down.png") left center no-repeat;
+  background:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/blue/arr_1down.png") left center no-repeat;
   cursor:pointer;
   padding-left:20px;
 }
 #stoodle-plugin #comments fieldset.closed > * { display:none; }
 #stoodle-plugin #comments fieldset.closed legend {
-  background-image:url("../../../../assets/images/icons/16/blue/arr_1right.png");
+  background-image:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/blue/arr_1right.png");
   display:block;
 }
 #stoodle-plugin #comments textarea[name=comment] { width:100%; }
@@ -182,11 +183,11 @@
   padding:1em;
 }
 .js #stoodle-plugin .stoodle-participants a {
-  background:url("../../../../assets/images/icons/16/white/arr_1down.png") right center no-repeat;
+  background:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/white/arr_1down.png") right center no-repeat;
   color:inherit;
   padding-right:20px;
 }
-.js #stoodle-plugin .stoodle-participants.collapsed a { background-image:url("../../../../assets/images/icons/16/white/arr_1right.png"); }
+.js #stoodle-plugin .stoodle-participants.collapsed a { background-image:url("http://127.0.0.1/~tleilax/studip/trunk/public/assets/images/icons/16/white/arr_1right.png"); }
 dl.evaluation { *zoom:1; }
 dl.evaluation:before, dl.evaluation:after {
   display:table;

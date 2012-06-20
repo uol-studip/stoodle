@@ -40,6 +40,9 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         if (!class_exists('Studip\LinkButton')) {
             require 'classes/LinkButton.class.php';
         }
+        if (!class_exists('Studip\ResetButton')) {
+            require 'classes/ResetButton.class.php';
+        }
 
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/buttons.css');
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/tooltipicon.css');
