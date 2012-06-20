@@ -7,23 +7,20 @@
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @version 0.9.5.3
  **/
+
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
-    function __construct()
+    function getTabNavigation($course_id) 
     {
-        parent::__construct();
+        $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
+        $navigation->setImage('icons/16/white/assessment.png');
+        $navigation->setActiveImage('icons/16/black/assessment.png');
 
-        if (Navigation::hasItem('/course') and $this->isActivated()) {
-            $navigation = new Navigation(_('Stoodle'), PluginEngine::getLink('stoodleplugin/stoodle/index'));
-            $navigation->setImage('icons/16/white/assessment.png');
-            $navigation->setActiveImage('icons/16/black/assessment.png');
-            Navigation::addItem('/course/stoodle', $navigation);
-
-            if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
-                $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
-                $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
-            }
+        if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
+            $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
+            $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
         }
+        return array('stoodle' => $navigation);
     }
 
     public function initialize()
