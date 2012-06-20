@@ -5,11 +5,12 @@
  * Shameless doodle clone
  *
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
- * @version 0.8
+ * @version 0.9.5.3
  **/
+
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
-    function __construct()
+    function __construct() 
     {
         parent::__construct();
 
@@ -39,11 +40,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         if (!class_exists('Studip\LinkButton')) {
             require 'classes/LinkButton.class.php';
         }
-
-        require 'app/models/Stoodle.php';
-        require 'app/models/StoodleOption.php';
-        require 'app/models/StoodleComment.php';
-        require 'app/models/StoodleAnswer.php';
 
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/buttons.css');
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/tooltipicon.css');

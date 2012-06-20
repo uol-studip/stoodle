@@ -1,6 +1,16 @@
 <?
+// Global includes
 $RELATIVE_PATH_CALENDAR = $GLOBALS['RELATIVE_PATH_CALENDAR']; // Weird hack
 require_once 'lib/calendar/lib/DbCalendarEvent.class.php';
+
+require_once 'vendor/trails/trails.php';
+require_once 'app/controllers/studip_controller.php';
+
+// Local includes
+require 'app/models/Stoodle.php';
+require 'app/models/StoodleOption.php';
+require 'app/models/StoodleComment.php';
+require 'app/models/StoodleAnswer.php';
 
 if (!function_exists('spoken_time')) {
     function spoken_time($time, $max_displayed = 2)
