@@ -38,9 +38,9 @@
             <td><?= $stoodle->end_date ? date('d.m.Y H:i', $stoodle->end_date) : _('offen') ?></td>
             <td><?= count($stoodle->getAnswers()) ?></td>
             <td><?= $stoodle->allow_comments ? count($stoodle->comments) : '-' ?></td>
-            <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked')) ?></td>
-            <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked')) ?></td>
-            <td><?= Assets::img('icons/16/blue/checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked')) ?></td>
+            <td><?= Assets::img('icons/16/black/checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked')) ?></td>
+            <td><?= Assets::img('icons/16/black/checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked')) ?></td>
+            <td><?= Assets::img('icons/16/black/checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked')) ?></td>
             <td style="text-align: right;">
         <? if ($stoodle->evaluated): ?>
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">

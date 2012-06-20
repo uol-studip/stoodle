@@ -86,6 +86,22 @@ class Stoodle extends SimpleORMap
         return $this->answers;
     }
     
+    public function getAnsweredOptions()
+    {
+        $answers = $this->getAnswers();
+        
+        $options = array();
+        foreach ($answers as $user_id => $answer) {
+            foreach ($answer['selection'] as $option_id) {
+                @$options[$option_id][] = $user_id;
+            }
+            foreach ($answer['maybes'] as $option_id) {
+                @$options[$option_id][] = $user_id;
+            }
+        }
+        return $options;
+    }
+    
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);

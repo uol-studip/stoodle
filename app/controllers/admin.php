@@ -26,6 +26,21 @@ class AdminController extends StudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
             throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
         }
+        
+        if (!empty($_SESSION['sms_msg'])) {
+            $msgs = array_chunk(explode('§', $_SESSION['sms_msg']), 2);
+            foreach ($msgs as $msg) {
+                if ($msg[0] === 'msg') {
+                    $type = 'success';
+                } elseif ($msg[0] === 'error') {
+                    $type = 'error';
+                } else {
+                    $type = 'info';
+                }
+                PageLayout::postMessage(Messagebox::$type($msg[1]));
+            }
+            unset($_SESSION['sms_msg']);
+        }
     }
 
     /**
@@ -132,6 +147,7 @@ class AdminController extends StudipController
         if (empty($this->options)) {
             $this->options = array('');
         }
+        $this->stoodle = $stoodle;
     }
 
     private function extractOptions($defaults = array(), $include_additional = false)
@@ -277,5 +293,52 @@ class AdminController extends StudipController
 
         PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
         $this->redirect('admin');
+    }
+    
+    /**
+     * 
+     **/
+    public function mail_action($id)
+    {
+        $stoodle = new Stoodle($id);
+        $answers = $stoodle->getAnsweredOptions();
+        
+        $mail_to = Request::optionArray('mail_to');
+        if (empty($mail_to)) {
+            PageLayout::postMessage(Messagebox::error(_('Sie haben keine Empfänger ausgewählt.')));
+            $this->redirect('admin/edit/' . $id);
+            return;
+        }
+        
+        foreach ($mail_to as $value) {
+            if ($value === 'all') {
+                $mail_to = array('all');
+                break;
+            }
+        }
+        
+        $recipients = array();
+        foreach ($mail_to as $option_id) {
+            if ($option_id === 'all') {
+                $recipients = array_keys($stoodle->getAnswers());
+            } else {
+                $recipients = array_merge($recipients, (array)@$answers[$option_id]);
+            }
+        }
+
+        if (empty($mail_to)) {
+            PageLayout::postMessage(Messagebox::error(_('Es wurden keine gültigen Empfänger gefunden.')));
+            $this->redirect('admin/edit/' . $id);
+            return;
+        }
+
+        $recipients = array_filter(array_map('get_username', $recipients));
+        $parameters = array(
+            'rec_uname' => $recipients,
+            'subject'   => sprintf('Stoodle "%s"', $stoodle->title),
+            'sms_source_page' => str_replace(dirname($_SERVER['SCRIPT_NAME']) . '/', '', $this->url_for('admin/edit', $id)),
+        );
+        $url = URLHelper::getURL('sms_send.php', $parameters);
+        $this->redirect($url);
     }
 }

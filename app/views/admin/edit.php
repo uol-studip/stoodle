@@ -38,20 +38,13 @@
 <? endif; ?>
 
 <form action="<?= $controller->url_for('admin/edit', $id) ?>" method="post">
+<h3 class="topic"><?= $id ? _('Umfrage bearbeiten') : _('Neue Umfrage erstellen') ?></h3>
 <table class="default zebra stoodle">
     <colgroup>
         <col width="200">
         <col>
         <col width="200">
     </colgroup>
-    <thead>
-        <tr>
-            <td class="topic" colspan="3">
-                <?= $stoodle_id ? _('Umfrage bearbeiten') : _('Neue Umfrage erstellen') ?>
-            </td>
-        </tr>
-    </thead>
-
     <tbody>
         <tr>
             <th colspan="3"><?= _('Grunddaten') ?></th>
@@ -264,3 +257,34 @@
     </tfoot>
 </table>
 </form>
+
+<? if (count($answers)): ?>
+<h3 class="topic">
+    <?= _('Teilnehmerliste') ?>
+</h3>
+<form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post">
+<table class="default zebra-hover stoodle-list">
+    <thead>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        <? foreach ($stoodle->options as $id => $option): ?>
+            <th><?= $stoodle->formatOption($id) ?></th>
+        <? endforeach; ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous)) ?>
+    </tbody>
+<? if (!$stoodle->is_anonymous): ?>
+    <tfoot>
+        <tr>
+            <td colspan="<?= 2 + count($stoodle->options) ?>">
+                <?= Studip\Button::createAccept(_('Nachricht verschicken')) ?>
+                <?= Studip\ResetButton::create(_('Auswahl zurücksetzen')) ?>
+            </td>
+        </tr>
+    </tfoot>
+<? endif; ?>
+</table>
+</form>
+<? endif; ?>
