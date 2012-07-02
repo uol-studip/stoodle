@@ -6,7 +6,7 @@
         date.setMinutes(parseInt(fragments[1], 10));
         return date;
     }
-    
+
     $.timepicker.regional['de'] = {
         closeText: 'Schliessen',
         currentText: 'Jetzt',
@@ -34,6 +34,8 @@
                     changeMonth: true,
                     changeYear: true,
                     minDate: new Date(),
+                    hourGrid: 2,
+                    minuteGrid: 5,
                     numberOfMonths: 2,
                     onSelect: function (picker) {
                         var date, additional, time;
@@ -54,7 +56,7 @@
 
                         time = Math.floor(date.getTime() / 1000);
                         $(this).next().val(time);
-                        
+
                         $(this).data('changed', true);
                     },
                     beforeShow: function (textbox, instance) {
@@ -62,12 +64,16 @@
                             marginTop: (-textbox.offsetHeight) + 'px',
                             marginLeft: textbox.offsetWidth + 'px'
                         });
-                    },                    
+                    },
                     timeOnly: type === 'time'
                     // ,
                     // addSliderAccess: true,
                     // sliderAccessArgs: { touchonly: false }
                 };
+
+            options.minDate.setSeconds(0);
+            options.minDate.setMinutes(0);
+            options.minDate.setMilliseconds(0);
 
             if (type === 'time') {
                 delete options.minDate;
@@ -86,14 +92,14 @@
                     time = Math.floor(time.getTime() / 1000);
                 }
             }
-        
+
             hidden_input.val(time || null);
             $(this).after(hidden_input)
 
         });
 
         return this;
-    }    
+    }
 }(jQuery));
 
 jQuery(function ($) {
@@ -119,7 +125,7 @@ jQuery(function ($) {
             input = $('input:not([type=hidden])', clone),
             index = 1 + parseInt($.trim($('td:first', row).text()).substr(1), 10);
         $('input', clone).attr('name', 'options[-' + (new Date()).getTime() + ']');
-        
+
         input.attr('id', null);
 
         $('td:first', clone).text('#' + index);
@@ -132,7 +138,7 @@ jQuery(function ($) {
         return false;
     });
 */
-    
+
     $('form[action*="admin/edit"]').on('click', 'button[name=remove]', function () {
         var row = $(this).closest('tr');
         row.nextAll().not(':last').toggleClass('cycle_even cycle_odd').each(function () {
@@ -141,7 +147,7 @@ jQuery(function ($) {
             $('button[name=remove]', this).val(index - 1);
 //            $('input[name^="options"]', this).attr('name', 'options[' + (index - 1) + ']');
         });
-        
+
         if (row.siblings().length === 2) {
             $('input', row).val('');
         } else {
@@ -163,14 +169,14 @@ jQuery(function ($) {
                 value        = original.val(),
                 clone, temp,
                 defaultValue = $('input[type=hidden]', this).val();
-            
+
             try {
                 original[(orig_type === 'range' ? 'datetime' : orig_type) + 'picker']('destroy');
             } catch (e) {}
 
             clone = original.clone(false, false);
             clone.attr('type', type);
-            
+
             if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'date') {
                 clone.val(value.split(' ')[0]);
             } else if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'time') {
