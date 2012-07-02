@@ -18,9 +18,17 @@
             $(':checkbox[name="mail_to[]"][value=all]').attr('checked', true);
         }
     });
+    
 }(jQuery));
 
 jQuery(function ($) {
     $('#comments legend').click().wrapInner('<a href="#"/>');
     $('.stoodle-participants').wrapInner('<a href="#"/>').addClass('collapsed').next().hide();
+
+    $('tr.stoodle td').click(function () {
+        // We need a workaround, since a simple .click() does not suffice
+        var href = $(this).closest('tr').find('a').attr('href');
+        location.href = href;
+        return false;
+    });
 });
