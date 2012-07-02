@@ -62,10 +62,10 @@
                 <a href="<?= $controller->url_for('admin/edit', $stoodle->stoodle_id) ?>">
                     <?= Assets::img('icons/16/blue/edit', tooltip2(_('Umfrage bearbeiten'))) ?>
                 </a>
+        <? endif; ?>
                 <a href="<?= $controller->url_for('admin/delete', $stoodle->stoodle_id) ?>">
                     <?= Assets::img('icons/16/blue/trash', tooltip2(_('Umfrage löschen'))) ?>
                 </a>
-        <? endif; ?>
             </td>
         </tr>
     <? endforeach; ?>
