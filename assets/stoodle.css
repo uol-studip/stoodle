@@ -207,3 +207,4 @@ dl.evaluation dd { margin-left:100px; }
   width:2em;
 }
 .appointments input[type=checkbox]:checked ~ div { display:block; }
+tr.stoodle td { cursor:pointer; }
