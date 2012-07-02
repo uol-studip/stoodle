@@ -10,7 +10,7 @@
 
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
-    function getTabNavigation($course_id) 
+    function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
         $navigation->setImage('icons/16/white/assessment.png');
@@ -26,10 +26,10 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     public function initialize()
     {
         require 'bootstrap.php';
-        
+
         $this->addStylesheet('assets/stoodle.less');
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
-        
+
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
 //        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-ui-sliderAccess.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
