@@ -5,7 +5,7 @@
  * Shameless doodle clone
  *
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
- * @version 0.9.6
+ * @version 0.9.6.2
  **/
 
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
