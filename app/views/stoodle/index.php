@@ -19,7 +19,7 @@
         </tr>
     <? endif; ?>
     <? foreach ($stoodles['present'] as $stoodle): ?>
-        <tr>
+        <tr class="stoodle">
             <td><?= date('d.m.Y', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>

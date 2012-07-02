@@ -60,7 +60,8 @@ class Stoodle extends SimpleORMap
     public function delete()
     {
         if (!$this->isNew()) {
-            foreach ($this->options as $option) {
+            foreach (array_keys($this->options) as $id) {
+                $option = new StoodleOption($id);
                 $option->delete();
             }
             foreach ($this->comments as $comment) {

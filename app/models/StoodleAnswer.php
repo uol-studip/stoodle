@@ -28,7 +28,7 @@ class StoodleAnswer
 
     public static function removeByStoodleId($stoodle_id)
     {
-        $query = "DELETE FROM stoodle_answer WHERE stoodle_id = ?";
+        $query = "DELETE FROM stoodle_answers WHERE stoodle_id = ?";
         $statement = DBManager::get()->prepare($query);
         $statement->execute(array($stoodle_id));
 

@@ -27,6 +27,8 @@ class AdminController extends StudipController
             throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
         }
         
+        // We need this since the messaging section of Stud.IP still uses the old
+        // mechanism to display messages
         if (!empty($_SESSION['sms_msg'])) {
             $msgs = array_chunk(explode('§', $_SESSION['sms_msg']), 2);
             foreach ($msgs as $msg) {
@@ -109,8 +111,14 @@ class AdminController extends StudipController
             if ($this->start_date && $this->end_date && $this->start_date > $this->end_date) {
                 $errors[] = _('Das Enddatum muss vor dem Startdatum liegen.');
             }
+
+            $this->options = $this->reduceOptions($this->options, $invalid);
             if (count($this->options) < 1) {
                 $errors[] = _('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
+            }
+            
+            if (count($invalid) > 0) {
+                $errors[] = _('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
             }
 
             if (empty($errors)) {
@@ -167,6 +175,21 @@ class AdminController extends StudipController
         }
 
         return $options;
+    }
+    
+    private function reduceOptions($options, &$invalid = array())
+    {
+        $result = $invalid = array();
+        foreach ($options as $id => $option) {
+            if (empty($option) || ($this->type === 'range' && $option === '-')) {
+                continue;
+            }
+            if ($this->type === 'range' && ($option[0] === '-' || $option[strlen($option) - 1] === '-')) {
+                $invalid[] = $id;
+            }
+            $result[$id] = $option;
+        }
+        return $result;
     }
 
     public function stop_action($id)
@@ -268,7 +291,7 @@ class AdminController extends StudipController
                                      count($targets) * count($results), count($results));
             }
 
-            Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.', $details));
+            Pagelayout::postMessage(Messagebox::success(_('Die Umfrage wurde ausgewertet.'), $details));
             $this->redirect('admin');
             return;
         }
