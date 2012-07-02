@@ -57,6 +57,12 @@
                         
                         $(this).data('changed', true);
                     },
+                    beforeShow: function (textbox, instance) {
+                        instance.dpDiv.css({
+                            marginTop: (-textbox.offsetHeight) + 'px',
+                            marginLeft: textbox.offsetWidth + 'px'
+                        });
+                    },                    
                     timeOnly: type === 'time'
                     // ,
                     // addSliderAccess: true,
