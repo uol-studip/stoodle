@@ -268,7 +268,7 @@ class AdminController extends StudipController
                                      count($targets) * count($results), count($results));
             }
 
-            Pagelayout::postMessage(Messagebox::success('Die Umfrage wurde ausgewertet.', $details));
+            Pagelayout::postMessage(Messagebox::success(_('Die Umfrage wurde ausgewertet.'), $details));
             $this->redirect('admin');
             return;
         }
