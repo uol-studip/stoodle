@@ -36,9 +36,14 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
     }
 
-    function getIconNavigation($course_id, $last_visit)
+    function getIconNavigation($course_id, $last_visit, $user_id)
     {
         return null;
+    }
+    
+    function getNotificationObjects($course_id, $since, $user_id)
+    {
+        return array();
     }
 
     function getInfoTemplate($course_id)
