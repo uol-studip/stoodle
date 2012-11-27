@@ -9,7 +9,7 @@
 
     $formatValue = function ($type, $value) {
         if ($type === 'text') {
-            return $value;
+            return 'value="' . htmlReady($value) . '"';
         }
 
         $templates = array(

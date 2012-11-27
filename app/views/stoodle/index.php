@@ -42,7 +42,8 @@
             <td style="text-align: right;">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
                     <?= Assets::img('icons/16/blue/' . ($stoodle->userParticipated() ? 'test' : 'vote'),
-                                    tooltip2(_('An der Umfrage teilnehmen'))) ?>
+                                    array_merge(tooltip2(_('An der Umfrage teilnehmen')), array('class' => 'text-top'))) ?>
+                    <?= _('Teilnehmen') ?>
                 </a>
             </td>
         </tr>

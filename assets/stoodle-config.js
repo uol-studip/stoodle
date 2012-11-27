@@ -22,7 +22,7 @@
             $(this).removeClass('hasDatepicker').nextAll('[type=hidden]').remove();
 
             if (type === 'text') {
-                $(this).val('');
+//                $(this).val('');
                 return;
             }
 
