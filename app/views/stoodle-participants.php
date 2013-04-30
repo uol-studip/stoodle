@@ -1,3 +1,12 @@
+<? if (!$stoodle->is_public): ?>
+    <tr class="no-highlight">
+        <td class="blank">&nbsp;</td>
+        <td class="blank">&nbsp;</td>
+        <td colspan="<?= count($stoodle->options) ?>">
+            <?= MessageBox::info(_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
+        </td>
+    </tr>
+<? endif; ?>
 <?  $count = 1;
     foreach ($answers = $stoodle->getAnswers() as $user_id => $options):
        if ($user_id == $GLOBALS['user']->id && @$self === 'hide') continue;
@@ -35,9 +44,11 @@
         </td>
     <? endforeach; ?>
 <? else: ?>
-        <td colspan="<?= count($stoodle->options) ?>" class="private">
-            <?= _('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.') ?>
+    <? foreach (array_keys($stoodle->options) as $id): ?>
+        <td>
+            <?= Assets::img('icons/16/gray/question') ?>
         </td>
+    <? endforeach; ?>
 <? endif; ?>
     </tr>
 <? endforeach; ?>

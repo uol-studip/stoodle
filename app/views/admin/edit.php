@@ -26,7 +26,9 @@
     };
 ?>
 
-<noscript><?= Messagebox::error(_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?></noscript>
+<noscript>
+    <?= Messagebox::error(_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?>
+</noscript>
 
 <? if (array_sum($options_count)): ?>
 <?= Messagebox::info(
@@ -45,17 +47,19 @@
         <col>
         <col width="200">
     </colgroup>
-    <tbody>
+    <thead>
         <tr>
             <th colspan="3"><?= _('Grunddaten') ?></th>
         </tr>
+    </thead>
+    <tbody>
         <tr>
             <td>
-                <label for="title"><?= _('Titel') ?></label>
+                <label for="title"><?= _('Titel') ?> *</label>
             </td>
             <td colspan="2">
                 <input type="text" name="title" id="title"
-                       value="<?= htmlReady($title) ?>"
+                       required value="<?= htmlReady($title) ?>"
                        style="width:99%">
             </td>
         </tr>
@@ -73,24 +77,34 @@
                 <label for="type"><?= _('Typ') ?></label>
             </td>
             <td colspan="2">
-                <select id="type" name="type" <? if (array_sum($options_count)) echo 'disabled'; ?>>
+                <select id="type" name="type" <? if (!$stoodle->isNew()) echo 'disabled'; ?>>
                 <? foreach ($types as $t => $n): ?>
                     <option value="<?= $t ?>" <? if ($type == $t) echo 'selected'; ?>>
                         <?= htmlReady($n) ?>
                     </option>
                 <? endforeach; ?>
                 </select>
-            <? if (array_sum($options_count)): ?>
+            <? if (!$stoodle->isNew()): ?>
+                <?= tooltipIcon(_('Der Typ einer Umfrage kann im Nachhinein nicht mehr geändert werden'), true) ?>
                 <input type="hidden" name="type" value="<?= $type ?>">
             <? endif; ?>
             </td>
         </tr>
     </tbody>
+</table>
 
-    <tbody class="dates">
+<table class="default zebra stoodle">
+    <colgroup>
+        <col width="200">
+        <col>
+        <col width="200">
+    </colgroup>
+    <thead>
         <tr>
             <th colspan="3"><?= _('Laufzeit der Umfrage') ?></th>
         </tr>
+    </thead>
+    <tbody class="dates">
         <tr>
             <td>
                 <label for="start_date"><?= _('Start') ?></label>
@@ -127,11 +141,20 @@
             </td>
         </tr>
     </tbody>
+</table>
 
-    <tbody>
+<table class="default zebra stoodle">
+    <colgroup>
+        <col width="200">
+        <col>
+        <col width="200">
+    </colgroup>
+    <thead>
         <tr>
             <th colspan="3"><?= _('Optionen') ?></th>
         </tr>
+    </thead>
+    <tbody>
         <tr>
             <td>
                 <label for="allow_comments"><?= _('Kommentare erlauben') ?></label>
@@ -178,11 +201,24 @@
             </td>
         </tr>
     </tbody>
+</table>
 
-    <tbody class="options">
+<table class="default zebra stoodle">
+    <colgroup>
+        <col width="20">
+        <col width="50">
+        <col>
+        <col width="200">
+    </colgroup>
+    <thead>
         <tr>
+            <th>
+                <input type="checkbox" name="ids[]" value="all" data-proxyfor=".options :checkbox[name='ids[]']">
+            </th>
             <th colspan="3"><?= _('Antwortmöglichkeiten') ?></th>
         </tr>
+    </thead>
+    <tbody class="options">
     <? $index = 0; foreach ($options as $id => $value):
            if ($type === 'range') {
                list($value, $additional) = explode('-', $value);
@@ -190,10 +226,10 @@
     ?>
         <tr>
             <td>
+                <input type="checkbox" name="ids[]" value="<?= $id ?>">
+            </td>
+            <td>
                 #<?= $index + 1 ?>
-            <? if ($options_count[$id]): ?>
-                <small>(<?= sprintf(_('bereits %u Mal gewählt'), $options_count[$id]) ?>)</small>
-            <? endif; ?>
             </td>
             <td>
                 <input type="<?= $type ?>" name="options[<?= $id ?>]"
@@ -206,6 +242,9 @@
                         <? if ($options_count[$id]) echo 'disabled'; ?>
                         <?= $formatValue($type, $additional) ?>>
                 </span>
+            <? if ($options_count[$id]): ?>
+                <small>(<?= sprintf(_('bereits %u Mal gewählt'), $options_count[$id]) ?>)</small>
+            <? endif; ?>
             </td>
             <td style="text-align: right;" class="actions">
             <? if ($index > 0): ?>
@@ -231,31 +270,35 @@
                     <?= Assets::img('icons/16/grey/trash') ?>
                 </button>
             <? else: ?>
-                <button name="remove" value="<?= $index ?>" title="<?= _('Antwort löschen') ?>">
+                <button name="remove" value="<?= $id ?>" title="<?= _('Antwort löschen') ?>">
                     <?= Assets::img('icons/16/blue/trash', array('alt' => _('Antwort löschen'))) ?>
                 </button>
             <? endif; ?>
             </td>
         </tr>
     <? $index += 1; endforeach; ?>
-        <tr class="steelkante">
-            <td style="text-align: right" colspan="3">
-                <?= Studip\Button::create(_('Weitere Antwortmöglichkeit hinzufügen'), 'add') ?>
-            </td>
-        </tr>
-    </tbody>
-
-    <tfoot>
-        <tr class="steel">
-            <td colspan="3" style="text-align: center;">
-                <div class="button-group">
-                    <?= Studip\Button::createAccept(_('Speichern'), 'store') ?>
-                    <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('admin')) ?>
+        <tr>
+            <td colspan="4" class="printhead">
+                <?= Studip\Button::createCancel(_('Markierte Einträge entfernen'), 'remove') ?>
+                <div style="float: right;">
+                    <select name="add-quantity">
+                    <? for ($i = 1; $i <= 10; $i += 1): ?>
+                        <option><?= $i ?></option>
+                    <? endfor; ?>
+                    </select>
+                    <?= Studip\Button::create(_('Weitere Antwortmöglichkeit(en) hinzufügen'), 'add') ?>
                 </div>
             </td>
         </tr>
-    </tfoot>
+    </tbody>
 </table>
+
+<div style="text-align: center;">
+    <div class="button-group">
+        <?= Studip\Button::createAccept(_('Speichern'), 'store') ?>
+        <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('admin')) ?>
+    </div>
+</div>
 </form>
 
 <? if (count($answers)): ?>

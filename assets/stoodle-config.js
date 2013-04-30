@@ -81,7 +81,13 @@
                 throw 'Invalid type argument: ' + type;
             }
 
-            $(this)[(type === 'range' ? 'datetime' : type) + 'picker'](options);
+            $(this)[(type === 'range' ? 'datetime' : type) + 'picker'](options).blur(function () {
+                var value = $(this).val(),
+                    date = Date.parse(value);
+                if (date !== null) {
+                    hidden_input.val(~~(date.getTime() / 1000));
+                }
+            });
 
             if ($(this).val()) {
                 time = type === 'time'
@@ -103,68 +109,76 @@
 }(jQuery));
 
 jQuery(function ($) {
-    function pad(what, length) {
-        return ('0000000000' + what).substr(-(length || 2));
+    function pad(what, length, padding) {
+        return ('' + what).length < length
+            ? (Array(length + 1 - what.length)).join(padding || '0') + what
+            : what;
     }
+
+    $('input#start_date, input#end_date').init_input('datetime');
 
     $('.dates input[type=checkbox]').on('click', function () {
         var input = $(this).parent().siblings('[type=datetime]').attr('disabled', this.checked);
-        if (input.is(':not(:disabled)')) {
-            input.focus();
-        }
+        input.filter(':not(:disabled)').focus();
     }).filter(':checked').each(function () {
         $(this).parent().siblings('[type=datetime]').attr('disabled', true);
     });
 
-/*
-    $('form[action*="admin/edit"]').on('click', 'button[name=add]', function () {
-        console.log('foo');
+    $('.stoodle').on('click', 'button[name=remove]', function () {
+        var $that    = $(this).attr('disabled', true),
+            value    = $that.val(),
+            row      = $that.closest('tr'),
+            form     = row.closest('form'),
+            action   = form.attr('action'),
+            formdata = form.serializeArray();
 
-        var row   = $('tbody.options tr:last').prev(),
-            clone = row.clone(false, false),
-            input = $('input:not([type=hidden])', clone),
-            index = 1 + parseInt($.trim($('td:first', row).text()).substr(1), 10);
-        $('input', clone).attr('name', 'options[-' + (new Date()).getTime() + ']');
+        if (row.siblings().length === 0) {
+            row.find('input:not(:checkbox)').val('');
+            return false;
+        }
+        
+        $that.find('img').replaceWith('<span class="ajaxing"/>');
 
-        input.attr('id', null);
+        formdata.push({name: 'remove', value: value});
+        $.post(action, formdata, function (response, status, xhr) {
+            var options = $('.options', response);
+            $('.options', form).replaceWith(options);
+            
+            if (!value) {
+                $(':checkbox[name="ids[]"][value="all"]').attr('checked', false);
+            }
 
-        $('td:first', clone).text('#' + index);
-        $('button[name=remove]', clone).val(index);
-        clone.toggleClass('cycle_even cycle_odd');
-        row.after(clone);
-
-        $('select#type').change();
-
-        return false;
-    });
-*/
-
-    $('form[action*="admin/edit"]').on('click', 'button[name=remove]', function () {
-        var row = $(this).closest('tr');
-        row.nextAll().not(':last').toggleClass('cycle_even cycle_odd').each(function () {
-            var index = parseInt($.trim($('td:first', this).text()).substr(1), 10) - 1;
-            $('td:first', this).text('#' + index);
-            $('button[name=remove]', this).val(index - 1);
-//            $('input[name^="options"]', this).attr('name', 'options[' + (index - 1) + ']');
+            $('select#type').change();
         });
 
-        if (row.siblings().length === 2) {
-            $('input', row).val('');
-        } else {
-            row.remove();
-        }
-
         return false;
     });
 
-    $('input#start_date, input#end_date').init_input('datetime');
+    $('.stoodle').on('click', 'button[name=add]', function () {
+        var $that    = $(this).attr('disabled', true),
+            form     = $that.closest('form'),
+            action   = form.attr('action'),
+            formdata = form.serializeArray();
+
+        $('<span/>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo($that)
+
+        formdata.push({name: 'add', value: ''});
+        $.post(action, formdata, function (response, status, xhr) {
+            var options = $('.options', response);
+            $('.options', form).replaceWith(options);
+
+            $('select#type').change();
+        });
+
+        return false;
+    });
 
     $('select#type').change(function () {
         var type     = $(this).val(),
-            elements = $('tbody.options tr:not(:last):not(:first)');
+            elements = $('tbody.options tr');
 
         elements.each(function (index) {
-            var original     = $('input:not([type=hidden])', this).first(),
+            var original     = $('input:not([type=hidden]):not(:checkbox)', this).first(),
                 orig_type    = original.attr('type'),
                 value        = original.val(),
                 clone, temp,
@@ -172,25 +186,27 @@ jQuery(function ($) {
 
             try {
                 original[(orig_type === 'range' ? 'datetime' : orig_type) + 'picker']('destroy');
-            } catch (e) {}
+            } catch (e) { }
 
             clone = original.clone(false, false);
             clone.attr('type', type);
 
-            if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'date') {
-                clone.val(value.split(' ')[0]);
-            } else if (value && (orig_type === 'datetime' || orig_type === 'range') && type === 'time') {
-                clone.val(value.split(' ')[1]);
-            } else if (value && orig_type === 'time' && (type === 'datetime' || type === 'range')) {
-                temp = new Date();
-                temp = pad(temp.getDate()) + '.' + pad(temp.getMonth() + 1) + '.' + (2000 + temp.getYear() % 100);
-                clone.val(temp + ' ' + value);
-            } else if (value && orig_type === 'date' && (type === 'datetime' || type === 'range')) {
-                temp = new Date();
-                temp = pad(temp.getHours()) + ':' + pad(temp.getMinutes());
-                clone.val(value + ' ' + temp);
-            } else if (value && orig_type !== type) {
-                clone.val('');
+            if (value) {
+                if ((orig_type === 'datetime' || orig_type === 'range') && type === 'date') {
+                    clone.val(value.split(' ')[0]);
+                } else if ((orig_type === 'datetime' || orig_type === 'range') && type === 'time') {
+                    clone.val(value.split(' ')[1]);
+                } else if (orig_type === 'time' && (type === 'datetime' || type === 'range')) {
+                    temp = new Date();
+                    temp = pad(temp.getDate()) + '.' + pad(temp.getMonth() + 1) + '.' + (2000 + temp.getYear() % 100);
+                    clone.val(temp + ' ' + value);
+                } else if (orig_type === 'date' && (type === 'datetime' || type === 'range')) {
+                    temp = new Date();
+                    temp = pad(temp.getHours()) + ':' + pad(temp.getMinutes());
+                    clone.val(value + ' ' + temp);
+                } else if (orig_type !== type) {
+                    clone.val('');
+                }
             }
 
             original.replaceWith(clone);

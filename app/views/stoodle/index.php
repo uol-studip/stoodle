@@ -12,14 +12,14 @@
             <th>&nbsp;</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="stoodle-overview">
     <? if (empty($stoodles['present'])): ?>
         <tr class="blank">
             <td colspan="6"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
         </tr>
     <? endif; ?>
     <? foreach ($stoodles['present'] as $stoodle): ?>
-        <tr class="stoodle">
+        <tr>
             <td><?= date('d.m.Y', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>

@@ -16,7 +16,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setImage('icons/16/white/assessment.png');
         $navigation->setActiveImage('icons/16/black/assessment.png');
 
-        if ($GLOBALS['perm']->have_studip_perm('tutor', Request::option('cid'))) {
+        if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
             $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
         }
@@ -27,9 +27,10 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         require 'bootstrap.php';
 
-        $this->addStylesheet('assets/stoodle.less');
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
+        $this->addStylesheet('assets/stoodle.less');
 
+        PageLayout::addScript($this->getPluginURL() . '/assets/date-js/date-de-DE.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
 //        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-sliderAccess.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');

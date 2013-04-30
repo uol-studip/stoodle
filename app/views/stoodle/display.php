@@ -38,11 +38,11 @@
                         <?= Assets::img('icons/16/green/accept') ?>
                     </label>
                     <label>
-                        <input type="radio" name="selection[<?= $id ?>]" value="maybe" <? if ($answer && in_array($id, $answer['maybes'])) echo 'checked'; ?>>
+                        <input type="radio" name="selection[<?= $id ?>]" value="maybe" <? if (!$answer || !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
                         <?= Assets::img('icons/16/blue/question') ?>
                     </label>
                     <label>
-                        <input type="radio" name="selection[<?= $id ?>]" value="0" <? if (!$answer || !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
+                        <input type="radio" name="selection[<?= $id ?>]" value="0" <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
                         <?= Assets::img('icons/16/red/decline') ?>
                     </label>
                 <? else: ?>

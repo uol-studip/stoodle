@@ -1,5 +1,7 @@
 #stoodle-plugin {
     table {
+        margin-bottom: 1em;
+
         td, th { vertical-align: top; }
 
         &.stoodle-list {
@@ -13,10 +15,13 @@
                     padding-right: 20px;
                 }
             }
+            .highlighted { background-color: #eda; }
+            tr:nth-child(2n+1) td.highlighted { background-color: #fec; }
             label {
                 border-top: 1px dotted #aaa;
                 display: block;
                 padding-right: 20px;
+                text-align: center;
 
                 &:first-child { border-top: 0; }
                 &:hover { background-color: fade(#fff, 50%); }
@@ -50,12 +55,15 @@
         }
     }
 
-    input, select, textarea {
-        .box-sizing(border-box);
+    .stoodle {
+        input, select, textarea {
+            .box-sizing(border-box);
+        }
     }
 
     input[type=datetime], input[type=date], input[type=time] {
         position: relative;
+        width: 8em;
 //        z-index: 10;
     }
     input[type=datetime][disabled], input[type=date][disabled], input[type=text][disabled], select#type option[value=""] {
@@ -73,14 +81,14 @@
             padding: 0;
         }
         legend {
-            background: url("@{image-path}icons/16/blue/arr_1down.png") left center no-repeat;
+            background: url("@{image-path}/icons/16/blue/arr_1down.png") left center no-repeat;
             cursor: pointer;
             padding-left: 20px;
         }
         fieldset.closed {
             > * { display: none; }
             legend {
-                background-image: url("@{image-path}icons/16/blue/arr_1right.png");
+                background-image: url("@{image-path}/icons/16/blue/arr_1right.png");
                 display: block;
             }
         }
@@ -174,12 +182,12 @@
     }
     .js & .stoodle-participants {
         a {
-            background: url("@{image-path}icons/16/white/arr_1down.png") right center no-repeat;
+            background: url("@{image-path}/icons/16/blue/arr_1down.png") left center no-repeat;
             color: inherit; 
-            padding-right: 20px;
+            padding-left: 20px;
         }
         &.collapsed a {
-            background-image: url("@{image-path}icons/16/white/arr_1right.png");
+            background-image: url("@{image-path}/icons/16/blue/arr_1right.png");
         }
     }
 }
@@ -209,6 +217,4 @@ dl.evaluation {
     display: block;
 }
 
-tr.stoodle td {
-    cursor: pointer;
-}
+.stoodle-overview td { cursor: pointer; }

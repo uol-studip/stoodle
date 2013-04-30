@@ -130,7 +130,7 @@ class StoodleController extends StudipController
             && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id))
         {
             $message = Messagebox::error(_('Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist'));
-        } else if ($comment->delete() !== true) {
+        } else if (!$comment->delete()) {
             $message = Messagebox::error(_('Fehler beim Löschen des Kommentars.') . ' '
                                         ._('Bitte versuchen Sie es später noch einmal.'));
         } else {

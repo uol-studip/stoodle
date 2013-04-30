@@ -27,6 +27,10 @@ class AdminController extends StudipController
             throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
         }
         
+        if (Request::isXhr()) {
+            $this->set_content_type('text/html;Charset=windows-1252');
+        }
+        
         // We need this since the messaging section of Stud.IP still uses the old
         // mechanism to display messages
         if (!empty($_SESSION['sms_msg'])) {
@@ -78,16 +82,18 @@ class AdminController extends StudipController
         $this->is_anonymous   = Request::int('is_anonymous', $stoodle->isNew() ? 0 : $stoodle->is_anonymous);
         $this->allow_maybe    = Request::int('allow_maybe', $stoodle->isNew() ? 0 : $stoodle->allow_maybe);
         $this->allow_comments = Request::int('allow_comments', $stoodle->isNew() ? 1 : $stoodle->allow_comments);
-        // Integrate addiotional
+        // Integrate additional
         $this->options        = $this->extractOptions($stoodle->options, $this->type === 'range');
         $this->options_count  = $stoodle->getOptionsCount(null);
         $this->answers        = $stoodle->getAnswers();
 
+#        echo '<pre>';var_dump($_REQUEST);die;
+
         if (Request::submitted('move')) {
             list($direction, $index) = each(Request::getArray('move'));
 
-            $keys   = array_keys($this->options);
-            $key = array_splice($keys, $index, 1);
+            $keys = array_keys($this->options);
+            $key  = array_splice($keys, $index, 1);
             array_splice($keys, $direction == 'up' ? $index - 1 : $index + 1, 0, $key);
 
             $values = array_values($this->options);
@@ -96,12 +102,43 @@ class AdminController extends StudipController
 
             $this->options = array_combine($keys, $values);
         } else if (Request::submitted('remove')) {
-            $index = Request::int('remove');
-            unset($this->options[$index]);
-            $this->options = array_merge($this->options);
+            $index = Request::option('remove');
+            if (empty($index)) {
+                $ids = Request::optionArray('ids');
+                if (in_array('all', $ids)) {
+                    $this->options = array();
+                } else {
+                    foreach ($ids as $id) {
+                        unset($this->options[$id]);
+                    }
+                }
+                if (empty($this->options)) {
+                    $this->options[StoodleOption::getNewId()] = '';
+                }
+            } else {
+                unset($this->options[$index]);
+                $this->options = array_merge($this->options);
+            }
         } else if (Request::submitted('add')) {
+            $quantity = Request::int('add-quantity', 1);
+            for ($i = 1; $i <= $quantity; $i += 1) {
+                $value = '';
+                $last  = end($this->options);
+                if (!empty($last)) {
+                    if ($this->type === 'date') {
+                        $value = strtotime('+1 day', $last);
+                    } elseif ($this->type === 'time' || $this->type === 'datetime') {
+                        $value = strtotime('+1 hour', $last);
+                    } elseif ($this->type === 'range') {
+                        list(, $end) = explode('-', $last);
+                        $start = strtotime('+1 hour', $end);
+                        $end   = strtotime('+1 hour', $start);
+                        $value = $start . '-' . $end;
+                    }
+                }
+                $this->options[StoodleOption::getNewId()] = $value;
+            }
             $this->focussed = count($this->options);
-            $this->options[StoodleOption::getNewId()] = '';
         } else if (Request::submitted('store')) {
             $errors = array();
 
@@ -126,15 +163,18 @@ class AdminController extends StudipController
 
                 $stoodle->title          = $this->title;
                 $stoodle->description    = $this->description;
-                $stoodle->type           = $this->type;
                 $stoodle->start_date     = $this->start_date;
                 $stoodle->end_date       = $this->end_date;
                 $stoodle->is_public      = $this->is_public;
                 $stoodle->is_anonymous   = $this->is_anonymous;
                 $stoodle->allow_maybe    = $this->allow_maybe;
                 $stoodle->allow_comments = $this->allow_comments;
-                $stoodle->range_id       = $this->range_id;
-                $stoodle->user_id        = $GLOBALS['user']->id;
+
+                if ($new) {
+                    $stoodle->type     = $this->type;
+                    $stoodle->range_id = $this->range_id;
+                    $stoodle->user_id  = $GLOBALS['user']->id;
+                }
 
                 // echo '<pre>';
                 // var_dump($this->options);

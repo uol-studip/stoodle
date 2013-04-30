@@ -52,7 +52,7 @@
 <h3 class="topic stoodle-participants">
     <?= _('Teilnehmerliste') ?>
 </h3>
-<table class="collapsed default zebra-hover stoodle-list">
+<table class="default zebra-hover stoodle-list">
     <thead>
         <tr>
             <td colspan="2">&nbsp;</td>
