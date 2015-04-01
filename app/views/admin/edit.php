@@ -27,11 +27,11 @@
 ?>
 
 <noscript>
-    <?= Messagebox::error(_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?>
+    <?= MessageBox::error(_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?>
 </noscript>
 
 <? if (array_sum($options_count)): ?>
-<?= Messagebox::info(
+<?= MessageBox::info(
         sprintf(_('Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
         array(
             _('Der Typ der Umfrage kann nicht mehr verändert werden.'),

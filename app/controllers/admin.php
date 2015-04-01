@@ -43,7 +43,7 @@ class AdminController extends StudipController
                 } else {
                     $type = 'info';
                 }
-                PageLayout::postMessage(Messagebox::$type($msg[1]));
+                PageLayout::postMessage(MessageBox::$type($msg[1]));
             }
             unset($_SESSION['sms_msg']);
         }
@@ -185,10 +185,10 @@ class AdminController extends StudipController
                 $message = $new
                          ? _('Der Eintrag wurde erfolgreich erstellt.')
                          : _('Der Eintrag wurde erfolgreich bearbeitet.');
-                PageLayout::postMessage(Messagebox::success($message));
+                PageLayout::postMessage(MessageBox::success($message));
                 $this->redirect('admin');
             } else {
-                PageLayout::postMessage(Messagebox::error(_('Es sind Fehler aufgetreten:'), $errors));
+                PageLayout::postMessage(MessageBox::error(_('Es sind Fehler aufgetreten:'), $errors));
             }
         }
 
@@ -238,7 +238,7 @@ class AdminController extends StudipController
         $stoodle->end_date = time() - 1;
         $stoodle->store();
 
-        PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde beendet.')));
+        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde beendet.')));
         $this->redirect('admin');
     }
 
@@ -248,7 +248,7 @@ class AdminController extends StudipController
         $stoodle->end_date = null;
         $stoodle->store();
 
-        PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde fortgesetzt.')));
+        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde fortgesetzt.')));
         $this->redirect('admin');
     }
 
@@ -257,7 +257,7 @@ class AdminController extends StudipController
         $stoodle = new Stoodle($id);
 
         if ($stoodle->evaluated !== null) {
-            PageLayout::postMessage(Messagebox::error(_('Die Umfrage wurde bereits ausgewertet.')));
+            PageLayout::postMessage(MessageBox::error(_('Die Umfrage wurde bereits ausgewertet.')));
             $this->redirect('admin');
         }
 
@@ -331,7 +331,7 @@ class AdminController extends StudipController
                                      count($targets) * count($results), count($results));
             }
 
-            Pagelayout::postMessage(Messagebox::success(_('Die Umfrage wurde ausgewertet.'), $details));
+            Pagelayout::postMessage(MessageBox::success(_('Die Umfrage wurde ausgewertet.'), $details));
             $this->redirect('admin');
             return;
         }
@@ -354,7 +354,7 @@ class AdminController extends StudipController
         $stoodle = new Stoodle($id);
         $stoodle->delete();
 
-        PageLayout::postMessage(Messagebox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
+        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
         $this->redirect('admin');
     }
     
@@ -368,7 +368,7 @@ class AdminController extends StudipController
         
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
-            PageLayout::postMessage(Messagebox::error(_('Sie haben keine Empfänger ausgewählt.')));
+            PageLayout::postMessage(MessageBox::error(_('Sie haben keine Empfänger ausgewählt.')));
             $this->redirect('admin/edit/' . $id);
             return;
         }
@@ -390,7 +390,7 @@ class AdminController extends StudipController
         }
 
         if (empty($mail_to)) {
-            PageLayout::postMessage(Messagebox::error(_('Es wurden keine gültigen Empfänger gefunden.')));
+            PageLayout::postMessage(MessageBox::error(_('Es wurden keine gültigen Empfänger gefunden.')));
             $this->redirect('admin/edit/' . $id);
             return;
         }

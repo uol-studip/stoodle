@@ -55,12 +55,12 @@ class StoodleController extends StudipController
         $this->comments = ($comments === 'all');
 
         if ($stoodle->start_date && $stoodle->state > time()) {
-            PageLayout::postMessage(Messagebox::error(_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.')));
+            PageLayout::postMessage(MessageBox::error(_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.')));
             $this->redirect('stoodle');
             return;
         }
         if ($stoodle->end_date && $stoodle->end_date < time()) {
-            PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen.')));
+            PageLayout::postMessage(MessageBox::error(_('Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen.')));
             $this->redirect('stoodle');
             return;
         }
@@ -92,7 +92,7 @@ class StoodleController extends StudipController
 
         $answer->store();
 
-        PageLayout::postMessage(Messagebox::success(_('Ihre Teilnahme wurde gespeichert.')));
+        PageLayout::postMessage(MessageBox::success(_('Ihre Teilnahme wurde gespeichert.')));
         $this->redirect($this->url_for('stoodle/display', $id));
     }
 
@@ -107,12 +107,12 @@ class StoodleController extends StudipController
         $comment->comment    = trim(Request::get('comment'));
 
         if (empty($comment->comment)) {
-            $message =  Messagebox::info(_('Sie können keinen leeren Kommentar hinzufügen.'));
+            $message =  MessageBox::info(_('Sie können keinen leeren Kommentar hinzufügen.'));
         } else if ($comment->store() === false) {
-            $message = Messagebox::error(_('Der Kommentar konnte nicht gespeichert werden.') . ' '
+            $message = MessageBox::error(_('Der Kommentar konnte nicht gespeichert werden.') . ' '
                                         ._('Bitte versuchen Sie es später noch einmal.'));
         } else {
-            $message = Messagebox::success(_('Der Kommentar wurde hinzugefügt.'));
+            $message = MessageBox::success(_('Der Kommentar wurde hinzugefügt.'));
         }
         PageLayout::postMessage($message);
         $this->redirect('stoodle/' . $id . '#comments');
@@ -129,12 +129,12 @@ class StoodleController extends StudipController
         if ($comment->user_id != $GLOBALS['user']->id
             && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id))
         {
-            $message = Messagebox::error(_('Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist'));
+            $message = MessageBox::error(_('Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist'));
         } else if (!$comment->delete()) {
-            $message = Messagebox::error(_('Fehler beim Löschen des Kommentars.') . ' '
+            $message = MessageBox::error(_('Fehler beim Löschen des Kommentars.') . ' '
                                         ._('Bitte versuchen Sie es später noch einmal.'));
         } else {
-            $message = Messagebox::success(_('Der Kommentar wurde gelöscht.'));
+            $message = MessageBox::success(_('Der Kommentar wurde gelöscht.'));
         }
 
         PageLayout::postMessage($message);
@@ -148,19 +148,19 @@ class StoodleController extends StudipController
     {
         $this->stoodle = new Stoodle($id);
         if (!$this->stoodle) {
-            PageLayout::postMessage(Messagebox::error(_('Ungültige Stoodle-ID.')));
+            PageLayout::postMessage(MessageBox::error(_('Ungültige Stoodle-ID.')));
             $this->redirect('stoodle');
             return;
         }
 
         if (!$this->stoodle->evaluated) {
-            PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist noch nicht ausgewertet.')));
+            PageLayout::postMessage(MessageBox::error(_('Die Umfrage ist noch nicht ausgewertet.')));
             $this->redirect('stoodle');
             return;
         }
 
         if (!$this->stoodle->is_public && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
-            PageLayout::postMessage(Messagebox::error(_('Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')));
+            PageLayout::postMessage(MessageBox::error(_('Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')));
             $this->redirect('stoodle');
             return;
         }
