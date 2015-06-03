@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  *
  */
@@ -25,7 +25,7 @@ class StoodleController extends StudipController
             Navigation::activateItem('/course/stoodle');
         }
 
-        $layout = $GLOBALS['template_factory']->open('layouts/base');
+        $layout = $GLOBALS['template_factory']->open('layouts/base.php');
         $layout->body_id = 'stoodle-plugin';
         $this->set_layout($layout);
 
@@ -42,8 +42,10 @@ class StoodleController extends StudipController
         $this->stoodles  = Stoodle::loadByRange($this->range_id);
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id, array('is_public' => 1));
 
-        $this->setInfoboxImage('infobox/administration');
-        $this->addToInfobox(_('Informationen:'), _('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'), 'icons/16/black/info-circle');
+        $widget = new SidebarWidget();
+        $widget->setTitle(_('Informationen'));
+        $widget->addElement(new WidgetElement(_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.')));
+        Sidebar::get()->addWidget($widget);
     }
 
     /**
@@ -67,16 +69,31 @@ class StoodleController extends StudipController
 
         PageLayout::setTitle('Stoodle: ' . $this->stoodle->title);
 
-        $this->setInfoboxImage('infobox/administration');
-
         $infos = $this->get_template_factory()->render('stoodle/infobox', array('stoodle' => $this->stoodle));
-        $this->addToInfobox(_('Informationen'), $infos, 'icons/16/black/info');
 
-        $this->addToInfobox(_('Legende'), _('Zusage'), 'icons/16/green/accept');
+        $widget = new SidebarWidget();
+        $widget->setTitle('Informationen');
+        $widget->addElement(new WidgetElement($infos));
+        Sidebar::get()->addWidget($widget);
+
+        $widget = new ListWidget();
+        $widget->setTitle(_('Legende'));
+
+        $element = new WidgetElement(_('Zusage'));
+        $element->icon = 'icons/16/green/accept.png';
+        $widget->addElement($element);
+
         if ($this->stoodle->allow_maybe) {
-            $this->addToInfobox(_('Legende'), _('Ungewiss'), 'icons/16/blue/question');
+            $element = new WidgetElement(_('Ungewiss'));
+            $element->icon = 'icons/16/blue/question.png';
+            $widget->addElement($element);
         }
-        $this->addToInfobox(_('Legende'), _('Absage'), 'icons/16/red/decline');
+
+        $element = new WidgetElement(_('Absage'));
+        $element->icon = 'icons/16/red/decline.png';
+        $widget->addElement($element);
+
+        Sidebar::get()->addWidget($widget);
     }
 
     public function participate_action($id)
@@ -183,6 +200,13 @@ class StoodleController extends StudipController
 
         $answers      = count($this->stoodle->getAnswers());
         $participants = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
+
+        $content = $this->get_template_factory()->open('stoodle-information.php')->render(array('stoodle' => $this->stoodle));
+        $widget = new SidebarWidget();
+        $widget->setTitle(_('Informationen'));
+        $widget->addElement(new WidgetElement($content));
+        Sidebar::get()->addWidget($widget);
+
         $this->addToInfobox(_('Informationen'),
                             _('Laufzeit') . ': ' .
                             spoken_time($this->stoodle->end_date - ($this->stoodle->start_date ?: $this->stoodle->mkdate)),

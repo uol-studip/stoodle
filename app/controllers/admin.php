@@ -61,8 +61,11 @@ class AdminController extends StudipController
                           $this->url_for('admin/edit'),
                           _('Neue Umfrage erstellen'));
 
-        $this->setInfoboxImage('infobox/administration');
-        $this->addToInfobox(_('Aktionen'), $create, 'icons/16/black/plus');
+        $actions = new ActionsWidget();
+        $actions->addLink(_('Neue Umfrage erstellen'),
+                          $this->url_for('admin/edit'),
+                          'icons/16/blue/add.png');
+        Sidebar::get()->addWidget($actions);
     }
 
     /**

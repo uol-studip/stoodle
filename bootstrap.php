@@ -1,7 +1,7 @@
 <?
 // Global includes
-$RELATIVE_PATH_CALENDAR = $GLOBALS['RELATIVE_PATH_CALENDAR']; // Weird hack
-require_once 'lib/calendar/lib/DbCalendarEvent.class.php';
+#$RELATIVE_PATH_CALENDAR = $GLOBALS['RELATIVE_PATH_CALENDAR']; // Weird hack
+#require_once 'lib/calendar/lib/DbCalendarEvent.class.php';
 
 require_once 'vendor/trails/trails.php';
 require_once 'app/controllers/studip_controller.php';

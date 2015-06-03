@@ -11,7 +11,7 @@
     <table class="default zebra-hover stoodle-list">
         <thead>
             <tr>
-                <td colspan="2">&nbsp;</td>
+                <th colspan="2">&nbsp;</th>
             <? foreach ($stoodle->options as $id => $option): ?>
                 <th><?= $stoodle->formatOption($id) ?></th>
             <? endforeach; ?>

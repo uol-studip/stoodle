@@ -17,7 +17,7 @@
             <legend><?= _('Kommentar hinzufügen') ?></legend>
 
             <div class="type-text">
-                <textarea class="add_toolbar" name="comment"></textarea>
+                <textarea class="add_toolbar" name="comment" style="width: 100%;"></textarea>
             </div>
 
             <?= Studip\Button::createAccept(_('Kommentar speichern'), 'store') ?>
