@@ -3,3 +3,13 @@ pluginclassname=StoodlePlugin
 origin=UOL
 version=1.0
 studipMinVersion=3.1
+
+summary=Terminfindung wie bei Doodle
+description=Lehrende können in Stoodle in einer Umfrage mehrere Termine vorschlagen, über die Teilnehmende und Lehrende der Veranstaltungen abstimmen können. Teilnehmende können nur dann die Auswertung einer Umfrage einsehen, wenn diese öffentlich ist.
+icon=assets/icons/16/black/assessment.png
+keywords=Umfrage;Terminfindung
+
+screenshots=assets/screenshots
+screenshots.stoodle.png=Übersicht
+
+category=Kommunikation und Zusammenarbeit
