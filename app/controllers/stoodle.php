@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  *
  */
@@ -9,7 +9,9 @@ class StoodleController extends StudipController
      */
     public function before_filter(&$action, &$args)
     {
-        $this->range_id = Request::option('cid');
+        parent::before_filter($action, $args);
+
+        $this->range_id = $this->dispatcher->range_id;
         if (!$this->range_id) {
             throw new CheckObjectException();
         }
@@ -25,11 +27,9 @@ class StoodleController extends StudipController
             Navigation::activateItem('/course/stoodle');
         }
 
-        $layout = $GLOBALS['template_factory']->open('layouts/base');
-        $layout->body_id = 'stoodle-plugin';
+        $layout = $this->get_template_factory()->open('layout.php');
+        $layout->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         $this->set_layout($layout);
-
-        parent::before_filter($action, $args);
 
         $this->range_id = $this->dispatcher->range_id;
     }
@@ -42,8 +42,7 @@ class StoodleController extends StudipController
         $this->stoodles  = Stoodle::loadByRange($this->range_id);
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id, array('is_public' => 1));
 
-        $this->setInfoboxImage('infobox/administration');
-        $this->addToInfobox(_('Informationen:'), _('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'), 'icons/16/black/info-circle');
+        $this->setupSidebar('index');
     }
 
     /**
@@ -66,17 +65,7 @@ class StoodleController extends StudipController
         }
 
         PageLayout::setTitle('Stoodle: ' . $this->stoodle->title);
-
-        $this->setInfoboxImage('infobox/administration');
-
-        $infos = $this->get_template_factory()->render('stoodle/infobox', array('stoodle' => $this->stoodle));
-        $this->addToInfobox(_('Informationen'), $infos, 'icons/16/black/info');
-
-        $this->addToInfobox(_('Legende'), _('Zusage'), 'icons/16/green/accept');
-        if ($this->stoodle->allow_maybe) {
-            $this->addToInfobox(_('Legende'), _('Ungewiss'), 'icons/16/blue/question');
-        }
-        $this->addToInfobox(_('Legende'), _('Absage'), 'icons/16/red/decline');
+        $this->setupSidebar('display', $this->stoodle);
     }
 
     public function participate_action($id)
@@ -181,34 +170,106 @@ class StoodleController extends StudipController
         $this->users    = $users;
         $this->comments = true;
 
-        $answers      = count($this->stoodle->getAnswers());
-        $participants = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
-        $this->addToInfobox(_('Informationen'),
-                            _('Laufzeit') . ': ' .
-                            spoken_time($this->stoodle->end_date - ($this->stoodle->start_date ?: $this->stoodle->mkdate)),
-                            'icons/16/black/date');
-        $this->addToInfobox(_('Informationen'),
-                            _('Start') . ': ' . date('d.m.Y H:i', $this->stoodle->start_date ?: $this->stoodle->mkdate));
-        $this->addToInfobox(_('Informationen'),
-                            _('Ende') . ': ' . date('d.m.Y H:i', $this->stoodle->end_date));
-        $this->addToInfobox(_('Informationen'),
-                            _('Teilnehmer') . ': ' . $answers . ' (' . round($participants ? 100 * $answers / $participants : 0, 2) . '%)',
-                            'icons/16/black/stat');
-        $this->addToInfobox(_('Informationen'),
-                            sprintf(_('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
-                                    $this->stoodle->is_public ? _('öffentlich') : _('nicht öffentlich'),
-                                    $this->stoodle->is_anonymous ? _('anonym') : _('nicht anonym')),
-                            'icons/16/black/visibility-visible');
-        if ($this->stoodle->allow_maybe) {
-            $this->addToInfobox(_('Informationen'),
-                                _('Eine Angabe von "vielleicht" war erlaubt.'),
-                                'icons/16/black/question');
+        $this->setupSidebar('result', $this->stoodle);
+    }
+
+    /**
+     *
+     */
+    protected function setupSidebar($action, $stoodle = null)
+    {
+        $sidebar = Sidebar::get();
+
+        if ($action === 'index') {
+            $widget = new ListWidget();
+            $widget->setTitle(_('Informationen'));
+            $widget->addElement($this->sidebarElement(_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'),
+                                                   'icons/16/black/info-circle.png'));
+            $sidebar->addWidget($widget);
+        } elseif ($action === 'display') {
+            // General info
+            $widget = new ListWidget();
+            $widget->setTitle(_('Informationen'));
+
+            $start = sprintf('%s: %s', _('Start'), $stoodle->start_date ? strtotime('%x', $stoodle->start_date) : _('offen'));
+            $widget->addElement($this->sidebarElement($start, 'icons/16/black/info.png'));
+
+            $end = sprintf('%s: %s', _('Ende'), $stoodle->end_date ? strtotime('%x', $stoodle->end_date) : _('offen'));
+            $widget->addElement($this->sidebarElement($end));
+
+            $widget->addElement($this->sidebarElement(
+                $stoodle->is_public
+                    ? _('Die Ergebnisse der Umfrage sind öffentlich einsehbar.')
+                    : _('Die Ergebnisse der Umfrage sind nicht öffentlich einsehbar.')
+            ));
+            if ($stoodle->is_anonymous) {
+                $widget->addElement($this->sidebarElement(_('Die Umfrage ist anonym.')));
+            }
+            $sidebar->addWidget($widget);
+
+            // Legend
+            $legend = new ListWidget();
+            $legend->setTitle(_('Legende'));
+
+            $legend->addElement($this->sidebarElement(_('Zusage'), 'icons/16/green/accept.png'));
+            if ($this->stoodle->allow_maybe) {
+                $legend->addElement($this->sidebarElement(_('Ungewiss'), 'icons/16/blue/question.png'));
+            }
+            $legend->addElement($this->sidebarElement(_('Absage'), 'icons/16/red/decline.png'));
+        
+            $sidebar->addWidget($legend);
+        } elseif ($action === 'result') {
+            $answers      = count($this->stoodle->getAnswers());
+            $participants = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
+
+            $widget = new ListWidget();
+            $widget->setTitle(_('Informationen'));
+            
+            $widget->addElement($this->sidebarElement(
+                spoken_time($stoodle->end_date - ($stoodle->start_date ?: $stoodle->mkdate)),
+                'icons/16/black/date.png'
+            ));
+            
+            $start = sprintf('%s: %s', _('Start'),
+                             strtotime('%x %X', $stoodle->start_date ?: $stoodle->mkdate));
+            $widget->addElement($this->sidebarElement($start));
+            
+            $end = sprintf('%s: %s', _('Ende'),
+                             strtotime('%x %X', $stoodle->end_date));
+            $widget->addElement($this->sidebarElement($end));
+
+            $members = sprintf('%s: %u (%.2f%%)', _('Teilnehmer'), $answers,
+                               round($participants ? 100 * $answers / $participants : 0, 2));
+            $widget->addElement($this->sidebarElement($members, 'icons/16/black/stat.png'));
+
+            $info = sprintf(_('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
+                            $stoodle->is_public ? _('öffentlich') : _('nicht öffentlich'),
+                            $stoodle->is_anonymous ? _('anonym') : _('nicht anonym'));
+            $widget->addElement($this->sidebarElement($info, 'icons/16/black/visibility-visible.png'));
+    
+            if ($stoodle->allow_maybe) {
+                $widget->addElement($this->sidebarElement(
+                    _('Eine Angabe von "vielleicht" war erlaubt.'),
+                    'icons/16/black/question.png'
+                ));
+            }
+            if ($this->stoodle->allow_comments) {
+                $widget->addElement($this->sidebarElement(
+                    _('Kommentare waren erlaubt.'),
+                    'icons/16/black/comment.png'
+                ));
+            }
+            $sidebar->addWidget($widget);
         }
-        if ($this->stoodle->allow_comments) {
-            $this->addToInfobox(_('Informationen'),
-                                _('Kommentare waren erlaubt.'),
-                                'icons/16/black/comment');
-        }
-        $this->setInfoboxImage('infobox/evaluation.jpg');
+    }
+    
+    /**
+     *
+     */
+    protected function sidebarElement($content, $icon = null)
+    {
+        $element = new WidgetElement($content);
+        $element->icon = $icon;
+        return $element;
     }
 }

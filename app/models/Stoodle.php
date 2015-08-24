@@ -1,4 +1,4 @@
-<?
+<?php
 class Stoodle extends SimpleORMap
 {
     public $options  = array();

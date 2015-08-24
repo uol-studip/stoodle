@@ -1,4 +1,4 @@
-<?
+<?php
 class StoodleComment extends SimpleORMap
 {
     /**

@@ -1,4 +1,9 @@
+/*jslint browser: true */
+/*global jQuery, STUDIP */
+
 (function ($, STUDIP) {
+    'use strict';
+
     var Stoodle = {};
 
     Stoodle.Comments = {
@@ -15,7 +20,7 @@
     Stoodle.Result = {
         init: function () {
             // Enable toggling of participants
-            $('.stoodle-participants').live('click', function () {
+            $(document).on('click', '.stoodle-participants', function () {
                 $(this).toggleClass('collapsed').next().toggle('blind', 'fast');
                 return false;
             });
@@ -35,7 +40,7 @@
         }
     };
 
-    $(':checkbox[name="mail_to[]"]').live('click', function () {
+    $(document).on('click', ':checkbox[name="mail_to[]"]', function () {
         if ($(this).val() === 'all') {
             $(':checkbox[name="mail_to[]"]:not(:disabled)').attr('checked', this.checked);
         } else if (!this.checked) {
@@ -45,24 +50,24 @@
         }
     });
 
-    $('.stoodle-list tbody tr:not(.no-highlight) td:gt(1)').live('mouseenter', function () {
+    $(document).on('mouseenter', '.stoodle-list tbody tr:not(.no-highlight) td:gt(1)', function () {
         var index = $(this).index();
         if (index < 2) {
             return;
         }
         $(this).closest('table').find('tbody tr:not(.no-highlight) td:nth-child(' + (index + 1) + ')').addClass('highlighted');
         $(this).closest('table').find('thead th').eq(index - 2).addClass('highlighted');
-    }).live('mouseleave', function () {
+    }).on('mouseleave', '.stoodle-list tbody tr:not(.no-highlight) td:gt(1)', function () {
         var index = $(this).index();
         $(this).closest('table').find('tbody tr:not(.no-highlight) td:nth-child(' + (index + 1) + ')').removeClass('highlighted');
         $(this).closest('table').find('thead th').eq(index - 2).removeClass('highlighted');
     });
 
     STUDIP.Stoodle = Stoodle;
-}(jQuery, STUDIP));
 
-jQuery(document).ready(function ($) {
-    STUDIP.Stoodle.Comments.init();
-    STUDIP.Stoodle.Result.init();
-    STUDIP.Stoodle.Overview.init();
-});
+    $(document).ready(function () {
+        STUDIP.Stoodle.Comments.init();
+        STUDIP.Stoodle.Result.init();
+        STUDIP.Stoodle.Overview.init();
+    });
+}(jQuery, STUDIP));

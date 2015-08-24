@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  *
  */
@@ -14,11 +14,8 @@ class AdminController extends StudipController
         PageLayout::setTitle(_('Stoodle'));
         Navigation::activateItem('/course/stoodle/administration');
 
-        $layout_file = in_array($action, words('edit evaluate'))
-                     ? 'layouts/base_without_infobox'
-                     : 'layouts/base';
-        $layout = $GLOBALS['template_factory']->open($layout_file);
-        $layout->body_id = 'stoodle-plugin';
+        $layout = $this->get_template_factory()->open('layout.php');
+        $layout->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         $this->set_layout($layout);
 
         $this->range_id = $this->dispatcher->range_id;
@@ -29,6 +26,7 @@ class AdminController extends StudipController
         
         if (Request::isXhr()) {
             $this->set_content_type('text/html;Charset=windows-1252');
+            $this->set_layout(null);
         }
         
         // We need this since the messaging section of Stud.IP still uses the old
@@ -57,12 +55,11 @@ class AdminController extends StudipController
         $this->stoodles  = Stoodle::findByRange($this->range_id);
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id);
 
-        $create = sprintf('<a href="%s">%s</a>',
+        $actions = new ActionsWidget();
+        $actions->addLink(_('Neue Umfrage erstellen'),
                           $this->url_for('admin/edit'),
-                          _('Neue Umfrage erstellen'));
-
-        $this->setInfoboxImage('infobox/administration');
-        $this->addToInfobox(_('Aktionen'), $create, 'icons/16/black/plus');
+                          'icons/16/black/plus.png');
+        Sidebar::get()->addWidget($actions);
     }
 
     /**

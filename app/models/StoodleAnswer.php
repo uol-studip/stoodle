@@ -1,4 +1,4 @@
-<?
+<?php
 class StoodleAnswer
 {
     public static function getByStoodleId($stoodle_id)

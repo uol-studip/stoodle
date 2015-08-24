@@ -23,20 +23,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         return array('stoodle' => $navigation);
     }
 
-    public function initialize()
-    {
-        require 'bootstrap.php';
-
-        $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
-        $this->addStylesheet('assets/stoodle.less');
-
-        PageLayout::addScript($this->getPluginURL() . '/assets/date-js/date-de-DE.js');
-        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
-//        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-sliderAccess.js');
-        PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
-        PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
-    }
-
     function getIconNavigation($course_id, $last_visit, $user_id)
     {
         return null;
@@ -59,6 +45,17 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
      */
     public function perform($unconsumed_path)
     {
+        require 'bootstrap.php';
+
+        $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
+        $this->addStylesheet('assets/stoodle.less');
+
+        PageLayout::addScript($this->getPluginURL() . '/assets/date-js/date-de-DE.js');
+        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
+//        PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-sliderAccess.js');
+        PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
+        PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
+
         $range_id = Request::option('cid', $GLOBALS['SessSemName'][1]);
 
         $app_path = $this->getPluginPath() . '/app';
