@@ -47,6 +47,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         require 'bootstrap.php';
 
+        StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes');
+
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
         $this->addStylesheet('assets/stoodle.less');
 

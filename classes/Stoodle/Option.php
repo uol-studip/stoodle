@@ -1,16 +1,19 @@
 <?php
-class StoodleOption extends SimpleORMap
-{
-    /**
-     *
-     * @param string $id primary key of table
-     */
-    function __construct($id = null)
-    {
-        $this->db_table = 'stoodle_options';
-        parent::__construct($id);
-    }
+namespace Stoodle;
 
+use DBManager;
+use PDO;
+use SimpleORMap;
+
+class Option extends SimpleORMap
+{
+    protected static function configure($config = array())
+    {
+        $config['db_table'] = 'stoodle_options';
+        
+        parent::configure($config);
+    }
+    
     public function getNewId()
     {
         return md5(uniqid('stoodle-option', true));

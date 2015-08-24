@@ -1,6 +1,19 @@
 <?php
+namespace Stoodle;
+
+use DBManager;
+use PDO;
+use SimpleORMap;
+
 class Stoodle extends SimpleORMap
 {
+    protected static function configure($config = array())
+    {
+        $config['db_table'] = 'stoodle';
+        
+        parent::configure($config);
+    }
+    
     public $options  = array();
     public $results  = array();
     public $comments = array();
@@ -10,13 +23,13 @@ class Stoodle extends SimpleORMap
         parent::__construct($id);
 
         if (!$this->isNew()) {
-            foreach (StoodleOption::findByStoodle($id) as $option) {
+            foreach (Option::findByStoodle($id) as $option) {
                 $this->options[$option->option_id] = $option->value;
                 if ($option->result) {
                     $this->results[$option->option_id] = $option->value;
                 }
             }
-            $this->comments = StoodleComment::findByStoodle($id);
+            $this->comments = Comment::findByStoodle($id);
         }
     }
 
@@ -35,7 +48,7 @@ class Stoodle extends SimpleORMap
 
         foreach ($opts as $id => $value) {
             if (preg_match('/^-\d+$/', $id)) {
-                $id = StoodleOption::getNewId();
+                $id = Option::getNewId();
             }
             $options[$id] = $value;
         }
@@ -43,13 +56,13 @@ class Stoodle extends SimpleORMap
         $delete = array_diff(array_keys($this->options), array_keys($options));
 
         foreach ($delete as $id) {
-            $option = new StoodleOption($id);
+            $option = new Option($id);
             $option->delete();
         }
 
         $position = 0;
         foreach ($options as $id => $value) {
-            $option = new StoodleOption($id);
+            $option = new Option($id);
             $option->stoodle_id = $this->stoodle_id;
             $option->value = $value;
             $option->position = $position++;
@@ -61,14 +74,14 @@ class Stoodle extends SimpleORMap
     {
         if (!$this->isNew()) {
             foreach (array_keys($this->options) as $id) {
-                $option = new StoodleOption($id);
+                $option = new Option($id);
                 $option->delete();
             }
             foreach ($this->comments as $comment) {
                 $comment->delete();
             }
 
-            StoodleAnswer::removeByStoodleId($this->stoodle_id);
+            Answer::removeByStoodleId($this->stoodle_id);
         }
         parent::delete();
     }
@@ -81,7 +94,7 @@ class Stoodle extends SimpleORMap
         }
         
         if ($this->answers === null) {
-            $this->answers = StoodleAnswer::getByStoodleId($this->stoodle_id);
+            $this->answers = Answer::getByStoodleId($this->stoodle_id);
         }
 
         return $this->answers;

@@ -1,5 +1,10 @@
 <?php
-class StoodleAnswer
+namespace Stoodle;
+
+use DBManager;
+use PDO;
+
+class Answer
 {
     public static function getByStoodleId($stoodle_id)
     {
