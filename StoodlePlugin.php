@@ -51,7 +51,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         Helpbar::get()->addPlainText(_('Informationen'), $manifest['description']);
 
         StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes');
-        StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes/Stoodle', 'Stoodle');
+        StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes/stoodle', 'Stoodle');
 
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
         $this->addStylesheet('assets/stoodle.less');
