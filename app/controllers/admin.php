@@ -1,4 +1,5 @@
 <?php
+use Stoodle\Option;
 use Stoodle\Stoodle;
 
 /**
@@ -60,7 +61,7 @@ class AdminController extends StudipController
         $actions = new ActionsWidget();
         $actions->addLink(_('Neue Umfrage erstellen'),
                           $this->url_for('admin/edit'),
-                          'icons/16/black/plus.png');
+                          'icons/16/blue/add.png');
         Sidebar::get()->addWidget($actions);
     }
 
@@ -112,7 +113,7 @@ class AdminController extends StudipController
                     }
                 }
                 if (empty($this->options)) {
-                    $this->options[StoodleOption::getNewId()] = '';
+                    $this->options[Option::getNewId()] = '';
                 }
             } else {
                 unset($this->options[$index]);
@@ -135,7 +136,7 @@ class AdminController extends StudipController
                         $value = $start . '-' . $end;
                     }
                 }
-                $this->options[StoodleOption::getNewId()] = $value;
+                $this->options[Option::getNewId()] = $value;
             }
             $this->focussed = count($this->options);
         } else if (Request::submitted('store')) {
@@ -199,7 +200,7 @@ class AdminController extends StudipController
 
     private function extractOptions($defaults = array(), $include_additional = false)
     {
-        $options = Request::getArray('options') ?: $defaults ?: array(StoodleOption::getNewId() => '');
+        $options = Request::getArray('options') ?: $defaults ?: array(Option::getNewId() => '');
 
         if ($include_additional && isset($_REQUEST['options'], $_REQUEST['additional'])) {
             $additional = Request::getArray('additional');
@@ -233,7 +234,7 @@ class AdminController extends StudipController
 
     public function stop_action($id)
     {
-        $stoodle = new Stoodle($id);
+        $stoodle = Stoodle::find($id);
         $stoodle->end_date = time() - 1;
         $stoodle->store();
 
@@ -243,7 +244,7 @@ class AdminController extends StudipController
 
     public function resume_action($id)
     {
-        $stoodle = new Stoodle($id);
+        $stoodle = Stoodle::find($id);
         $stoodle->end_date = null;
         $stoodle->store();
 
@@ -253,7 +254,7 @@ class AdminController extends StudipController
 
     public function evaluate_action($id)
     {
-        $stoodle = new Stoodle($id);
+        $stoodle = Stoodle::find($id);
 
         if ($stoodle->evaluated !== null) {
             PageLayout::postMessage(MessageBox::error(_('Die Umfrage wurde bereits ausgewertet.')));
@@ -269,7 +270,7 @@ class AdminController extends StudipController
 
             $results = Request::optionArray('result');
             foreach (array_keys($stoodle->options) as $option_id) {
-                $option = new StoodleOption($option_id);
+                $option = new Option($option_id);
                 $option->setResult(in_array($option_id, $results));
             }
 
@@ -350,7 +351,7 @@ class AdminController extends StudipController
      */
     public function delete_action($id)
     {
-        $stoodle = new Stoodle($id);
+        $stoodle = Stoodle::find($id);
         $stoodle->delete();
 
         PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
@@ -362,7 +363,7 @@ class AdminController extends StudipController
      **/
     public function mail_action($id)
     {
-        $stoodle = new Stoodle($id);
+        $stoodle = Stoodle::find($id);
         $answers = $stoodle->getAnsweredOptions();
         
         $mail_to = Request::optionArray('mail_to');

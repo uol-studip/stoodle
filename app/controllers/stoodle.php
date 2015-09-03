@@ -1,4 +1,6 @@
 <?php
+use Stoodle\Answer;
+use Stoodle\Comment;
 use Stoodle\Stoodle;
 
 /**
@@ -72,7 +74,7 @@ class StoodleController extends StudipController
 
     public function participate_action($id)
     {
-        $answer = new StoodleAnswer($id);
+        $answer = new Answer($id);
 
         $answer->clearSelection();
         foreach (Request::optionArray('selection') as $option_id => $state) {
@@ -92,7 +94,7 @@ class StoodleController extends StudipController
      */
     public function comment_action($id)
     {
-        $comment = new StoodleComment();
+        $comment = new Comment();
         $comment->stoodle_id = $id;
         $comment->user_id    = $GLOBALS['user']->id;
         $comment->comment    = trim(Request::get('comment'));
@@ -114,7 +116,7 @@ class StoodleController extends StudipController
      */
     public function delete_comment_action($id)
     {
-        $comment = new StoodleComment($id);
+        $comment = Comment::find($id);
         $stoodle_id = $comment->stoodle_id;
 
         if ($comment->user_id != $GLOBALS['user']->id
