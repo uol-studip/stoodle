@@ -226,7 +226,8 @@
     ?>
         <tr>
             <td>
-                <input type="checkbox" name="ids[]" value="<?= $id ?>">
+                <input type="checkbox" name="ids[]" value="<?= $id ?>"
+                       <? if ($options_count[$id]) echo 'disabled'; ?>>
             </td>
             <td>
                 #<?= $index + 1 ?>

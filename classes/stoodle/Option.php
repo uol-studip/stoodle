@@ -37,4 +37,17 @@ class Option extends SimpleORMap
 
         return array_combine($ids, array_map('self::find', $ids));
     }
+
+    public function delete()
+    {
+        $query = "DELETE FROM stoodle_selection
+                  WHERE stoodle_id = :stoodle_id
+                    AND option_id = :option_id";
+        $statement = DBManager::get()->prepare($query);
+        $statement->bindValue(':stoodle_id', $this->stoodle_id);
+        $statement->bindValue(':option_ud', $this->option_id);
+        $statement->execute();
+
+        return parent::delete();
+    }
 }

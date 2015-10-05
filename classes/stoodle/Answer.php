@@ -13,7 +13,9 @@ class Answer
         if (!isset($result[$stoodle_id])) {
             $result[$stoodle_id] = array();
 
-            $query = "SELECT user_id FROM stoodle_answers WHERE stoodle_id = ?";
+            $query = "SELECT user_id
+                      FROM stoodle_answers
+                      WHERE stoodle_id = ?";
             $statement = DBManager::get()->prepare($query);
             $statement->execute(array($stoodle_id));
             $user_ids = $statement->fetchAll(PDO::FETCH_COLUMN);
@@ -69,9 +71,16 @@ class Answer
     {
         $this->clearSelection();
 
-        $query = "SELECT option_id, maybe FROM stoodle_selection WHERE stoodle_id = ? AND user_id = ?";
+        $query = "SELECT ssel.option_id, maybe
+                  FROM stoodle_selection AS ssel
+                  JOIN stoodle_options AS sopt
+                    ON (ssel.stoodle_id = sopt.stoodle_id AND ssel.option_id = sopt.option_id)
+                  WHERE ssel.stoodle_id = :stoodle_id
+                    AND ssel.user_id = :user_id";
         $statement = DBManager::get()->prepare($query);
-        $statement->execute(array($this->stoodle_id, $this->user_id));
+        $statement->bindValue(':stoodle_id', $this->stoodle_id);
+        $statement->bindValue(':user_id', $this->user_id);
+        $statement->execute();
 
         foreach ($statement as $row) {
             $this->addToSelection($row['option_id'], $row['maybe']);

@@ -119,7 +119,7 @@ class Stoodle extends SimpleORMap
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);
-        foreach (self::getAnswers() as $user_id => $options) {
+        foreach ($this->getAnswers() as $user_id => $options) {
             if ($maybe === null) {
                 $options = array_merge($options['maybes'], $options['selection']);
             } else if ($maybe) {

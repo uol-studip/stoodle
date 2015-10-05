@@ -176,9 +176,6 @@ class AdminController extends StudipController
                     $stoodle->user_id  = $GLOBALS['user']->id;
                 }
 
-                // echo '<pre>';
-                // var_dump($this->options);
-                // die;
                 $stoodle->store();
                 $stoodle->setOptions($this->options);
 
