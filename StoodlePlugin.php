@@ -10,11 +10,11 @@
 
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
-    function getTabNavigation($course_id)
+    public function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
-        $navigation->setImage('icons/16/white/assessment.png');
-        $navigation->setActiveImage('icons/16/black/assessment.png');
+        $navigation->setImage('icons/white/assessment.svg');
+        $navigation->setActiveImage('icons/black/assessment.svg');
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
@@ -23,17 +23,17 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         return array('stoodle' => $navigation);
     }
 
-    function getIconNavigation($course_id, $last_visit, $user_id)
+    public function getIconNavigation($course_id, $last_visit, $user_id)
     {
         return null;
     }
     
-    function getNotificationObjects($course_id, $since, $user_id)
+    public function getNotificationObjects($course_id, $since, $user_id)
     {
         return array();
     }
 
-    function getInfoTemplate($course_id)
+    public function getInfoTemplate($course_id)
     {
         return null;
     }
