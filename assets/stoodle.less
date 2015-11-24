@@ -10,7 +10,10 @@
             tbody tr.self td {
                 border-top: 1px solid #888;
                 &:nth-child(2) {
-                    background: url("@{image-path}/icons/16/red/arr_1right.png") right 5px no-repeat;
+                    .retina-background-icon('red/arr_1right.svg');
+                    background-position: right 5px;
+                    background-repeat: no-repeat;
+//                    background: transparent url("@{image-path}/icons/16/red/arr_1right.png") right 5px no-repeat;
                     font-weight: bold;
                     padding-right: 20px;
                 }
@@ -30,7 +33,7 @@
         }
 
         .actions button {
-            background: inherit;
+            background: none;
             border: 0;
             cursor: pointer;
             margin: 0;

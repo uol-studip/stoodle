@@ -1,5 +1,9 @@
+/*jslint browser: true, unparam: true */
+/*global jQuery */
 (function ($) {
-    function getTime (time) {
+    'use strict';
+
+    function getTime(time) {
         var fragments = time.split(':'),
             date      = new Date();
         date.setHours(parseInt(fragments[0], 10));
@@ -7,15 +11,15 @@
         return date;
     }
 
-    $.timepicker.regional['de'] = {
+    $.timepicker.regional.de = {
         closeText: 'Schliessen',
         currentText: 'Jetzt',
         hourText: 'Stunde',
         minuteText: 'Minute',
         timeText: 'Uhrzeit'
-    }
-    $.timepicker.setDefaults($.timepicker.regional['de']);
-    $.datepicker.setDefaults($.datepicker.regional['de']);
+    };
+    $.timepicker.setDefaults($.timepicker.regional.de);
+    $.datepicker.setDefaults($.datepicker.regional.de);
 
     $.fn.init_input = function (type) {
         this.each(function () {
@@ -26,10 +30,9 @@
                 return;
             }
 
-            var that = $(this),
-                name = $(this).attr('name'),
+            var name = $(this).attr('name'),
                 hidden_input = $('<input type="hidden"/>').attr('name', name),
-                trigger, time,
+                time,
                 options = {
                     changeMonth: true,
                     changeYear: true,
@@ -42,7 +45,7 @@
                         if ($(this).attr('type') === 'time') {
                             date = getTime(picker);
                         } else {
-                            date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate')
+                            date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate');
                         }
                         if ($(this).is('[name^=option]') && type === 'range') {
                             additional = $(this).siblings('span').find('input.hasDatepicker');
@@ -50,7 +53,7 @@
                                 time = date.getTime() + 2 * 60 * 60 * 1000;
                                 additional.datepicker('setDate', new Date(time));
                                 additional.datepicker('option', 'minDate', date);
-                                additional.next().val(time / 1000)
+                                additional.next().val(time / 1000);
                             }
                         }
 
@@ -85,7 +88,7 @@
                 var value = $(this).val(),
                     date = Date.parse(value);
                 if (date !== null) {
-                    hidden_input.val(~~(date.getTime() / 1000));
+                    hidden_input.val((date.getTime() / 1000).toFixed(0));
                 }
             });
 
@@ -100,19 +103,22 @@
             }
 
             hidden_input.val(time || null);
-            $(this).after(hidden_input)
-
+            $(this).after(hidden_input);
         });
 
         return this;
-    }
+    };
 }(jQuery));
 
 jQuery(function ($) {
+    'use strict';
+
     function pad(what, length, padding) {
-        return ('' + what).length < length
-            ? (Array(length + 1 - what.length)).join(padding || '0') + what
-            : what;
+        var str = (typeof what === 'number') ? what.toFixed(0) : what;
+        while (str.length < length) {
+            str = (padding || 0) + str;
+        }
+        return str;
     }
 
     $('input#start_date, input#end_date').init_input('datetime');
@@ -136,14 +142,14 @@ jQuery(function ($) {
             row.find('input:not(:checkbox)').val('');
             return false;
         }
-        
+
         $that.find('img').replaceWith('<span class="ajaxing"/>');
 
         formdata.push({name: 'remove', value: value});
         $.post(action, formdata, function (response, status, xhr) {
             var options = $('.options', response);
             $('.options', form).replaceWith(options);
-            
+
             if (!value) {
                 $(':checkbox[name="ids[]"][value="all"]').attr('checked', false);
             }
@@ -160,7 +166,7 @@ jQuery(function ($) {
             action   = form.attr('action'),
             formdata = form.serializeArray();
 
-        $('<span/>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo($that)
+        $('<span/>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo($that);
 
         formdata.push({name: 'add', value: ''});
         $.post(action, formdata, function (response, status, xhr) {
@@ -181,8 +187,8 @@ jQuery(function ($) {
             var original     = $('input:not([type=hidden]):not(:checkbox)', this).first(),
                 orig_type    = original.attr('type'),
                 value        = original.val(),
-                clone, temp,
-                defaultValue = $('input[type=hidden]', this).val();
+                clone,
+                temp;
 
             try {
                 original[(orig_type === 'range' ? 'datetime' : orig_type) + 'picker']('destroy');

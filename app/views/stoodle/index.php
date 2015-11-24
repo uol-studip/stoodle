@@ -1,4 +1,4 @@
-<table class="default zebra-hover">
+<table class="default">
     <thead>
         <tr>
             <th class="topic" colspan="6"><?= _('Aktuelle Umfragen') ?></th>
@@ -53,7 +53,7 @@
 
 <? if (!empty($evaluated)): ?>
 <br>
-<table class="default zebra-hover">
+<table class="default">
     <thead>
         <tr>
             <th class="topic" colspan="4"><?= _('Ausgewertete Umfragen') ?></th>

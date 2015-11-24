@@ -14,7 +14,7 @@
 <? endif; ?>
 
 <h3><?= _('Übersicht der Umfrage') ?></h3>
-<table class="default zebra-hover">
+<table class="default">
     <colgroup>
         <col>
         <col width="30px">
@@ -52,7 +52,7 @@
 <h3 class="topic stoodle-participants">
     <?= _('Teilnehmerliste') ?>
 </h3>
-<table class="default zebra-hover stoodle-list">
+<table class="default stoodle-list">
     <thead>
         <tr>
             <td colspan="2">&nbsp;</td>

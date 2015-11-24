@@ -25,7 +25,7 @@
     </form>
 <? endif; ?>
 <? if (!empty($stoodle->comments)): ?>
-    <table class="default zebra">
+    <table class="default">
         <colgroup>
             <col width="<?= reset(Avatar::getDimension(Avatar::SMALL)) ?>">
             <col>

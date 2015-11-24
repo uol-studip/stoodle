@@ -1,5 +1,7 @@
 <h2 class="topic"><?= _('Auswertung der Umfrage') ?>: <?= $stoodle->title ?></h2>
+<? if ($stoodle->description): ?>
 <blockquote><?= formatReady($stoodle->description) ?></blockquote>
+<? endif; ?>
 
 <dl class="evaluation">
     <dt><?= _('Teilnehmer') ?></dt>
@@ -13,7 +15,7 @@
 
 <form action="<?= $controller->url_for('admin/evaluate/' . $stoodle->stoodle_id) ?>" method="post">
 
-    <table class="default zebra-hover">
+    <table class="default">
         <colgroup>
             <col width="2em">
             <col>
@@ -72,7 +74,7 @@
     <h3 class="topic stoodle-participants">
         <?= _('Teilnehmerliste') ?>
     </h3>
-    <table class="collapsed default zebra-hover stoodle-list">
+    <table class="collapsed default stoodle-list">
         <thead>
             <tr>
                 <td colspan="2">&nbsp;</td>

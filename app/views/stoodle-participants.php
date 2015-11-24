@@ -59,7 +59,8 @@
         </th>
     </tr>
     <tr>
-        <td colspan="2">
+        <td>&nbsp;</td>
+        <td>
             <label class="plain">
                 <input type="checkbox" name="mail_to[]" value="all">
                 <?= _('Alle Teilnehmer') ?>

@@ -8,7 +8,7 @@
 
 <form action="<?= $controller->url_for('stoodle/participate', $stoodle->stoodle_id) ?>" method="post">
     <?= CSRFProtection::tokenTag() ?>
-    <table class="default zebra-hover stoodle-list">
+    <table class="default stoodle-list">
         <thead>
             <tr>
                 <td colspan="2">&nbsp;</td>
