@@ -317,7 +317,7 @@
         </tr>
     </thead>
     <tbody>
-        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous)) ?>
+        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous, 'admin' => true)) ?>
     </tbody>
 <? if (!$stoodle->is_anonymous): ?>
     <tfoot>

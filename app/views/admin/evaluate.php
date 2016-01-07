@@ -84,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            <?= $this->render_partial('stoodle-participants') ?>
+            <?= $this->render_partial('stoodle-participants.php', array('admin' => true)) ?>
         </tbody>
     </table>
 

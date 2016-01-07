@@ -17,7 +17,7 @@
         <? if ($stoodle->is_anonymous): ?>
             <?= Avatar::getAvatar('nobody')->getImageTag(Avatar::SMALL) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('about.php?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
                 <?= Avatar::getAvatar($user_id)->getImageTag(Avatar::SMALL) ?>
             </a>
         <? endif; ?>
@@ -26,27 +26,27 @@
         <? if ($stoodle->is_anonymous): ?>
             <?= sprintf(_('Teilnehmer #%u'), $count++) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('about.php?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
                 <?= htmlReady($user->getFullName()) ?>
             </a>
         <? endif; ?>
         </td>
-<? if ($stoodle->is_public): ?>
+<? if ($stoodle->is_public || $admin): ?>
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
         <? if ($stoodle->allow_maybe && in_array($id, $options['maybes'])): ?>
-            <?= Assets::img('icons/16/blue/question') ?>
+            <?= Assets::img('icons/16/blue/question.svg') ?>
         <? elseif (in_array($id, $options['selection'])): ?>
-            <?= Assets::img('icons/16/green/accept') ?>
+            <?= Assets::img('icons/16/green/accept.svg') ?>
         <? else: ?>
-            <?= Assets::img('icons/16/red/decline') ?>
+            <?= Assets::img('icons/16/red/decline.svg') ?>
         <? endif; ?>
         </td>
     <? endforeach; ?>
 <? else: ?>
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
-            <?= Assets::img('icons/16/gray/question') ?>
+            <?= Assets::img('icons/16/grey/question.svg') ?>
         </td>
     <? endforeach; ?>
 <? endif; ?>

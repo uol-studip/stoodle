@@ -36,7 +36,7 @@
         ?>
             <tr>
                 <td>
-                    <a href="<?= URLHelper::getLink('about.php?username=' . $user->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
                         <?= Avatar::getAvatar($comment->user_id)->getImageTag(Avatar::SMALL) ?>
                     </a>
                 </td>
@@ -46,7 +46,7 @@
                     <ul class="details">
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
-                            <a href="<?= URLHelper::getURL('about.php?username=' . $user->username, array('cid' => null)) ?>">
+                            <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
                                 <?= $user->getFullName() ?>
                             </a>
                         </li>
