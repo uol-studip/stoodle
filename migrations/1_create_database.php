@@ -1,12 +1,12 @@
-<?
-class CreateDatabase extends DBMigration
+<?php
+class CreateDatabase extends Migration
 {
-    function description()
+    public function description()
     {
         return 'Creates neccessary db tables for stoodle';
     }
 
-    function up()
+    public function up()
     {
         DBManager::get()->exec("CREATE TABLE IF NOT EXISTS `stoodle` (
             `stoodle_id` CHAR(32) NOT NULL,
@@ -65,7 +65,7 @@ class CreateDatabase extends DBMigration
         )");
     }
 
-    function down()
+    public function down()
     {
         DBManager::get()->query("DROP TABLE IF EXISTS stoodle, stoodle_options, stoodle_answers, stoodle_comments, stoodle_selection");
     }
