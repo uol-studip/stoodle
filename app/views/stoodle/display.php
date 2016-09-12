@@ -8,7 +8,7 @@
 
 <form action="<?= $controller->url_for('stoodle/participate', $stoodle->stoodle_id) ?>" method="post">
     <?= CSRFProtection::tokenTag() ?>
-    <table class="default zebra-hover stoodle-list">
+    <table class="default stoodle-list">
         <thead>
             <tr>
                 <td colspan="2">&nbsp;</td>
@@ -24,7 +24,7 @@
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
                 <td>
-                    <a href="<?= URLHelper::getLink('about.php?username=' . $GLOBALS['user']->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, array('cid' => null)) ?>">
                         <?= $GLOBALS['user']->getFullName() ?>
                     </a>
                 </td>

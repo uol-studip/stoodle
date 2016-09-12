@@ -41,7 +41,7 @@
 
 <form action="<?= $controller->url_for('admin/edit', $id) ?>" method="post">
 <h3 class="topic"><?= $id ? _('Umfrage bearbeiten') : _('Neue Umfrage erstellen') ?></h3>
-<table class="default zebra stoodle">
+<table class="default stoodle">
     <colgroup>
         <col width="200">
         <col>
@@ -93,7 +93,7 @@
     </tbody>
 </table>
 
-<table class="default zebra stoodle">
+<table class="default stoodle">
     <colgroup>
         <col width="200">
         <col>
@@ -143,7 +143,7 @@
     </tbody>
 </table>
 
-<table class="default zebra stoodle">
+<table class="default stoodle">
     <colgroup>
         <col width="200">
         <col>
@@ -203,7 +203,7 @@
     </tbody>
 </table>
 
-<table class="default zebra stoodle">
+<table class="default stoodle">
     <colgroup>
         <col width="20">
         <col width="50">
@@ -307,7 +307,7 @@
     <?= _('Teilnehmerliste') ?>
 </h3>
 <form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post">
-<table class="default zebra-hover stoodle-list">
+<table class="default stoodle-list">
     <thead>
         <tr>
             <td colspan="2">&nbsp;</td>
@@ -317,7 +317,7 @@
         </tr>
     </thead>
     <tbody>
-        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous)) ?>
+        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous, 'admin' => true)) ?>
     </tbody>
 <? if (!$stoodle->is_anonymous): ?>
     <tfoot>
