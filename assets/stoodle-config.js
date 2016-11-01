@@ -185,7 +185,7 @@ jQuery(function ($) {
 
         elements.each(function (index) {
             var original     = $('input:not([type=hidden]):not(:checkbox)', this).first(),
-                orig_type    = original.attr('type'),
+                orig_type    = original.data('type'),
                 value        = original.val(),
                 clone,
                 temp;
@@ -195,7 +195,8 @@ jQuery(function ($) {
             } catch (e) { }
 
             clone = original.clone(false, false);
-            clone.attr('type', type);
+            clone.attr('type', type === 'range' ? 'date' : type);
+            clone.data('type', type);
 
             if (value) {
                 if ((orig_type === 'datetime' || orig_type === 'range') && type === 'date') {

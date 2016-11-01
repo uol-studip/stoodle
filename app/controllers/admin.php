@@ -129,7 +129,7 @@ class AdminController extends StudipController
                         $value = strtotime('+1 day', $last);
                     } elseif ($this->type === 'time' || $this->type === 'datetime') {
                         $value = strtotime('+1 hour', $last);
-                    } elseif ($this->type === 'range') {
+                    } elseif ($this->type === 'range' && $last !== '-') {
                         list(, $end) = explode('-', $last);
                         $start = strtotime('+1 hour', $end);
                         $end   = strtotime('+1 hour', $start);
