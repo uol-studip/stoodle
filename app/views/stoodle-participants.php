@@ -35,18 +35,18 @@
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
         <? if ($stoodle->allow_maybe && in_array($id, $options['maybes'])): ?>
-            <?= Assets::img('icons/16/blue/question.svg') ?>
+            <?= Icon::create('question', 'clickable') ?>
         <? elseif (in_array($id, $options['selection'])): ?>
-            <?= Assets::img('icons/16/green/accept.svg') ?>
+            <?= Icon::create('accept', 'accept') ?>
         <? else: ?>
-            <?= Assets::img('icons/16/red/decline.svg') ?>
+            <?= Icon::create('decline', 'attention') ?>
         <? endif; ?>
         </td>
     <? endforeach; ?>
 <? else: ?>
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
-            <?= Assets::img('icons/16/grey/question.svg') ?>
+            <?= Icon::create('question', 'inactive') ?>
         </td>
     <? endforeach; ?>
 <? endif; ?>

@@ -13,8 +13,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
-        $navigation->setImage('icons/white/assessment.svg');
-        $navigation->setActiveImage('icons/black/assessment.svg');
+        $navigation->setImage(Icon::create('assessment', 'info_alt'));
+        $navigation->setActiveImage(Icon::create('assessment', 'info'));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));

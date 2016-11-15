@@ -10,10 +10,9 @@
             tbody tr.self td {
                 border-top: 1px solid #888;
                 &:nth-child(2) {
-                    .retina-background-icon('red/arr_1right.svg');
+                    .background-icon('arr_1right', 'attention');
                     background-position: right 5px;
                     background-repeat: no-repeat;
-//                    background: transparent url("@{image-path}/icons/16/red/arr_1right.png") right 5px no-repeat;
                     font-weight: bold;
                     padding-right: 20px;
                 }
@@ -84,14 +83,16 @@
             padding: 0;
         }
         legend {
-            background: url("@{image-path}/icons/16/blue/arr_1down.png") left center no-repeat;
+            .background-icon('arr_1down', 'clickable');
+            background-position: left center;
+            background-repeat: no-repeat;
             cursor: pointer;
             padding-left: 20px;
         }
         fieldset.closed {
             > * { display: none; }
             legend {
-                background-image: url("@{image-path}/icons/16/blue/arr_1right.png");
+                .background-icon('arr_1right', 'clickable');
                 display: block;
             }
         }
@@ -179,12 +180,14 @@
     }
     .js & .stoodle-participants {
         a {
-            background: url("@{image-path}/icons/16/blue/arr_1down.png") left center no-repeat;
+            .background-icon('arr_1down', 'clickable');
+            background-position: left center;
+            background-repeat: no-repeat;
             color: inherit; 
             padding-left: 20px;
         }
         &.collapsed a {
-            background-image: url("@{image-path}/icons/16/blue/arr_1right.png");
+            .background-icon('arr_1right', 'clickable');
         }
     }
 }

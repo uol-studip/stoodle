@@ -59,9 +59,11 @@ class AdminController extends StudipController
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id);
 
         $actions = new ActionsWidget();
-        $actions->addLink(_('Neue Umfrage erstellen'),
-                          $this->url_for('admin/edit'),
-                          'icons/16/blue/add.png');
+        $actions->addLink(
+            _('Neue Umfrage erstellen'),
+            $this->url_for('admin/edit'),
+            Icon::create('add', 'clickable')
+        );
         Sidebar::get()->addWidget($actions);
     }
 

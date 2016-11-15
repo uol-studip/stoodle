@@ -35,15 +35,15 @@
                 <? if ($stoodle->allow_maybe): ?>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="1" <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>>
-                        <?= Assets::img('icons/16/green/accept') ?>
+                        <?= Icon::create('accept', 'accept') ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="maybe" <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>>
-                        <?= Assets::img('icons/16/blue/question') ?>
+                        <?= Icon::create('question', 'clickable') ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="0" <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
-                        <?= Assets::img('icons/16/red/decline') ?>
+                        <?= Icon::create('decline', 'attention') ?>
                     </label>
                 <? else: ?>
                     <input type="hidden" name="selection[<?= $id ?>]" value="0">

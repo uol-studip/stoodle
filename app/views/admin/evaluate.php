@@ -31,15 +31,15 @@
                 <th>&nbsp;</th>
                 <th><?= _('Antwort') ?></th>
                 <th style="text-align: center;">
-                    <?= Assets::img('icons/16/black/accept', tooltip2(_('Kopfzahl: Zugesagt'))) ?>
+                    <?= Icon::create('accept', 'info', tooltip2(_('Kopfzahl: Zugesagt'))) ?>
                 </th>
             <? if ($stoodle->allow_maybe): ?>
                 <th style="text-align: center;">
-                    <?= Assets::img('icons/16/black/question', tooltip2(_('Kopfzahl: Vielleicht'))) ?>
+                    <?= Icon::create('question', 'info', tooltip2(_('Kopfzahl: Vielleicht'))) ?>
                 </th>
             <? endif; ?>
                 <th style="text-align: center;">
-                    <?= Assets::img('icons/16/black/decline', tooltip2(_('Kopfzahl: Abgesagt'))) ?>
+                    <?= Icon::create('decline', 'info', tooltip2(_('Kopfzahl: Abgesagt'))) ?>
                 </th>
                 <th>&nbsp;</th>
             </tr>
