@@ -26,12 +26,7 @@ class AdminController extends StudipController
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
             throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
         }
-        
-        if (Request::isXhr()) {
-            $this->set_content_type('text/html;Charset=windows-1252');
-            $this->set_layout(null);
-        }
-        
+
         // We need this since the messaging section of Stud.IP still uses the old
         // mechanism to display messages
         if (!empty($_SESSION['sms_msg'])) {
@@ -59,11 +54,9 @@ class AdminController extends StudipController
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id);
 
         $actions = new ActionsWidget();
-        $actions->addLink(
-            _('Neue Umfrage erstellen'),
-            $this->url_for('admin/edit'),
-            Icon::create('add', 'clickable')
-        );
+        $actions->addLink(_('Neue Umfrage erstellen'),
+                          $this->url_for('admin/edit'),
+                          Icon::create('add', 'clickable'));
         Sidebar::get()->addWidget($actions);
     }
 

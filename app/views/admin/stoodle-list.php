@@ -32,7 +32,7 @@
         </tr>
     <? endif; ?>
     <? foreach ($stoodles as $stoodle): ?>
-        <tr class="<?= TextHelper::cycle('cycle_even', 'cycle_odd') ?>">
+        <tr>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td><?= $stoodle->start_date ? date('d.m.Y H:i', $stoodle->start_date) : _('offen') ?></td>
             <td><?= $stoodle->end_date ? date('d.m.Y H:i', $stoodle->end_date) : _('offen') ?></td>
@@ -41,7 +41,7 @@
             <td><?= Icon::create('checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked'), 'info') ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked'), 'info') ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked'), 'info') ?></td>
-            <td style="text-align: right;">
+            <td class="actions">
         <? if ($stoodle->evaluated): ?>
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
                     <?= Icon::create('stat', 'clickable', tooltip2(_('Ergebnisse ansehen'))) ?>

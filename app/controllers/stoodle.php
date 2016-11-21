@@ -187,7 +187,8 @@ class StoodleController extends StudipController
         if ($action === 'index') {
             $widget = new ListWidget();
             $widget->setTitle(_('Informationen'));
-            $widget->addElement($this->sidebarElement(_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'), Icon::create('info-circle', 'info')));
+            $widget->addElement($this->sidebarElement(_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'),
+                                                   Icon::create('info-circle', 'info')));
             $sidebar->addWidget($widget);
         } elseif ($action === 'display') {
             // General info
@@ -214,11 +215,11 @@ class StoodleController extends StudipController
             $legend = new ListWidget();
             $legend->setTitle(_('Legende'));
 
-            $legend->addElement($this->sidebarElement(_('Zusage'), Icon::create('accept', 'status-green')));
+            $legend->addElement($this->sidebarElement(_('Zusage'), Icon::create('accept', 'accept')));
             if ($this->stoodle->allow_maybe) {
                 $legend->addElement($this->sidebarElement(_('Ungewiss'), Icon::create('question', 'clickable')));
             }
-            $legend->addElement($this->sidebarElement(_('Absage'), Icon::create('decline', 'attention')));
+            $legend->addElement($this->sidebarElement(_('Absage'), Icon::create('red', 'attention')));
         
             $sidebar->addWidget($legend);
         } elseif ($action === 'result') {
@@ -269,7 +270,7 @@ class StoodleController extends StudipController
     /**
      *
      */
-    protected function sidebarElement($content, Icon $icon = null)
+    protected function sidebarElement($content, $icon = null)
     {
         $element = new WidgetElement($content);
         $element->icon = $icon;

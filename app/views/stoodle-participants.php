@@ -39,7 +39,7 @@
         <? elseif (in_array($id, $options['selection'])): ?>
             <?= Icon::create('accept', 'accept') ?>
         <? else: ?>
-            <?= Icon::create('decline', 'attention') ?>
+            <?= Icon::create('red', 'attention') ?>
         <? endif; ?>
         </td>
     <? endforeach; ?>

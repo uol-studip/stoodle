@@ -251,10 +251,10 @@
                 <small>(<?= sprintf(_('bereits %u Mal gewählt'), $options_count[$id]) ?>)</small>
             <? endif; ?>
             </td>
-            <td style="text-align: right;" class="actions">
+            <td class="actions">
             <? if ($index > 0): ?>
                 <button name="move[up]" value="<?= $index ?>" title="<?= _('Antwort nach oben verschieben') ?>">
-                    <?= Icon::create('arr_2up', 'sort', tooltip2(_('Antwort nach oben verschieben'))) ?>
+                    <?= Icon::create('arr_2up', 'sort', array('alt' => _('Antwort nach oben verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
