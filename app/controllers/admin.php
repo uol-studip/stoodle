@@ -7,6 +7,12 @@ use Stoodle\Stoodle;
  */
 class AdminController extends StudipController
 {
+    public function __construct($dispatcher)
+    {
+        parent::__construct($dispatcher);
+        $this->plugin = $dispatcher->plugin;
+    }
+
     /**
      *
      */
@@ -62,7 +68,7 @@ class AdminController extends StudipController
         $actions->addLink(
             _('Neue Umfrage erstellen'),
             $this->url_for('admin/edit'),
-            Icon::create('add', 'clickable')
+            $this->plugin->getSidebarIcon('add', 'clickable')
         );
         Sidebar::get()->addWidget($actions);
     }

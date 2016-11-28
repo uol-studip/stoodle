@@ -254,29 +254,29 @@
             <td style="text-align: right;" class="actions">
             <? if ($index > 0): ?>
                 <button name="move[up]" value="<?= $index ?>" title="<?= _('Antwort nach oben verschieben') ?>">
-                    <?= Icon::create('arr_2up', 'sort', tooltip2(_('Antwort nach oben verschieben'))) ?>
+                    <?= $plugin->getIcon('arr_2up', 'sort', tooltip2(_('Antwort nach oben verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= Icon::create('arr_2up', 'inactive') ?>
+                    <?= $plugin->getIcon('arr_2up', 'inactive') ?>
                 </button>
             <? endif; ?>
             <? if ($index < count($options) - 1): ?>
                 <button name="move[down]" value="<?= $index ?>" title="<?= _('Antwort nach unten verschieben') ?>">
-                    <?= Icon::create('arr_2down', 'sort', tooltip2(_('Antwort nach unten verschieben'))) ?>
+                    <?= $plugin->getIcon('arr_2down', 'sort', tooltip2(_('Antwort nach unten verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= Icon::create('arr_2down', 'inactive') ?>
+                    <?= $plugin->getIcon('arr_2down', 'inactive') ?>
                 </button>
             <? endif; ?>
             <? if ($options_count[$id]): ?>
                 <button disabled>
-                    <?= Icon::create('trash', 'inactive') ?>
+                    <?= $plugin->getIcon('trash', 'inactive') ?>
                 </button>
             <? else: ?>
                 <button name="remove" value="<?= $id ?>" title="<?= _('Antwort löschen') ?>">
-                    <?= Icon::create('trash', 'clickable', tooltip2(_('Antwort löschen'))) ?>
+                    <?= $plugin->getIcon('trash', 'clickable', tooltip2(_('Antwort löschen'))) ?>
                 </button>
             <? endif; ?>
             </td>

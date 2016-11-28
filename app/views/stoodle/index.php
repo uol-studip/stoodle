@@ -34,14 +34,14 @@
             <td><?= count($stoodle->getAnswers()) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
-                <?= Icon::create('checkbox-checked', 'info') ?>
+                <?= $plugin->getIcon('checkbox-checked', 'info') ?>
             <? else: ?>
-                <?= Icon::create('checkbox-unchecked', 'info') ?>
+                <?= $plugin->getIcon('checkbox-unchecked', 'info') ?>
             <? endif; ?>
             </td>
             <td style="text-align: right;">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
-                    <?= Icon::create($stoodle->userParticipated() ? 'test' : 'vote', 'clickable',
+                    <?= $plugin->getIcon($stoodle->userParticipated() ? 'test' : 'vote', 'clickable',
                                     array_merge(tooltip2(_('An der Umfrage teilnehmen')), array('class' => 'text-top'))) ?>
                     <?= _('Teilnehmen') ?>
                 </a>
@@ -72,14 +72,14 @@
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
-                <?= Icon::create('checkbox-checked', 'clickable') ?>
+                <?= $plugin->getIcon('checkbox-checked', 'clickable') ?>
             <? else: ?>
-                <?= Icon::create('checkbox-unchecked', 'clickable') ?>
+                <?= $plugin->getIcon('checkbox-unchecked', 'clickable') ?>
             <? endif; ?>
             </td>
             <td style="text-align: right;">
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
-                    <?= Icon::create('stat', 'clickable', tooltip2(_('Ergebnisse ansehen'))) ?>
+                    <?= $plugin->getIcon('stat', 'clickable', tooltip2(_('Ergebnisse ansehen'))) ?>
                 </a>
             </td>
         </tr>
