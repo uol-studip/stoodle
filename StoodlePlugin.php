@@ -108,10 +108,10 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
      * Version-safe icon creation.
      * Works in Stud.IP 3.5 and below.
      */
-    public function getIcon($icon, $role)
+    public function getIcon($icon, $role, $attributes = array())
     {
         if (!$this->isLegacy()) {
-            return Icon::create($icon, $role);
+            return Icon::create($icon, $role, $attributes);
         }
         return Assets::img(sprintf(
             'icons/16/%s/%s.svg',
