@@ -110,7 +110,7 @@
                 <label for="start_date"><?= _('Start') ?></label>
             </td>
             <td colspan="2">
-                <input type="datetime" name="start_date" id="start_date"
+                <input type="text" name="start_date" id="start_date" class="datetime"
                        <?= $formatValue('datetime', $start_date) ?>>
                 <label>
                     <input type="checkbox" name="start_date" value="foo"
@@ -127,7 +127,7 @@
                 <label for="end_date"><?= _('Ende') ?></label>
             </td>
             <td colspan="2">
-                <input type="datetime" name="end_date" id="end_date"
+                <input type="text" name="end_date" id="end_date" class="datetime"
                        <?= $formatValue('datetime', $end_date) ?>>
                 <label>
                     <input type="checkbox" name="end_date" value=""
