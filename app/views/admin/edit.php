@@ -233,7 +233,7 @@
                 #<?= $index + 1 ?>
             </td>
             <td>
-                <input type="<?= $type === 'range' ? 'date' : $type ?>"
+                <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                        name="options[<?= $id ?>]"
                        data-type="<?= $type ?>"
                     <? if ($options_count[$id]) echo 'disabled'; ?>
@@ -241,7 +241,7 @@
                     <? if (isset($focussed) && $focussed == $index) echo 'autofocus'; ?>>
                 <span class="type-range">
                     <?= _('bis') ?>
-                    <input type="<?= $type === 'range' ? 'date' : $type ?>"
+                    <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                         data-type="<?= $type ?>"
                         name="additional[<?= $id ?>]"
                         <? if ($options_count[$id]) echo 'disabled'; ?>

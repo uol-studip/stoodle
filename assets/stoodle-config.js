@@ -195,8 +195,8 @@ jQuery(function ($) {
             } catch (e) { }
 
             clone = original.clone(false, false);
-            clone.attr('type', type === 'range' ? 'date' : type);
-            clone.data('type', type);
+            clone.attr('type', ['date', 'datetime', 'range', 'time'].indexOf(type) === -1 ? type : 'text');
+            clone.data('type', ['date', 'datetime', 'range', 'time'].indexOf(type) === -1 ? type : 'text');
 
             if (value) {
                 if ((orig_type === 'datetime' || orig_type === 'range') && type === 'date') {
