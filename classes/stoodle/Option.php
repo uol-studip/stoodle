@@ -10,10 +10,10 @@ class Option extends SimpleORMap
     protected static function configure($config = array())
     {
         $config['db_table'] = 'stoodle_options';
-        
+
         parent::configure($config);
     }
-    
+
     public function getNewId()
     {
         return md5(uniqid('stoodle-option', true));
@@ -45,7 +45,7 @@ class Option extends SimpleORMap
                     AND option_id = :option_id";
         $statement = DBManager::get()->prepare($query);
         $statement->bindValue(':stoodle_id', $this->stoodle_id);
-        $statement->bindValue(':option_ud', $this->option_id);
+        $statement->bindValue(':option_id', $this->option_id);
         $statement->execute();
 
         return parent::delete();
