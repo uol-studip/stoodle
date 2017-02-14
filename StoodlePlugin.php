@@ -10,11 +10,21 @@
 
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
+    protected static $icon_mapping = [
+        'clickable'    => 'blue',
+        'accept'       => 'green',
+        'status-green' => 'green',
+        'info_alt'     => 'white',
+        'info'         => 'black',
+        'inactive'     => 'grey',
+    ];
+
+    
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
-        $navigation->setImage(Icon::create('assessment', 'info_alt'));
-        $navigation->setActiveImage(Icon::create('assessment', 'info'));
+        $navigation->setImage($this->getSidebarIcon('assessment', 'info_alt'));
+        $navigation->setActiveImage($this->getSidebarIcon('assessment', 'info'));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
@@ -54,7 +64,9 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes/stoodle', 'Stoodle');
 
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
-        $this->addStylesheet('assets/stoodle.less');
+        $this->addStylesheet(
+            $this->isLegacy() ? 'assets/stoodle-3.3.less' : 'assets/stoodle.less'
+        );
 
         PageLayout::addScript($this->getPluginURL() . '/assets/date-js/date-de-DE.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
@@ -74,5 +86,42 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->plugin   = $this;
         $dispatcher->range_id = $range_id;
         $dispatcher->dispatch($unconsumed_path);
+    }
+
+    /**
+     * Version-safe icon creation.
+     * Works in Stud.IP 3.5 and below.
+     */
+    public function getSidebarIcon($icon, $role)
+    {
+        if (!$this->isLegacy()) {
+            return Icon::create($icon, $role);
+        }
+        return Assets::image_path(sprintf(
+            'icons/16/%s/%s.svg',
+            self::$icon_mapping[$role],
+            $icon
+        ));
+    }
+
+    /**
+     * Version-safe icon creation.
+     * Works in Stud.IP 3.5 and below.
+     */
+    public function getIcon($icon, $role, $attributes = array())
+    {
+        if (!$this->isLegacy()) {
+            return Icon::create($icon, $role, $attributes);
+        }
+        return Assets::img(sprintf(
+            'icons/16/%s/%s.svg',
+            self::$icon_mapping[$role],
+            $icon
+        ));
+    }
+
+    private function isLegacy()
+    {
+        return !class_exists('ActionMenu');
     }
 }
