@@ -13,13 +13,13 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     protected static $icon_mapping = [
         'clickable'    => 'blue',
         'accept'       => 'green',
-        'status-green' => 'green',
         'info_alt'     => 'white',
         'info'         => 'black',
         'inactive'     => 'grey',
+        'status-red'   => 'red',
+        'status-green' => 'green',
     ];
 
-    
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
@@ -37,7 +37,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         return null;
     }
-    
+
     public function getNotificationObjects($course_id, $since, $user_id)
     {
         return array();
