@@ -31,7 +31,7 @@
     Stoodle.Overview = {
         init: function () {
             // Enable click on row to select
-            $('.stoodle-overview td').click(function () {
+            $('.stoodle-overview tr:not(.empty) td').click(function () {
                 // We need a workaround, since a simple .click() does not suffice
                 var href = $(this).closest('tr').find('a[href]').attr('href');
                 location.href = href;

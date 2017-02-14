@@ -14,7 +14,7 @@
     </thead>
     <tbody class="stoodle-overview">
     <? if (empty($stoodles['present'])): ?>
-        <tr class="blank">
+        <tr class="empty">
             <td colspan="6"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
         </tr>
     <? endif; ?>
