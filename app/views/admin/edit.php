@@ -107,37 +107,51 @@
     <tbody class="dates">
         <tr>
             <td>
-                <label for="start_date"><?= _('Start') ?></label>
+                <label for="start_date">
+                    <?= _('Start') ?>
+                    <?= tooltipicon(_('Wenn Sie keinen festen Startzeitpunkt angeben möchten, '
+                                    . 'können Sie den Haken bei "offen" setzen, um die '
+                                    . 'Umfrage unverzüglich zu starten.')) ?>
+                </label>
             </td>
             <td colspan="2">
-                <input type="text" name="start_date" id="start_date" class="datetime"
-                       <?= $formatValue('datetime', $start_date) ?>>
-                <label>
-                    <input type="checkbox" name="start_date" value="foo"
-                           <? if (!$start_date) echo 'checked'; ?>>
+                <input type="checkbox" name="start_date" value="foo"
+                       id="start_date_switch" class="studip-checkbox"
+                       data-disables="#start_date" data-gains-focus
+                       <? if (!$start_date) echo 'checked'; ?>>
+                <label for="start_date_switch">
                     <?= _('Offen') ?>
                 </label>
-                <?= tooltipicon(_('Wenn Sie keinen festen Startzeitpunkt angeben möchten, '
-                                 .'können Sie den Haken bei "offen" setzen, um die '
-                                 .'Umfrage unverzüglich zu starten.')) ?>
+                <label>
+                    <?= _('bzw.')?>
+                    <input type="text" name="start_date" id="start_date" class="datetime"
+                           <?= $formatValue('datetime', $start_date) ?>>
+                </label>
             </td>
         </tr>
         <tr>
             <td>
-                <label for="end_date"><?= _('Ende') ?></label>
+                <label for="end_date">
+                    <?= _('Ende') ?>
+                    <?= tooltipicon(_('Wenn Sie keinen festen Endzeitpunkt angeben möchten, '
+                                    . 'können Sie den Haken bei "offen" setzen, um die '
+                                    . 'Umfrage unbegrenzt laufen zu lassen. Sie muss dann '
+                                    . 'manuell in der Verwaltung beendet werden.')) ?>
+                </label>
             </td>
             <td colspan="2">
-                <input type="text" name="end_date" id="end_date" class="datetime"
-                       <?= $formatValue('datetime', $end_date) ?>>
-                <label>
-                    <input type="checkbox" name="end_date" value=""
-                           <? if (!$end_date) echo 'checked'; ?>>
+                <input type="checkbox" name="end_date" value=""
+                       id="end_date_switch" class="studip-checkbox"
+                       data-disables="#end_date" data-gains-focus
+                       <? if (!$end_date) echo 'checked'; ?>>
+                <label for="end_date_switch">
                     <?= _('Offen') ?>
                 </label>
-                <?= tooltipicon(_('Wenn Sie keinen festen Endzeitpunkt angeben möchten, '
-                                 .'können Sie den Haken bei "offen" setzen, um die '
-                                 .'Umfrage unbegrenzt laufen zu lassen. Sie muss dann '
-                                 .'manuell in der Verwaltung beendet werden.')) ?>
+                <label>
+                    <?= _('bzw.')?>
+                    <input type="text" name="end_date" id="end_date" class="datetime"
+                           <?= $formatValue('datetime', $end_date) ?>>
+                </label>
             </td>
         </tr>
     </tbody>

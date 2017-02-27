@@ -123,13 +123,13 @@ jQuery(function ($) {
 
     $('input#start_date, input#end_date').init_input('datetime');
 
-    $('.dates input[type=checkbox]').on('click', function () {
-        var input = $(this).parent().siblings('.datetime').attr('disabled', this.checked);
-        input.filter(':not(:disabled)').focus();
-    }).filter(':checked').each(function () {
-        $(this).parent().siblings('.datetime').attr('disabled', true);
-    });
-
+    // $('.dates input[type=checkbox]').on('click', function () {
+    //     var input = $(this).parent().siblings('.datetime').attr('disabled', this.checked);
+    //     input.filter(':not(:disabled)').focus();
+    // }).filter(':checked').each(function () {
+    //     $(this).parent().siblings('.datetime').attr('disabled', true);
+    // });
+    //
     $('.stoodle').on('click', 'button[name=remove]', function () {
         var $that    = $(this).attr('disabled', true),
             value    = $that.val(),
