@@ -123,13 +123,13 @@ jQuery(function ($) {
 
     $('input#start_date, input#end_date').init_input('datetime');
 
-    $('.dates input[type=checkbox]').on('click', function () {
-        var input = $(this).parent().siblings('[type=datetime]').attr('disabled', this.checked);
-        input.filter(':not(:disabled)').focus();
-    }).filter(':checked').each(function () {
-        $(this).parent().siblings('[type=datetime]').attr('disabled', true);
-    });
-
+    // $('.dates input[type=checkbox]').on('click', function () {
+    //     var input = $(this).parent().siblings('.datetime').attr('disabled', this.checked);
+    //     input.filter(':not(:disabled)').focus();
+    // }).filter(':checked').each(function () {
+    //     $(this).parent().siblings('.datetime').attr('disabled', true);
+    // });
+    //
     $('.stoodle').on('click', 'button[name=remove]', function () {
         var $that    = $(this).attr('disabled', true),
             value    = $that.val(),
@@ -195,8 +195,8 @@ jQuery(function ($) {
             } catch (e) { }
 
             clone = original.clone(false, false);
-            clone.attr('type', type === 'range' ? 'date' : type);
-            clone.data('type', type);
+            clone.attr('type', ['date', 'datetime', 'range', 'time'].indexOf(type) === -1 ? type : 'text');
+            clone.data('type', ['date', 'datetime', 'range', 'time'].indexOf(type) === -1 ? type : 'text');
 
             if (value) {
                 if ((orig_type === 'datetime' || orig_type === 'range') && type === 'date') {

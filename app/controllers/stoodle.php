@@ -193,17 +193,31 @@ class StoodleController extends StudipController
         if ($action === 'index') {
             $widget = new ListWidget();
             $widget->setTitle(_('Informationen'));
-            $widget->addElement($this->sidebarElement(_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'), $this->plugin->getSidebarIcon('info-circle', 'info')));
+            $widget->addElement($this->sidebarElement(
+                _('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'),
+                $this->plugin->getSidebarIcon('info-circle', 'info')
+            ));
             $sidebar->addWidget($widget);
         } elseif ($action === 'display') {
             // General info
             $widget = new ListWidget();
             $widget->setTitle(_('Informationen'));
 
-            $start = sprintf('%s: %s', _('Start'), $stoodle->start_date ? strtotime('%x', $stoodle->start_date) : _('offen'));
-            $widget->addElement($this->sidebarElement($start, $this->plugin->getSidebarIcon('info', 'info')));
+            $start = sprintf(
+                '%s: %s',
+                _('Start'),
+                $stoodle->start_date ? strtotime('%x', $stoodle->start_date) : _('offen')
+            );
+            $widget->addElement($this->sidebarElement(
+                $start,
+                $this->plugin->getSidebarIcon('info', 'info')
+            ));
 
-            $end = sprintf('%s: %s', _('Ende'), $stoodle->end_date ? strtotime('%x', $stoodle->end_date) : _('offen'));
+            $end = sprintf(
+                '%s: %s',
+                _('Ende'),
+                $stoodle->end_date ? strtotime('%x', $stoodle->end_date) : _('offen')
+            );
             $widget->addElement($this->sidebarElement($end));
 
             $widget->addElement($this->sidebarElement(
@@ -220,11 +234,20 @@ class StoodleController extends StudipController
             $legend = new ListWidget();
             $legend->setTitle(_('Legende'));
 
-            $legend->addElement($this->sidebarElement(_('Zusage'), $this->plugin->getSidebarIcon('accept', 'status-green')));
+            $legend->addElement($this->sidebarElement(
+                _('Zusage'),
+                $this->plugin->getSidebarIcon('accept', 'status-green')
+            ));
             if ($this->stoodle->allow_maybe) {
-                $legend->addElement($this->sidebarElement(_('Ungewiss'), $this->plugin->getSidebarIcon('question', 'clickable')));
+                $legend->addElement($this->sidebarElement(
+                    _('Ungewiss'),
+                    $this->plugin->getSidebarIcon('question', 'clickable')
+                ));
             }
-            $legend->addElement($this->sidebarElement(_('Absage'), $this->plugin->getSidebarIcon('decline', 'attention')));
+            $legend->addElement($this->sidebarElement(
+                _('Absage'),
+                $this->plugin->getSidebarIcon('decline', 'status-red')
+            ));
         
             $sidebar->addWidget($legend);
         } elseif ($action === 'result') {
@@ -239,22 +262,40 @@ class StoodleController extends StudipController
                 $this->plugin->getSidebarIcon('date', 'info')
             ));
             
-            $start = sprintf('%s: %s', _('Start'),
-                             strtotime('%x %X', $stoodle->start_date ?: $stoodle->mkdate));
+            $start = sprintf(
+                '%s: %s',
+                _('Start'),
+                strtotime('%x %X', $stoodle->start_date ?: $stoodle->mkdate)
+            );
             $widget->addElement($this->sidebarElement($start));
             
-            $end = sprintf('%s: %s', _('Ende'),
-                             strtotime('%x %X', $stoodle->end_date));
+            $end = sprintf(
+                '%s: %s',
+                _('Ende'),
+                strtotime('%x %X', $stoodle->end_date)
+            );
             $widget->addElement($this->sidebarElement($end));
 
-            $members = sprintf('%s: %u (%.2f%%)', _('Teilnehmer'), $answers,
-                               round($participants ? 100 * $answers / $participants : 0, 2));
-            $widget->addElement($this->sidebarElement($members, $this->plugin->getSidebarIcon('stat', 'info')));
+            $members = sprintf(
+                '%s: %u (%.2f%%)',
+                _('Teilnehmer'),
+                $answers,
+                round($participants ? 100 * $answers / $participants : 0, 2)
+            );
+            $widget->addElement($this->sidebarElement(
+                $members,
+                $this->plugin->getSidebarIcon('stat', 'info')
+            ));
 
-            $info = sprintf(_('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
-                            $stoodle->is_public ? _('öffentlich') : _('nicht öffentlich'),
-                            $stoodle->is_anonymous ? _('anonym') : _('nicht anonym'));
-            $widget->addElement($this->sidebarElement($info, $this->plugin->getSidebarIcon('visibility-visible', 'info')));
+            $info = sprintf(
+                _('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
+                $stoodle->is_public ? _('öffentlich') : _('nicht öffentlich'),
+                $stoodle->is_anonymous ? _('anonym') : _('nicht anonym')
+            );
+            $widget->addElement($this->sidebarElement(
+                $info,
+                $this->plugin->getSidebarIcon('visibility-visible', 'info')
+            ));
     
             if ($stoodle->allow_maybe) {
                 $widget->addElement($this->sidebarElement(

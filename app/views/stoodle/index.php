@@ -14,7 +14,7 @@
     </thead>
     <tbody class="stoodle-overview">
     <? if (empty($stoodles['present'])): ?>
-        <tr class="blank">
+        <tr class="empty">
             <td colspan="6"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
         </tr>
     <? endif; ?>
@@ -24,7 +24,7 @@
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>
             <? if ($stoodle->end_date): ?>
-                <abbr title="<?= date('d.m.Y H:i', $stoodle->end_date) ?>">
+                <abbr title="<?= date('%x %H:%M', $stoodle->end_date) ?>">
                     <?= spoken_time($stoodle->end_date - time()) ?>
                 </abbr>
             <? else: ?>
@@ -39,10 +39,15 @@
                 <?= $plugin->getIcon('checkbox-unchecked', 'info') ?>
             <? endif; ?>
             </td>
-            <td style="text-align: right;">
+            <td class="actions">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
-                    <?= $plugin->getIcon($stoodle->userParticipated() ? 'test' : 'vote', 'clickable',
-                                    array_merge(tooltip2(_('An der Umfrage teilnehmen')), array('class' => 'text-top'))) ?>
+                    <?= $plugin->getIcon(
+                        $stoodle->userParticipated() ? 'test' : 'vote',
+                        'clickable',
+                        array_merge(
+                            tooltip2(_('An der Umfrage teilnehmen')),
+                            array('class' => 'text-top'))
+                    ) ?>
                     <?= _('Teilnehmen') ?>
                 </a>
             </td>
@@ -68,7 +73,7 @@
     <tbody>
     <? foreach ($evaluated as $stoodle): ?>
         <tr>
-            <td><?= date('d.m.Y', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
+            <td><?= strftime('%s', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
@@ -77,7 +82,7 @@
                 <?= $plugin->getIcon('checkbox-unchecked', 'clickable') ?>
             <? endif; ?>
             </td>
-            <td style="text-align: right;">
+            <td class="actions">
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
                     <?= $plugin->getIcon('stat', 'clickable', tooltip2(_('Ergebnisse ansehen'))) ?>
                 </a>

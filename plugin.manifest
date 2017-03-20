@@ -6,7 +6,7 @@ studipMinVersion=3.3
 
 summary=Terminfindung wie bei Doodle
 description=Lehrende können in Stoodle in einer Umfrage mehrere Termine vorschlagen, über die Teilnehmende und Lehrende der Veranstaltungen abstimmen können. Teilnehmende können nur dann die Auswertung einer Umfrage einsehen, wenn diese öffentlich ist.
-icon=assets/icons/black/assessment.svg
+icon=../../../assets/images/icons/black/assessment.svg
 keywords=Umfrage;Terminfindung
 
 screenshots=assets/screenshots

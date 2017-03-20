@@ -31,7 +31,7 @@
     Stoodle.Overview = {
         init: function () {
             // Enable click on row to select
-            $('.stoodle-overview td').click(function () {
+            $('.stoodle-overview tr:not(.empty) td').click(function () {
                 // We need a workaround, since a simple .click() does not suffice
                 var href = $(this).closest('tr').find('a[href]').attr('href');
                 location.href = href;
@@ -70,4 +70,23 @@
         STUDIP.Stoodle.Result.init();
         STUDIP.Stoodle.Overview.init();
     });
+
+
+
+
+    // Use a checkbox as a toggle switch for the disabled attribute of another
+    // element. Define element to disable if checkbox is either :checked or
+    // :indeterminate by a css selector in attribute "data-disables".
+    $(document).on('change', ':checkbox[data-disables]', function () {
+        var disables = $(this).data('disables'),
+            disabled = $(this).prop('checked') || $(this).prop('indeterminate') || false,
+            focussed = $(this).data('gains-focus') !== undefined;
+        $(disables).attr('disabled', disabled).trigger('update.proxy');
+        if (focussed) {
+            $(disables).filter(':not([disabled])').focus();
+        }
+    }).ready(function () {
+        $(':checkbox[data-disables]').trigger('change');
+    });
+
 }(jQuery, STUDIP));

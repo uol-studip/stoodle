@@ -32,7 +32,7 @@
         </tr>
     <? endif; ?>
     <? foreach ($stoodles as $stoodle): ?>
-        <tr class="<?= TextHelper::cycle('cycle_even', 'cycle_odd') ?>">
+        <tr>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td><?= $stoodle->start_date ? date('d.m.Y H:i', $stoodle->start_date) : _('offen') ?></td>
             <td><?= $stoodle->end_date ? date('d.m.Y H:i', $stoodle->end_date) : _('offen') ?></td>
