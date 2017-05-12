@@ -56,11 +56,13 @@
             return;
         }
         $(this).closest('table').find('tbody tr:not(.no-highlight) td:nth-child(' + (index + 1) + ')').addClass('highlighted');
-        $(this).closest('table').find('thead th').eq(index - 2).addClass('highlighted');
+        $(this).closest('table').find('th:nth-child(' + index + ')').addClass('highlighted');
     }).on('mouseleave', '.stoodle-list tbody tr:not(.no-highlight) td:gt(1)', function () {
         var index = $(this).index();
         $(this).closest('table').find('tbody tr:not(.no-highlight) td:nth-child(' + (index + 1) + ')').removeClass('highlighted');
-        $(this).closest('table').find('thead th').eq(index - 2).removeClass('highlighted');
+        $(this).closest('table').find('th:nth-child(' + index + ')').removeClass('highlighted');
+    }).on('click', '.stoodle-list td:has(:checkbox[name^="selection"])', function () {
+        $(':checkbox', this).click();
     });
 
     STUDIP.Stoodle = Stoodle;

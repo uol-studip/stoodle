@@ -19,6 +19,14 @@
         </thead>
         <tbody>
             <?= $this->render_partial('stoodle-participants', array('self' => 'hide')) ?>
+        <? if (count($stoodle->getAnswers()) >= 10): ?>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            <? foreach ($stoodle->options as $id => $option): ?>
+                <th style="text-align: center;"><?= $stoodle->formatOption($id) ?></th>
+            <? endforeach; ?>
+            </tr>
+        <? endif; ?>
             <tr class="steel self">
                 <td>
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>

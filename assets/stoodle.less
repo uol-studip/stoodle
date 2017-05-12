@@ -2,7 +2,10 @@
     table {
         margin-bottom: 1em;
 
-        td, th { vertical-align: top; }
+        td, th {
+            vertical-align: top;
+            .transition(background-color 300ms);
+        }
 
         .empty td, td.empty {
             padding: 1em 0;
@@ -22,7 +25,9 @@
                     padding-right: 20px;
                 }
             }
-            .highlighted { background-color: #eda; }
+            .highlighted {
+                background-color: #eda;
+            }
             tr:nth-child(2n+1) td.highlighted { background-color: #fec; }
             label {
                 border-top: 1px dotted #aaa;
@@ -188,7 +193,7 @@
             .background-icon('arr_1down', 'clickable');
             background-position: left center;
             background-repeat: no-repeat;
-            color: inherit; 
+            color: inherit;
             padding-left: 20px;
         }
         &.collapsed a {
