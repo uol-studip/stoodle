@@ -1,7 +1,9 @@
 <?php
 namespace Stoodle;
 
+use Course;
 use DBManager;
+use Institute;
 use PDO;
 use SimpleORMap;
 
@@ -10,10 +12,10 @@ class Stoodle extends SimpleORMap
     protected static function configure($config = array())
     {
         $config['db_table'] = 'stoodle';
-        
+
         parent::configure($config);
     }
-    
+
     public $options  = array();
     public $results  = array();
     public $comments = array();
@@ -92,18 +94,18 @@ class Stoodle extends SimpleORMap
         if ($this->isNew()) {
             return array();
         }
-        
+
         if ($this->answers === null) {
             $this->answers = Answer::getByStoodleId($this->stoodle_id);
         }
 
         return $this->answers;
     }
-    
+
     public function getAnsweredOptions()
     {
         $answers = $this->getAnswers();
-        
+
         $options = array();
         foreach ($answers as $user_id => $answer) {
             foreach ($answer['selection'] as $option_id) {
@@ -115,7 +117,7 @@ class Stoodle extends SimpleORMap
         }
         return $options;
     }
-    
+
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);
@@ -151,9 +153,9 @@ class Stoodle extends SimpleORMap
             'time'       => _('%H:%M Uhr'),
             'short-time' => _('%H:%M')
         );
-        
+
         $value = $this->options[$option_id];
-        
+
         switch ($raw ?: $this->type) {
             case 'range':
                 list($start, $end) = explode('-', $value);
@@ -168,6 +170,35 @@ class Stoodle extends SimpleORMap
             default:
                 return $value;
         }
+    }
+
+    public function getRange()
+    {
+        if ($course = Course::find($this->range_id)) {
+            return $course;
+        }
+        if ($institute = Institute::find($this->range_id)) {
+            return $institute;
+        }
+        return false;
+    }
+
+    public function getRangeMembers($status = 'autor')
+    {
+        $range = $this->getRange();
+        if (!$range) {
+            return false;
+        }
+        if ($range instanceof Course) {
+            return $range->getMembersWithStatus($status ?: 'autor');
+        }
+        if ($range instanceof Institute) {
+            return $range->members->filter(function ($member) use ($status) {
+                return !$status
+                    || $member->inst_perms === $status;
+            });
+        }
+        return false;
     }
 
     public static function findByRange($range_id)
@@ -186,7 +217,7 @@ class Stoodle extends SimpleORMap
         foreach ($filters as $column => $value) {
             $conditions .= " AND $column = ?";
         }
-        
+
         $query = "SELECT stoodle_id
                   FROM stoodle
                   WHERE range_id = ? AND evaluated IS NOT NULL {$conditions}

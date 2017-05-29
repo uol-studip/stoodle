@@ -156,7 +156,7 @@ class AdminController extends StudipController
             if (count($this->options) < 1) {
                 $errors[] = _('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
             }
-            
+
             if (count($invalid) > 0) {
                 $errors[] = _('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
             }
@@ -216,7 +216,7 @@ class AdminController extends StudipController
 
         return $options;
     }
-    
+
     private function reduceOptions($options, &$invalid = array())
     {
         $result = $invalid = array();
@@ -292,13 +292,13 @@ class AdminController extends StudipController
                     $answers = $stoodle->getAnswers();
                     $targets = array_keys($answers);
                 } else {
-                    $seminar = Seminar::GetInstance($this->range_id);
                     $targets = array();
-                    foreach (words('autor tutor dozent') as $type) {
-                        $temp    = $seminar->getMembers($type);
+                    foreach (['', 'autor', 'tutor', 'dozent'] as $type) {
+                        $temp    = $stoodle->getRangeMembers($type);
                         $ids     = array_keys($temp);
                         $targets = array_merge($targets, $ids);
                     }
+                    $targets = array_unique($targets);
                 }
 
                 $duration = round(Request::float('appointment_duration') * 60 * 60);
@@ -340,7 +340,7 @@ class AdminController extends StudipController
         $this->selections     = $stoodle->getOptionsCount();
         $this->maybes         = $stoodle->getOptionsCount(true);
         $this->max            = max($stoodle->getOptionsCount(null));
-        $this->participants   = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
+        $this->participants   = count($stoodle->getRangeMembers());
 
         $this->selections_max = max($this->selections);
         $this->maybes_max     = max($this->maybes);
@@ -357,29 +357,29 @@ class AdminController extends StudipController
         PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
         $this->redirect('admin');
     }
-    
+
     /**
-     * 
+     *
      **/
     public function mail_action($id)
     {
         $stoodle = Stoodle::find($id);
         $answers = $stoodle->getAnsweredOptions();
-        
+
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
             PageLayout::postMessage(MessageBox::error(_('Sie haben keine Empfänger ausgewählt.')));
             $this->redirect('admin/edit/' . $id);
             return;
         }
-        
+
         foreach ($mail_to as $value) {
             if ($value === 'all') {
                 $mail_to = array('all');
                 break;
             }
         }
-        
+
         $recipients = array();
         foreach ($mail_to as $option_id) {
             if ($option_id === 'all') {
