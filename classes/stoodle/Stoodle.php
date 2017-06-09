@@ -183,7 +183,7 @@ class Stoodle extends SimpleORMap
         return false;
     }
 
-    public function getRangeMembers($status = 'autor')
+    public function getRangeMembers($status = null)
     {
         $range = $this->getRange();
         if (!$range) {

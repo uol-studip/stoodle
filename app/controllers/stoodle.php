@@ -206,7 +206,7 @@ class StoodleController extends StudipController
             $start = sprintf(
                 '%s: %s',
                 _('Start'),
-                $stoodle->start_date ? strtotime('%x', $stoodle->start_date) : _('offen')
+                $stoodle->start_date ? strftime('%x', $stoodle->start_date) : _('offen')
             );
             $widget->addElement($this->sidebarElement(
                 $start,
@@ -216,7 +216,7 @@ class StoodleController extends StudipController
             $end = sprintf(
                 '%s: %s',
                 _('Ende'),
-                $stoodle->end_date ? strtotime('%x', $stoodle->end_date) : _('offen')
+                $stoodle->end_date ? strftime('%x', $stoodle->end_date) : _('offen')
             );
             $widget->addElement($this->sidebarElement($end));
 
@@ -252,7 +252,7 @@ class StoodleController extends StudipController
             $sidebar->addWidget($legend);
         } elseif ($action === 'result') {
             $answers      = count($this->stoodle->getAnswers());
-            $participants = count($this->stoodle->getRangeMembers('autor'));
+            $participants = count($this->stoodle->getRangeMembers());
 
             $widget = new ListWidget();
             $widget->setTitle(_('Informationen'));
