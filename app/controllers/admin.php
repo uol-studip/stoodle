@@ -63,7 +63,7 @@ class AdminController extends StudipController
         $actions->addLink(
             _('Neue Umfrage erstellen'),
             $this->url_for('admin/edit'),
-            $this->plugin->getSidebarIcon('add', 'clickable')
+            $this->plugin->getIcon('add', 'clickable')
         );
         Sidebar::get()->addWidget($actions);
     }

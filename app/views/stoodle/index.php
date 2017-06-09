@@ -1,8 +1,6 @@
 <table class="default">
+    <caption><?= _('Aktuelle Umfragen') ?></caption>
     <thead>
-        <tr>
-            <th class="topic" colspan="6"><?= _('Aktuelle Umfragen') ?></th>
-        </tr>
         <tr>
             <th><?= _('Datum') ?></th>
             <th><?= _('Titel') ?></th>
@@ -59,10 +57,8 @@
 <? if (!empty($evaluated)): ?>
 <br>
 <table class="default">
+    <caption><?= _('Ausgewertete Umfragen') ?></caption>
     <thead>
-        <tr>
-            <th class="topic" colspan="4"><?= _('Ausgewertete Umfragen') ?></th>
-        </tr>
         <tr>
             <th><?= _('Datum') ?></th>
             <th><?= _('Titel') ?></th>
@@ -73,7 +69,7 @@
     <tbody>
     <? foreach ($evaluated as $stoodle): ?>
         <tr>
-            <td><?= strftime('%s', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
+            <td><?= strftime('%x %H:%M', $stoodle->start_date ?: $stoodle->mkdate) ?></td>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>

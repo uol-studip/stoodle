@@ -7,7 +7,6 @@
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @version 0.9.6.5
  **/
-
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
     protected static $icon_mapping = [
@@ -23,8 +22,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
-        $navigation->setImage($this->getSidebarIcon('assessment', 'info_alt'));
-        $navigation->setActiveImage($this->getSidebarIcon('assessment', 'info'));
+        $navigation->setImage($this->getIcon('assessment', 'info_alt'));
+        $navigation->setActiveImage($this->getIcon('assessment', 'info'));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
@@ -40,7 +39,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 
     public function getNotificationObjects($course_id, $since, $user_id)
     {
-        return array();
+        return [];
     }
 
     public function getInfoTemplate($course_id)
@@ -79,29 +78,13 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $app_path = $this->getPluginPath() . '/app';
 
         URLHelper::removeLinkParam('cid');
-        $app_url = rtrim(PluginEngine::getURL($this, array(), ''), '/');
+        $app_url = rtrim(PluginEngine::getURL($this, [], ''), '/');
         URLHelper::addLinkParam('cid', $range_id);
 
         $dispatcher = new Trails_Dispatcher($app_path, $app_url, 'stoodle');
         $dispatcher->plugin   = $this;
         $dispatcher->range_id = $range_id;
         $dispatcher->dispatch($unconsumed_path);
-    }
-
-    /**
-     * Version-safe icon creation.
-     * Works in Stud.IP 3.5 and below.
-     */
-    public function getSidebarIcon($icon, $role)
-    {
-        if (!$this->isLegacy()) {
-            return Icon::create($icon, $role);
-        }
-        return Assets::image_path(sprintf(
-            'icons/16/%s/%s.svg',
-            self::$icon_mapping[$role],
-            $icon
-        ));
     }
 
     /**
@@ -117,7 +100,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
             'icons/16/%s/%s.svg',
             self::$icon_mapping[$role],
             $icon
-        ));
+        ), $attributes);
     }
 
     private function isLegacy()

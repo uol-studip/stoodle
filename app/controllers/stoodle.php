@@ -195,7 +195,7 @@ class StoodleController extends StudipController
             $widget->setTitle(_('Informationen'));
             $widget->addElement($this->sidebarElement(
                 _('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'),
-                $this->plugin->getSidebarIcon('info-circle', 'info')
+                $this->plugin->getIcon('info-circle', 'info')
             ));
             $sidebar->addWidget($widget);
         } elseif ($action === 'display') {
@@ -210,7 +210,7 @@ class StoodleController extends StudipController
             );
             $widget->addElement($this->sidebarElement(
                 $start,
-                $this->plugin->getSidebarIcon('info', 'info')
+                $this->plugin->getIcon('info', 'info')
             ));
 
             $end = sprintf(
@@ -236,43 +236,43 @@ class StoodleController extends StudipController
 
             $legend->addElement($this->sidebarElement(
                 _('Zusage'),
-                $this->plugin->getSidebarIcon('accept', 'status-green')
+                $this->plugin->getIcon('accept', 'status-green')
             ));
             if ($this->stoodle->allow_maybe) {
                 $legend->addElement($this->sidebarElement(
                     _('Ungewiss'),
-                    $this->plugin->getSidebarIcon('question', 'clickable')
+                    $this->plugin->getIcon('question', 'clickable')
                 ));
             }
             $legend->addElement($this->sidebarElement(
                 _('Absage'),
-                $this->plugin->getSidebarIcon('decline', 'status-red')
+                $this->plugin->getIcon('decline', 'status-red')
             ));
-        
+
             $sidebar->addWidget($legend);
         } elseif ($action === 'result') {
             $answers      = count($this->stoodle->getAnswers());
-            $participants = count(Seminar::getInstance($this->range_id)->getMembers('autor'));
+            $participants = count($this->stoodle->getRangeMembers('autor'));
 
             $widget = new ListWidget();
             $widget->setTitle(_('Informationen'));
-            
+
             $widget->addElement($this->sidebarElement(
                 spoken_time($stoodle->end_date - ($stoodle->start_date ?: $stoodle->mkdate)),
-                $this->plugin->getSidebarIcon('date', 'info')
+                $this->plugin->getIcon('date', 'info')
             ));
-            
+
             $start = sprintf(
                 '%s: %s',
                 _('Start'),
-                strtotime('%x %X', $stoodle->start_date ?: $stoodle->mkdate)
+                strtotime('%x %H:%M', $stoodle->start_date ?: $stoodle->mkdate)
             );
             $widget->addElement($this->sidebarElement($start));
-            
+
             $end = sprintf(
                 '%s: %s',
                 _('Ende'),
-                strtotime('%x %X', $stoodle->end_date)
+                strtotime('%x %H:%M', $stoodle->end_date)
             );
             $widget->addElement($this->sidebarElement($end));
 
@@ -284,7 +284,7 @@ class StoodleController extends StudipController
             );
             $widget->addElement($this->sidebarElement(
                 $members,
-                $this->plugin->getSidebarIcon('stat', 'info')
+                $this->plugin->getIcon('stat', 'info')
             ));
 
             $info = sprintf(
@@ -294,25 +294,25 @@ class StoodleController extends StudipController
             );
             $widget->addElement($this->sidebarElement(
                 $info,
-                $this->plugin->getSidebarIcon('visibility-visible', 'info')
+                $this->plugin->getIcon('visibility-visible', 'info')
             ));
-    
+
             if ($stoodle->allow_maybe) {
                 $widget->addElement($this->sidebarElement(
                     _('Eine Angabe von "vielleicht" war erlaubt.'),
-                    $this->plugin->getSidebarIcon('question', 'info')
+                    $this->plugin->getIcon('question', 'info')
                 ));
             }
             if ($this->stoodle->allow_comments) {
                 $widget->addElement($this->sidebarElement(
                     _('Kommentare waren erlaubt.'),
-                    $this->plugin->getSidebarIcon('comment', 'info')
+                    $this->plugin->getIcon('comment', 'info')
                 ));
             }
             $sidebar->addWidget($widget);
         }
     }
-    
+
     /**
      *
      */

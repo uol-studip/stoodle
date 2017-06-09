@@ -2,7 +2,7 @@
 <blockquote><?= formatReady($stoodle->description) ?></blockquote>
 
 <? if (count($stoodle->results) > 1): ?>
-<h3>Ausgewählte Ergebnisse</h3>
+<h3><?= _('Ausgewählte Ergebnisse') ?></h3>
 <ul>
 <? foreach ($stoodle->results as $id => $value): ?>
     <li><?= $stoodle->formatOption($id) ?></li>
