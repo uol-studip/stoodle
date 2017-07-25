@@ -61,8 +61,10 @@
         var index = $(this).index();
         $(this).closest('table').find('tbody tr:not(.no-highlight) td:nth-child(' + (index + 1) + ')').removeClass('highlighted');
         $(this).closest('table').find('th:nth-child(' + index + ')').removeClass('highlighted');
-    }).on('click', '.stoodle-list td:has(:checkbox[name^="selection"])', function () {
-        $(':checkbox', this).click();
+    }).on('click', '.stoodle-list td:has(:checkbox[name^="selection"])', function (event) {
+        if ($(event.target).is('td')) {
+            $(':checkbox', this).click();
+        }
     });
 
     STUDIP.Stoodle = Stoodle;
