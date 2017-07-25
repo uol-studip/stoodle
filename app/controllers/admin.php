@@ -305,7 +305,7 @@ class AdminController extends StudipController
 
                 foreach ($results as $option_id) {
                     $option = $stoodle->options[$option_id];
-                    if ($stoodle->type !== $range) {
+                    if ($stoodle->type !== 'range') {
                         $option .= '-' . ($option + $duration);
                     }
                     list($start, $end) = explode('-', $option);
@@ -369,7 +369,7 @@ class AdminController extends StudipController
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
             PageLayout::postMessage(MessageBox::error(_('Sie haben keine Empfänger ausgewählt.')));
-            $this->redirect('admin/edit/' . $id);
+            $this->relocate('admin/edit/' . $id);
             return;
         }
 
@@ -391,22 +391,16 @@ class AdminController extends StudipController
 
         if (empty($mail_to)) {
             PageLayout::postMessage(MessageBox::error(_('Es wurden keine gültigen Empfänger gefunden.')));
-            $this->redirect('admin/edit/' . $id);
+            $this->relocate('admin/edit/' . $id);
             return;
         }
 
         $recipients = array_filter(array_map('get_username', $recipients));
-        $url = $this->url_for('admin/edit', $id);
-        if (strlen(dirname($_SERVER['SCRIPT_NAME'])) > 1) {
-            $url = str_replace(dirname($_SERVER['SCRIPT_NAME']), '', $url);
-        }
-        $url = ltrim($url, '/');
         $parameters = array(
             'rec_uname' => $recipients,
-            'subject'   => sprintf('Stoodle "%s"', $stoodle->title),
-            'sms_source_page' => $url,
+            'default_subject'   => sprintf('Stoodle "%s"', $stoodle->title),
         );
-        $url = URLHelper::getURL('sms_send.php', $parameters);
+        $url = URLHelper::getURL('dispatch.php/messages/write', $parameters);
         $this->redirect($url);
     }
 }

@@ -68,7 +68,7 @@
                 <label for="description"><?= _('Beschreibung') ?></label>
             </td>
             <td colspan="2">
-                <textarea class="add_toolbar" name="description" id="description" 
+                <textarea class="add_toolbar" name="description" id="description"
                           style="width:99%"><?= htmlReady($description) ?></textarea>
             </td>
         </tr>
@@ -324,7 +324,7 @@
 <h3 class="topic">
     <?= _('Teilnehmerliste') ?>
 </h3>
-<form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post">
+<form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post" data-dialog>
 <table class="default stoodle-list">
     <thead>
         <tr>

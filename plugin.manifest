@@ -1,7 +1,7 @@
 pluginname=Stoodle
 pluginclassname=StoodlePlugin
 origin=UOL
-version=1.2.6
+version=1.2.7
 studipMinVersion=3.5
 
 summary=Terminfindung wie bei Doodle
