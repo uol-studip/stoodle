@@ -63,7 +63,7 @@ class StoodleController extends StudipController
         $this->stoodle  = new Stoodle($id);
         $this->comments = ($comments === 'all');
 
-        if ($this->stoodle->start_date && $this->stoodle->state > time()) {
+        if ($this->stoodle->start_date && $this->stoodle->startdate > time()) {
             PageLayout::postMessage(MessageBox::error(_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.')));
             $this->redirect('stoodle');
             return;
