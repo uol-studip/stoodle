@@ -75,21 +75,11 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         return $result;
     }
 
-    protected static $icon_mapping = [
-        'clickable'    => 'blue',
-        'accept'       => 'green',
-        'info_alt'     => 'white',
-        'info'         => 'black',
-        'inactive'     => 'grey',
-        'status-red'   => 'red',
-        'status-green' => 'green',
-    ];
-
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation($this->_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
-        $navigation->setImage($this->getIcon('assessment', 'info_alt'));
-        $navigation->setActiveImage($this->getIcon('assessment', 'info'));
+        $navigation->setImage(Icon::create('assessment', Icon::ROLE_INFO_ALT));
+        $navigation->setActiveImage(Icon::create('assessment', Icon::ROLE_INFO));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
             $navigation->addSubNavigation('index', new Navigation(
@@ -157,22 +147,6 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->current_plugin = $this;
         $dispatcher->range_id       = $range_id;
         $dispatcher->dispatch($unconsumed_path);
-    }
-
-    /**
-     * Version-safe icon creation.
-     * Works in Stud.IP 3.5 and below.
-     */
-    public function getIcon($icon, $role, $attributes = array())
-    {
-        if (!$this->isLegacy()) {
-            return Icon::create($icon, $role, $attributes);
-        }
-        return Assets::img(sprintf(
-            'icons/16/%s/%s.svg',
-            self::$icon_mapping[$role],
-            $icon
-        ), $attributes);
     }
 
     private function isLegacy()

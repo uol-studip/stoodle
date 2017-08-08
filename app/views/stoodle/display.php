@@ -27,7 +27,7 @@
             <? endforeach; ?>
             </tr>
         <? endif; ?>
-            <tr class="steel self">
+            <tr class="self">
                 <td>
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
@@ -43,15 +43,15 @@
                 <? if ($stoodle->allow_maybe): ?>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="1" <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>>
-                        <?= $plugin->getIcon('accept', 'accept') ?>
+                        <?= Icon::create('accept', Icon::ROLE_STATUS_GREEN) ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="maybe" <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>>
-                        <?= $plugin->getIcon('question', 'clickable') ?>
+                        <?= Icon::create('question') ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="0" <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
-                        <?= $plugin->getIcon('decline', 'attention') ?>
+                        <?= Icon::create('decline', Icon::ROLE_STATUS_RED) ?>
                     </label>
                 <? else: ?>
                     <input type="hidden" name="selection[<?= $id ?>]" value="0">

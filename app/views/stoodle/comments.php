@@ -57,7 +57,7 @@
                     ?>
                         <li>
                             <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
-                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
+                                <?= Icon::create('trash')->asImg(['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
                             </a>
                         </li>
                     <? endif; ?>
@@ -69,7 +69,7 @@
             <tr class="more-comments">
                 <td colspan="2" class="topic">
                     <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id, 'all') ?>#comments">
-                        <?= $plugin->getIcon('arr_1down', 'info_alt') ?>
+                        <?= Icon::create('arr_1down', Icon::ROLE_INFO_ALT) ?>
                         <? if ($spillover == 1): ?>
                             <?= $_('1 weiterer Kommentar') ?>
                         <? else: ?>

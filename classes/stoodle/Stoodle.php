@@ -211,7 +211,7 @@ class Stoodle extends SimpleORMap
         return array_map('self::find', $ids);
     }
 
-    public static function findEvaluatedByRange($range_id, $filters = array())
+    public static function findEvaluatedByRange($range_id, $filters = [])
     {
         $conditions = '';
         foreach ($filters as $column => $value) {

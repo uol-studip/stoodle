@@ -268,29 +268,29 @@
             <td class="actions">
             <? if ($index > 0): ?>
                 <button name="move[up]" value="<?= $index ?>" title="<?= $_('Antwort nach oben verschieben') ?>">
-                    <?= $plugin->getIcon('arr_2up', 'sort', tooltip2($_('Antwort nach oben verschieben'))) ?>
+                    <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach oben verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= $plugin->getIcon('arr_2up', 'inactive') ?>
+                    <?= Icon::create('arr_2up', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? endif; ?>
             <? if ($index < count($options) - 1): ?>
                 <button name="move[down]" value="<?= $index ?>" title="<?= $_('Antwort nach unten verschieben') ?>">
-                    <?= $plugin->getIcon('arr_2down', 'sort', tooltip2($_('Antwort nach unten verschieben'))) ?>
+                    <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach unten verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= $plugin->getIcon('arr_2down', 'inactive') ?>
+                    <?= Icon::create('arr_2down', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? endif; ?>
             <? if ($options_count[$id]): ?>
                 <button disabled>
-                    <?= $plugin->getIcon('trash', 'inactive') ?>
+                    <?= Icon::create('trash', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? else: ?>
                 <button name="remove" value="<?= $id ?>" title="<?= $_('Antwort löschen') ?>">
-                    <?= $plugin->getIcon('trash', 'clickable', tooltip2($_('Antwort löschen'))) ?>
+                    <?= Icon::create('trash')->asImg(tooltip2($_('Antwort löschen'))) ?>
                 </button>
             <? endif; ?>
             </td>
@@ -335,7 +335,7 @@
         </tr>
     </thead>
     <tbody>
-        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous, 'admin' => true)) ?>
+        <?= $this->render_partial('stoodle-participants', ['show_mail' => !$stoodle->is_anonymous, 'admin' => true]) ?>
     </tbody>
 <? if (!$stoodle->is_anonymous): ?>
     <tfoot>

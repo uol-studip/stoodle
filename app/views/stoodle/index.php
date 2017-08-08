@@ -33,22 +33,17 @@
             <td><?= count($stoodle->getAnswers()) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
-                <?= $plugin->getIcon('checkbox-checked', 'info') ?>
+            <?= Icon::create('checkbox-checked', Icon::ROLE_INFO) ?>
             <? else: ?>
-                <?= $plugin->getIcon('checkbox-unchecked', 'info') ?>
+            <?= Icon::create('checkbox-unchecked', Icon::ROLE_INFO) ?>
             <? endif; ?>
             </td>
             <td class="actions">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
-                    <?= $plugin->getIcon(
-                        $stoodle->userParticipated() ? 'test' : 'vote',
-                        'clickable',
-                        array_merge(
-                            tooltip2($_('An der Umfrage teilnehmen')),
-                            ['class' => 'text-top']
-                        )
+                    <?= Icon::create($stoodle->userParticipated() ? 'test' : 'vote')->asImg(
+                        tooltip2(_('An der Umfrage teilnehmen')), ['class' => 'text-top']
                     ) ?>
-                    <?= $_('Teilnehmen') ?>
+                    <?= _('Teilnehmen') ?>
                 </a>
             </td>
         </tr>
@@ -75,14 +70,14 @@
             <td><?= htmlReady($stoodle->title) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
-                <?= $plugin->getIcon('checkbox-checked', 'clickable') ?>
+                <?= Icon::create('checkbox-checked', Icon::ROLE_INFO) ?>
             <? else: ?>
-                <?= $plugin->getIcon('checkbox-unchecked', 'clickable') ?>
+                <?= Icon::create('checkbox-unchecked', Icon::ROLE_INFO) ?>
             <? endif; ?>
             </td>
             <td class="actions">
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
-                    <?= $plugin->getIcon('stat', 'clickable', tooltip2($_('Ergebnisse ansehen'))) ?>
+                    <?= Icon::create('stat')->asImg(tooltip2($_('Ergebnisse ansehen'))) ?>
                 </a>
             </td>
         </tr>
