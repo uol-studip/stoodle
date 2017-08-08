@@ -70,7 +70,7 @@
         <? endforeach; ?>
         </tbody>
     </table>
-    
+
     <h3 class="topic stoodle-participants">
         <?= _('Teilnehmerliste') ?>
     </h3>
@@ -84,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            <?= $this->render_partial('stoodle-participants.php', array('admin' => true)) ?>
+            <?= $this->render_partial('stoodle-participants.php', ['admin' => true]) ?>
         </tbody>
     </table>
 
@@ -98,22 +98,22 @@
         <div style="margin: 1em 0 0;">
             <label>
                 <input type="radio" name="appointments_for" value="all" checked>
-                <?= _('für <u>alle</u> Teilnehmer dieser Veranstaltung') ?>
+                <?= _('fÃ¼r <u>alle</u> Teilnehmer dieser Veranstaltung') ?>
                 <?= tooltipIcon(_('Dies beinhaltet Tutoren und Dozenten')) ?>
             </label>
             <label>
                 <input type="radio" name="appointments_for" value="stoodle">
-                <?= _('für alle Teilnehmer dieser Umfrage') ?>
+                <?= _('fÃ¼r alle Teilnehmer dieser Umfrage') ?>
             </label>
             <label>
                 <input type="radio" name="appointments_for" value="valid">
-                <?= _('für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt') ?>
+                <?= _('fÃ¼r alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt') ?>
             </label>
         <? if ($stoodle->type !== 'range'): ?>
             <label style="margin-top: 1em">
                 <?= _('Dauer in Stunden') ?>
                 <input type="text" name="appointment_duration" value="2">
-                <?= tooltipicon('Auch Werte wie "0.5" für eine halbe Stunde sind zulässig.') ?>
+                <?= tooltipicon('Auch Werte wie "0.5" fÃ¼r eine halbe Stunde sind zulÃ¤ssig.') ?>
             </label>
         <? endif; ?>
         </div>

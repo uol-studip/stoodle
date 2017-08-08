@@ -14,7 +14,7 @@
     <form action="<?= $controller->url_for('stoodle/comment', $stoodle->stoodle_id) ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <fieldset>
-            <legend><?= _('Kommentar hinzufügen') ?></legend>
+            <legend><?= _('Kommentar hinzufÃ¼gen') ?></legend>
 
             <div class="type-text">
                 <textarea class="add_toolbar" name="comment"></textarea>
@@ -36,7 +36,7 @@
         ?>
             <tr>
                 <td>
-                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                         <?= Avatar::getAvatar($comment->user_id)->getImageTag(Avatar::SMALL) ?>
                     </a>
                 </td>
@@ -46,18 +46,18 @@
                     <ul class="details">
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
-                            <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+                            <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                                 <?= $user->getFullName() ?>
                             </a>
                         </li>
                     <? if ($comment->user_id == $GLOBALS['user']->id
                         || $GLOBALS['perm']->have_perm('root')
                         || $GLOBALS['perm']->have_studip_perm('tutor', $range_id)):
-                        
+
                     ?>
                         <li>
                             <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
-                                <?= Icon::create('trash', 'clickable', ['class' => 'text-top'] + tooltip2(_('Kommentar löschen'))) ?>
+                                <?= Icon::create('trash', 'clickable', ['class' => 'text-top'] + tooltip2(_('Kommentar lÃ¶schen'))) ?>
                             </a>
                         </li>
                     <? endif; ?>
@@ -73,7 +73,7 @@
                         <? if ($spillover == 1): ?>
                             <?= _('1 weiterer Kommentar') ?>
                         <? else: ?>
-                            <?= sprintf(_('%u weitere Kommentare...'), $spillover) ?> 
+                            <?= sprintf(_('%u weitere Kommentare...'), $spillover) ?>
                         <? endif; ?>
                     </a>
                 </td>

@@ -42,7 +42,7 @@
             <td style="text-align: right;">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
                     <?= Icon::create($stoodle->userParticipated() ? 'test' : 'vote', 'clickable',
-                                    array_merge(tooltip2(_('An der Umfrage teilnehmen')), array('class' => 'text-top'))) ?>
+                                    array_merge(tooltip2(_('An der Umfrage teilnehmen')), ['class' => 'text-top'])) ?>
                     <?= _('Teilnehmen') ?>
                 </a>
             </td>

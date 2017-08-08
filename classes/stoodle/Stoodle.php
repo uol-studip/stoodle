@@ -7,16 +7,16 @@ use SimpleORMap;
 
 class Stoodle extends SimpleORMap
 {
-    protected static function configure($config = array())
+    protected static function configure($config = [])
     {
         $config['db_table'] = 'stoodle';
-        
+
         parent::configure($config);
     }
-    
-    public $options  = array();
-    public $results  = array();
-    public $comments = array();
+
+    public $options  = [];
+    public $results  = [];
+    public $comments = [];
 
     public function __construct($id = null)
     {
@@ -44,7 +44,7 @@ class Stoodle extends SimpleORMap
 
     public function setOptions($opts)
     {
-        $options = array();
+        $options = [];
 
         foreach ($opts as $id => $value) {
             if (preg_match('/^-\d+$/', $id)) {
@@ -90,21 +90,21 @@ class Stoodle extends SimpleORMap
     public function getAnswers()
     {
         if ($this->isNew()) {
-            return array();
+            return [];
         }
-        
+
         if ($this->answers === null) {
             $this->answers = Answer::getByStoodleId($this->stoodle_id);
         }
 
         return $this->answers;
     }
-    
+
     public function getAnsweredOptions()
     {
         $answers = $this->getAnswers();
-        
-        $options = array();
+
+        $options = [];
         foreach ($answers as $user_id => $answer) {
             foreach ($answer['selection'] as $option_id) {
                 @$options[$option_id][] = $user_id;
@@ -115,7 +115,7 @@ class Stoodle extends SimpleORMap
         }
         return $options;
     }
-    
+
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);
@@ -145,15 +145,15 @@ class Stoodle extends SimpleORMap
 
     public function formatOption($option_id, $raw = false)
     {
-        $templates = array(
+        $templates = [
             'date'       => _('%d.%m.'),
             'datetime'   => _('%d.%m. %H:%M Uhr'),
             'time'       => _('%H:%M Uhr'),
             'short-time' => _('%H:%M')
-        );
-        
+        ];
+
         $value = $this->options[$option_id];
-        
+
         switch ($raw ?: $this->type) {
             case 'range':
                 list($start, $end) = explode('-', $value);
@@ -174,25 +174,25 @@ class Stoodle extends SimpleORMap
     {
         $query = "SELECT stoodle_id FROM stoodle WHERE range_id = ? AND evaluated IS NULL ORDER BY start_date, end_date";
         $statement = DBManager::get()->prepare($query);
-        $statement->execute(array($range_id));
+        $statement->execute([$range_id]);
         $ids = $statement->fetchAll(PDO::FETCH_COLUMN);
 
         return array_map('self::find', $ids);
     }
 
-    public static function findEvaluatedByRange($range_id, $filters = array())
+    public static function findEvaluatedByRange($range_id, $filters = [])
     {
         $conditions = '';
         foreach ($filters as $column => $value) {
             $conditions .= " AND $column = ?";
         }
-        
+
         $query = "SELECT stoodle_id
                   FROM stoodle
                   WHERE range_id = ? AND evaluated IS NOT NULL {$conditions}
                   ORDER BY start_date, end_date";
         $statement = DBManager::get()->prepare($query);
-        $statement->execute(array_merge(array($range_id), array_values($filters)));
+        $statement->execute(array_merge([$range_id], array_values($filters)));
         $ids = $statement->fetchAll(PDO::FETCH_COLUMN);
 
         return array_map('self::find', $ids);
@@ -202,7 +202,7 @@ class Stoodle extends SimpleORMap
     {
         $stoodles = self::findByRange($range_id);
 
-        $result = array('past' => array(), 'present' => array(), 'future' => array());
+        $result = ['past' => [], 'present' => [], 'future' => []];
         foreach ($stoodles as $stoodle) {
             $index = 'present';
             if ($stoodle->end_date && $stoodle->end_date < time()) {
@@ -219,7 +219,7 @@ class Stoodle extends SimpleORMap
     {
         $query = "SELECT MAX(position) FROM stoodle WHERE range_id = ?";
         $statement = DBManager::get()->prepare($query);
-        $statement->execute(array($range_id));
+        $statement->execute([$range_id]);
         return 1 + $statement->fetchColumn();
     }
 }

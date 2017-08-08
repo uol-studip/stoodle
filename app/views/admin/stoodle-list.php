@@ -20,7 +20,7 @@
             <th><?= _('Ende') ?></th>
             <th><abbr title="<?= _('Anzahl der Teilnehmer') ?>">#</abbr></th>
             <th><?= Icon::create('comment', 'info', tooltip2(_('Anzahl der Kommentare'))) ?></th>
-            <th><?= Icon::create('visibility-visible', 'info', tooltip2(_('Öffentlich'))) ?></th>
+            <th><?= Icon::create('visibility-visible', 'info', tooltip2(_('Ã–ffentlich'))) ?></th>
             <th><?= Icon::create('visibility-invisible', 'info', tooltip2(_('Anonym'))) ?></th>
             <th><?= Icon::create('question', 'info', tooltip2(_('Vielleicht'))) ?></th>
             <th>&nbsp;</th>
@@ -32,7 +32,7 @@
         </tr>
     <? endif; ?>
     <? foreach ($stoodles as $stoodle): ?>
-        <tr class="<?= TextHelper::cycle('cycle_even', 'cycle_odd') ?>">
+        <tr>
             <td><?= htmlReady($stoodle->title) ?></td>
             <td><?= $stoodle->start_date ? date('d.m.Y H:i', $stoodle->start_date) : _('offen') ?></td>
             <td><?= $stoodle->end_date ? date('d.m.Y H:i', $stoodle->end_date) : _('offen') ?></td>
@@ -64,7 +64,7 @@
                 </a>
         <? endif; ?>
                 <a href="<?= $controller->url_for('admin/delete', $stoodle->stoodle_id) ?>">
-                    <?= Icon::create('trash', 'clickable', tooltip2(_('Umfrage löschen'))) ?>
+                    <?= Icon::create('trash', 'clickable', tooltip2(_('Umfrage lÃ¶schen'))) ?>
                 </a>
             </td>
         </tr>

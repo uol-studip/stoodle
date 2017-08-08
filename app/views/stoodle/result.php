@@ -2,18 +2,18 @@
 <blockquote><?= formatReady($stoodle->description) ?></blockquote>
 
 <? if (count($stoodle->results) > 1): ?>
-<h3>Ausgewählte Ergebnisse</h3>
+<h3><?= _('AusgewÃ¤hlte Ergebnisse') ?></h3>
 <ul>
 <? foreach ($stoodle->results as $id => $value): ?>
     <li><?= $stoodle->formatOption($id) ?></li>
 <? endforeach; ?>
 </ul>
 <? elseif (count($stoodle->results) == 1): ?>
-<h3><?= _('Ausgewähltes Ergebnis') ?></h3>
+<h3><?= _('AusgewÃ¤hltes Ergebnis') ?></h3>
 <p><?= $stoodle->formatOption(key($stoodle->results)) ?></p>
 <? endif; ?>
 
-<h3><?= _('Übersicht der Umfrage') ?></h3>
+<h3><?= _('Ãœbersicht der Umfrage') ?></h3>
 <table class="default">
     <colgroup>
         <col>

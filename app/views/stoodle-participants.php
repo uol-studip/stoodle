@@ -3,7 +3,7 @@
         <td class="blank">&nbsp;</td>
         <td class="blank">&nbsp;</td>
         <td colspan="<?= count($stoodle->options) ?>">
-            <?= MessageBox::info(_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
+            <?= MessageBox::info(_('Die Antworten der Teilnehmer sind nicht Ã¶ffentlich einsehbar.')) ?>
         </td>
     </tr>
 <? endif; ?>
@@ -17,7 +17,7 @@
         <? if ($stoodle->is_anonymous): ?>
             <?= Avatar::getAvatar('nobody')->getImageTag(Avatar::SMALL) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                 <?= Avatar::getAvatar($user_id)->getImageTag(Avatar::SMALL) ?>
             </a>
         <? endif; ?>
@@ -26,7 +26,7 @@
         <? if ($stoodle->is_anonymous): ?>
             <?= sprintf(_('Teilnehmer #%u'), $count++) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                 <?= htmlReady($user->getFullName()) ?>
             </a>
         <? endif; ?>
@@ -37,9 +37,9 @@
         <? if ($stoodle->allow_maybe && in_array($id, $options['maybes'])): ?>
             <?= Icon::create('question', 'clickable') ?>
         <? elseif (in_array($id, $options['selection'])): ?>
-            <?= Icon::create('accept', 'accept') ?>
+            <?= Icon::create('accept', 'status-green') ?>
         <? else: ?>
-            <?= Icon::create('decline', 'attention') ?>
+            <?= Icon::create('decline', 'status-red') ?>
         <? endif; ?>
         </td>
     <? endforeach; ?>
@@ -55,7 +55,7 @@
 <? if (@$show_mail): ?>
     <tr>
         <th colspan="<?= 2 + count($stoodle->options) ?>" style="text-align: center;">
-            <?= _('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:') ?>
+            <?= _('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewÃ¤hlt haben:') ?>
         </th>
     </tr>
     <tr>

@@ -17,20 +17,20 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $navigation->setActiveImage(Icon::create('assessment', 'info'));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
-            $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
+            $navigation->addSubNavigation('index', new Navigation(_('Ãœbersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
             $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
         }
-        return array('stoodle' => $navigation);
+        return ['stoodle' => $navigation];
     }
 
     public function getIconNavigation($course_id, $last_visit, $user_id)
     {
         return null;
     }
-    
+
     public function getNotificationObjects($course_id, $since, $user_id)
     {
-        return array();
+        return [];
     }
 
     public function getInfoTemplate($course_id)
@@ -67,7 +67,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $app_path = $this->getPluginPath() . '/app';
 
         URLHelper::removeLinkParam('cid');
-        $app_url = rtrim(PluginEngine::getURL($this, array(), ''), '/');
+        $app_url = rtrim(PluginEngine::getURL($this, [], ''), '/');
         URLHelper::addLinkParam('cid', $range_id);
 
         $dispatcher = new Trails_Dispatcher($app_path, $app_url, 'stoodle');

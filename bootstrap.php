@@ -5,7 +5,7 @@ require_once 'app/controllers/studip_controller.php';
 if (!function_exists('spoken_time')) {
     function spoken_time($time, $max_displayed = 2)
     {
-        $result = array();
+        $result = [];
 
         $seconds = $time % 60;
         if ($seconds == 1) {

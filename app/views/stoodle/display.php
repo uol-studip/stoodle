@@ -18,13 +18,13 @@
             </tr>
         </thead>
         <tbody>
-            <?= $this->render_partial('stoodle-participants', array('self' => 'hide')) ?>
+            <?= $this->render_partial('stoodle-participants', ['self' => 'hide']) ?>
             <tr class="steel self">
                 <td>
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
                 <td>
-                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, ['cid' => null]) ?>">
                         <?= $GLOBALS['user']->getFullName() ?>
                     </a>
                 </td>
