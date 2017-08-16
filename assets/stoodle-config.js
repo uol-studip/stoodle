@@ -42,7 +42,7 @@
                     numberOfMonths: 2,
                     onSelect: function (picker) {
                         var date, additional, time;
-                        if ($(this).attr('type') === 'time') {
+                        if (type === 'time') {
                             date = getTime(picker);
                         } else {
                             date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate');
