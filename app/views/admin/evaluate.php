@@ -1,15 +1,15 @@
-<h2 class="topic"><?= _('Auswertung der Umfrage') ?>: <?= $stoodle->title ?></h2>
+<h2 class="topic"><?= $_('Auswertung der Umfrage') ?>: <?= $stoodle->title ?></h2>
 <? if ($stoodle->description): ?>
 <blockquote><?= formatReady($stoodle->description) ?></blockquote>
 <? endif; ?>
 
 <dl class="evaluation">
-    <dt><?= _('Teilnehmer') ?></dt>
+    <dt><?= $_('Teilnehmer') ?></dt>
     <dd>
         <?= $answers = count($stoodle->getAnswers()) ?>
         (<?= round($participants ? 100 * $answers / $participants : 0, 2) ?>%)
     </dd>
-    <dt><?= _('Laufzeit') ?></dt>
+    <dt><?= $_('Laufzeit') ?></dt>
     <dd><?= spoken_time($stoodle->end_date - ($stoodle->start_date ?: $stoodle->mkdate)) ?></dd>
 </dl>
 
@@ -29,17 +29,17 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                <th><?= _('Antwort') ?></th>
+                <th><?= $_('Antwort') ?></th>
                 <th style="text-align: center;">
-                    <?= $plugin->getIcon('accept', 'info', tooltip2(_('Kopfzahl: Zugesagt'))) ?>
+                    <?= $plugin->getIcon('accept', 'info', tooltip2($_('Kopfzahl: Zugesagt'))) ?>
                 </th>
             <? if ($stoodle->allow_maybe): ?>
                 <th style="text-align: center;">
-                    <?= $plugin->getIcon('question', 'info', tooltip2(_('Kopfzahl: Vielleicht'))) ?>
+                    <?= $plugin->getIcon('question', 'info', tooltip2($_('Kopfzahl: Vielleicht'))) ?>
                 </th>
             <? endif; ?>
                 <th style="text-align: center;">
-                    <?= $plugin->getIcon('decline', 'info', tooltip2(_('Kopfzahl: Abgesagt'))) ?>
+                    <?= $plugin->getIcon('decline', 'info', tooltip2($_('Kopfzahl: Abgesagt'))) ?>
                 </th>
                 <th>&nbsp;</th>
             </tr>
@@ -70,9 +70,9 @@
         <? endforeach; ?>
         </tbody>
     </table>
-    
+
     <h3 class="topic stoodle-participants">
-        <?= _('Teilnehmerliste') ?>
+        <?= $_('Teilnehmerliste') ?>
     </h3>
     <table class="collapsed default stoodle-list">
         <thead>
@@ -84,34 +84,34 @@
             </tr>
         </thead>
         <tbody>
-            <?= $this->render_partial('stoodle-participants.php', array('admin' => true)) ?>
+            <?= $this->render_partial('stoodle-participants.php', ['admin' => true]) ?>
         </tbody>
     </table>
 
 <? if (in_array($stoodle->type, words('range datetime'))): ?>
-    <h3 class="topic"><?= _('Optionen') ?></h3>
+    <h3 class="topic"><?= $_('Optionen') ?></h3>
     <div class="appointments">
         <label for="create_appointments">
-            <?= _('Termine eintragen:') ?>
+            <?= $_('Termine eintragen:') ?>
         </label>
         <input type="checkbox" name="create_appointments" id="create_appointments" value="1">
         <div style="margin: 1em 0 0;">
             <label>
                 <input type="radio" name="appointments_for" value="all" checked>
-                <?= _('für <u>alle</u> Teilnehmer dieser Veranstaltung') ?>
-                <?= tooltipIcon(_('Dies beinhaltet Tutoren und Dozenten')) ?>
+                <?= $_('für <u>alle</u> Teilnehmer dieser Veranstaltung') ?>
+                <?= tooltipIcon($_('Dies beinhaltet Tutoren und Dozenten')) ?>
             </label>
             <label>
                 <input type="radio" name="appointments_for" value="stoodle">
-                <?= _('für alle Teilnehmer dieser Umfrage') ?>
+                <?= $_('für alle Teilnehmer dieser Umfrage') ?>
             </label>
             <label>
                 <input type="radio" name="appointments_for" value="valid">
-                <?= _('für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt') ?>
+                <?= $_('für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt') ?>
             </label>
         <? if ($stoodle->type !== 'range'): ?>
             <label style="margin-top: 1em">
-                <?= _('Dauer in Stunden') ?>
+                <?= $_('Dauer in Stunden') ?>
                 <input type="text" name="appointment_duration" value="2">
                 <?= tooltipicon('Auch Werte wie "0.5" für eine halbe Stunde sind zulässig.') ?>
             </label>
@@ -121,7 +121,7 @@
 <? endif; ?>
 
     <div style="text-align: center;">
-        <?= Studip\Button::createAccept(_('Auswerten'), 'evaluate') ?>
-        <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('admin/index')) ?>
+        <?= Studip\Button::createAccept($_('Auswerten'), 'evaluate') ?>
+        <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->url_for('admin/index')) ?>
     </div>
 </form>

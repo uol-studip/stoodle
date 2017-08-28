@@ -1,19 +1,19 @@
 <table class="default">
-    <caption><?= _('Aktuelle Umfragen') ?></caption>
+    <caption><?= $_('Aktuelle Umfragen') ?></caption>
     <thead>
         <tr>
-            <th><?= _('Datum') ?></th>
-            <th><?= _('Titel') ?></th>
-            <th><?= _('Verbleibende Zeit') ?></th>
-            <th><?= _('Teilnehmer') ?></th>
-            <th><?= _('Teilgenommen?') ?></th>
+            <th><?= $_('Datum') ?></th>
+            <th><?= $_('Titel') ?></th>
+            <th><?= $_('Verbleibende Zeit') ?></th>
+            <th><?= $_('Teilnehmer') ?></th>
+            <th><?= $_('Teilgenommen?') ?></th>
             <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody class="stoodle-overview">
     <? if (empty($stoodles['present'])): ?>
         <tr class="empty">
-            <td colspan="6"><?= _('Es liegen keine aktuellen Umfragen vor.') ?></td>
+            <td colspan="6"><?= $_('Es liegen keine aktuellen Umfragen vor.') ?></td>
         </tr>
     <? endif; ?>
     <? foreach ($stoodles['present'] as $stoodle): ?>
@@ -26,7 +26,7 @@
                     <?= spoken_time($stoodle->end_date - time()) ?>
                 </abbr>
             <? else: ?>
-                <?= _('unbegrenzt') ?>
+                <?= $_('unbegrenzt') ?>
             <? endif; ?>
             </td>
             <td><?= count($stoodle->getAnswers()) ?></td>
@@ -43,10 +43,11 @@
                         $stoodle->userParticipated() ? 'test' : 'vote',
                         'clickable',
                         array_merge(
-                            tooltip2(_('An der Umfrage teilnehmen')),
-                            array('class' => 'text-top'))
+                            tooltip2($$_('An der Umfrage teilnehmen')),
+                            ['class' => 'text-top']
+                        )
                     ) ?>
-                    <?= _('Teilnehmen') ?>
+                    <?= $_('Teilnehmen') ?>
                 </a>
             </td>
         </tr>
@@ -57,12 +58,12 @@
 <? if (!empty($evaluated)): ?>
 <br>
 <table class="default">
-    <caption><?= _('Ausgewertete Umfragen') ?></caption>
+    <caption><?= $_('Ausgewertete Umfragen') ?></caption>
     <thead>
         <tr>
-            <th><?= _('Datum') ?></th>
-            <th><?= _('Titel') ?></th>
-            <th><?= _('Teilgenommen?') ?></th>
+            <th><?= $_('Datum') ?></th>
+            <th><?= $_('Titel') ?></th>
+            <th><?= $_('Teilgenommen?') ?></th>
             <th>&nbsp;</th>
         </tr>
     </thead>
@@ -80,7 +81,7 @@
             </td>
             <td class="actions">
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
-                    <?= $plugin->getIcon('stat', 'clickable', tooltip2(_('Ergebnisse ansehen'))) ?>
+                    <?= $plugin->getIcon('stat', 'clickable', tooltip2($_('Ergebnisse ansehen'))) ?>
                 </a>
             </td>
         </tr>

@@ -1,19 +1,19 @@
-<h2 class="topic"><?= _('Auswertung:') ?> <?= htmlReady($stoodle->title) ?></h2>
+<h2 class="topic"><?= $_('Auswertung:') ?> <?= htmlReady($stoodle->title) ?></h2>
 <blockquote><?= formatReady($stoodle->description) ?></blockquote>
 
 <? if (count($stoodle->results) > 1): ?>
-<h3><?= _('Ausgewählte Ergebnisse') ?></h3>
+<h3><?= $_('Ausgewählte Ergebnisse') ?></h3>
 <ul>
 <? foreach ($stoodle->results as $id => $value): ?>
     <li><?= $stoodle->formatOption($id) ?></li>
 <? endforeach; ?>
 </ul>
-<? elseif (count($stoodle->results) == 1): ?>
-<h3><?= _('Ausgewähltes Ergebnis') ?></h3>
+<? elseif (count($stoodle->results) === 1): ?>
+<h3><?= $_('Ausgewähltes Ergebnis') ?></h3>
 <p><?= $stoodle->formatOption(key($stoodle->results)) ?></p>
 <? endif; ?>
 
-<h3><?= _('Übersicht der Umfrage') ?></h3>
+<h3><?= $_('Übersicht der Umfrage') ?></h3>
 <table class="default">
     <colgroup>
         <col>
@@ -50,7 +50,7 @@
 
 <? if ($GLOBALS['perm']->have_studip_perm('tutor', $range_id)): ?>
 <h3 class="topic stoodle-participants">
-    <?= _('Teilnehmerliste') ?>
+    <?= $_('Teilnehmerliste') ?>
 </h3>
 <table class="default stoodle-list">
     <thead>

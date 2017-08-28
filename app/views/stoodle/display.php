@@ -1,5 +1,5 @@
 <h2 class="topic">
-    <?= _('Umfrage') ?>:
+    <?= $_('Umfrage') ?>:
     <?= htmlReady($stoodle->title) ?>
 </h2>
 <? if (!empty($stoodle->description)): ?>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <?= $this->render_partial('stoodle-participants', array('self' => 'hide')) ?>
+            <?= $this->render_partial('stoodle-participants', ['self' => 'hide']) ?>
         <? if (count($stoodle->getAnswers()) >= 10): ?>
             <tr>
                 <td colspan="2">&nbsp;</td>
@@ -32,7 +32,7 @@
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
                 <td>
-                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, ['cid' => null]) ?>">
                         <?= $GLOBALS['user']->getFullName() ?>
                     </a>
                 </td>
@@ -81,7 +81,7 @@
             <tr>
                 <td colspan="2">&nbsp;</td>
                 <td colspan="<?= count($stoodle->options) ?>">
-                    <?= Studip\Button::create(_('Auswahl speichern'), 'participate') ?>
+                    <?= Studip\Button::create($_('Auswahl speichern'), 'participate') ?>
                 </td>
             </tr>
         </tfoot>

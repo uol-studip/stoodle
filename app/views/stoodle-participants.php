@@ -3,7 +3,7 @@
         <td class="blank">&nbsp;</td>
         <td class="blank">&nbsp;</td>
         <td colspan="<?= count($stoodle->options) ?>">
-            <?= MessageBox::info(_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
+            <?= MessageBox::info($_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
         </td>
     </tr>
 <? endif; ?>
@@ -17,16 +17,16 @@
         <? if ($stoodle->is_anonymous): ?>
             <?= Avatar::getAvatar('nobody')->getImageTag(Avatar::SMALL) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                 <?= Avatar::getAvatar($user_id)->getImageTag(Avatar::SMALL) ?>
             </a>
         <? endif; ?>
         </td>
         <td>
         <? if ($stoodle->is_anonymous): ?>
-            <?= sprintf(_('Teilnehmer #%u'), $count++) ?>
+            <?= sprintf($_('Teilnehmer #%u'), $count++) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                 <?= htmlReady($user->getFullName()) ?>
             </a>
         <? endif; ?>
@@ -55,7 +55,7 @@
 <? if (@$show_mail): ?>
     <tr>
         <th colspan="<?= 2 + count($stoodle->options) ?>" style="text-align: center;">
-            <?= _('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:') ?>
+            <?= $_('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:') ?>
         </th>
     </tr>
     <tr>
@@ -63,7 +63,7 @@
         <td>
             <label class="plain">
                 <input type="checkbox" name="mail_to[]" value="all">
-                <?= _('Alle Teilnehmer') ?>
+                <?= $_('Alle Teilnehmer') ?>
             </label>
         </td>
     <? foreach (array_keys($stoodle->options) as $id): ?>

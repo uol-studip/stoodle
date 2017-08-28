@@ -3,24 +3,24 @@
 <div id="comments">
     <h3>
     <? if (empty($stoodle->comments)): ?>
-        <?= _('Kommentare') ?>
+        <?= $_('Kommentare') ?>
     <? elseif (count($stoodle->comments) > 1): ?>
-        <?= sprintf(_('%u Kommentare'), count($stoodle->comments)) ?>
+        <?= sprintf($_('%u Kommentare'), count($stoodle->comments)) ?>
     <? else: ?>
-        <?= _('1 Kommentar') ?>
+        <?= $_('1 Kommentar') ?>
     <? endif; ?>
     </h3>
 <? if (!$stoodle->end_date || $stoodle->end_date > time()): ?>
     <form action="<?= $controller->url_for('stoodle/comment', $stoodle->stoodle_id) ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <fieldset>
-            <legend><?= _('Kommentar hinzufügen') ?></legend>
+            <legend><?= $_('Kommentar hinzufügen') ?></legend>
 
             <div class="type-text">
                 <textarea class="add_toolbar" name="comment"></textarea>
             </div>
 
-            <?= Studip\Button::createAccept(_('Kommentar speichern'), 'store') ?>
+            <?= Studip\Button::createAccept($_('Kommentar speichern'), 'store') ?>
         </fieldset>
     </form>
 <? endif; ?>
@@ -36,7 +36,7 @@
         ?>
             <tr>
                 <td>
-                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+                    <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                         <?= Avatar::getAvatar($comment->user_id)->getImageTag(Avatar::SMALL) ?>
                     </a>
                 </td>
@@ -46,18 +46,18 @@
                     <ul class="details">
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
-                            <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, array('cid' => null)) ?>">
+                            <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
                                 <?= $user->getFullName() ?>
                             </a>
                         </li>
                     <? if ($comment->user_id == $GLOBALS['user']->id
                         || $GLOBALS['perm']->have_perm('root')
                         || $GLOBALS['perm']->have_studip_perm('tutor', $range_id)):
-                        
+
                     ?>
                         <li>
                             <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
-                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2(_('Kommentar löschen'))) ?>
+                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
                             </a>
                         </li>
                     <? endif; ?>
@@ -71,9 +71,9 @@
                     <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id, 'all') ?>#comments">
                         <?= $plugin->getIcon('arr_1down', 'info_alt') ?>
                         <? if ($spillover == 1): ?>
-                            <?= _('1 weiterer Kommentar') ?>
+                            <?= $_('1 weiterer Kommentar') ?>
                         <? else: ?>
-                            <?= sprintf(_('%u weitere Kommentare...'), $spillover) ?> 
+                            <?= sprintf($_('%u weitere Kommentare...'), $spillover) ?>
                         <? endif; ?>
                     </a>
                 </td>

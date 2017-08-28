@@ -3,16 +3,11 @@ use Stoodle\Option;
 use Stoodle\Stoodle;
 
 /**
- *
+ * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
+ * @license GPL2 or any later version
  */
-class AdminController extends StudipController
+class AdminController extends UOL\StudipController
 {
-    public function __construct($dispatcher)
-    {
-        parent::__construct($dispatcher);
-        $this->plugin = $dispatcher->plugin;
-    }
-
     /**
      *
      */
@@ -20,7 +15,7 @@ class AdminController extends StudipController
     {
         parent::before_filter($action, $args);
 
-        PageLayout::setTitle(_('Stoodle'));
+        PageLayout::setTitle($this->_('Stoodle'));
         Navigation::activateItem('/course/stoodle/administration');
 
         $layout = $this->get_template_factory()->open('layout.php');
@@ -30,7 +25,7 @@ class AdminController extends StudipController
         $this->range_id = $this->dispatcher->range_id;
 
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
-            throw new AccessDeniedException(_('Sie haben keinen Zugriff auf diesen Bereich.'));
+            throw new AccessDeniedException();
         }
 
         // We need this since the messaging section of Stud.IP still uses the old
@@ -61,7 +56,7 @@ class AdminController extends StudipController
 
         $actions = new ActionsWidget();
         $actions->addLink(
-            _('Neue Umfrage erstellen'),
+            $this->_('Neue Umfrage erstellen'),
             $this->url_for('admin/edit'),
             $this->plugin->getIcon('add', 'clickable')
         );
@@ -104,7 +99,7 @@ class AdminController extends StudipController
             array_splice($values, $direction == 'up' ? $index - 1 : $index + 1, 0, $value);
 
             $this->options = array_combine($keys, $values);
-        } else if (Request::submitted('remove')) {
+        } elseif (Request::submitted('remove')) {
             $index = Request::option('remove');
             if (empty($index)) {
                 $ids = Request::optionArray('ids');
@@ -122,7 +117,7 @@ class AdminController extends StudipController
                 unset($this->options[$index]);
                 $this->options = array_merge($this->options);
             }
-        } else if (Request::submitted('add')) {
+        } elseif (Request::submitted('add')) {
             $quantity = Request::int('add-quantity', 1);
             for ($i = 1; $i <= $quantity; $i += 1) {
                 $value = '';
@@ -142,23 +137,23 @@ class AdminController extends StudipController
                 $this->options[Option::getNewId()] = $value;
             }
             $this->focussed = count($this->options);
-        } else if (Request::submitted('store')) {
+        } elseif (Request::submitted('store')) {
             $errors = array();
 
             if (empty($this->title)) {
-                $errors[] = _('Bitte geben Sie einen Titel an');
+                $errors[] = $this->_('Bitte geben Sie einen Titel an');
             }
             if ($this->start_date && $this->end_date && $this->start_date > $this->end_date) {
-                $errors[] = _('Das Enddatum muss vor dem Startdatum liegen.');
+                $errors[] = $this->_('Das Enddatum muss vor dem Startdatum liegen.');
             }
 
             $this->options = $this->reduceOptions($this->options, $invalid);
             if (count($this->options) < 1) {
-                $errors[] = _('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
+                $errors[] = $this->_('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
             }
 
             if (count($invalid) > 0) {
-                $errors[] = _('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
+                $errors[] = $this->_('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
             }
 
             if (empty($errors)) {
@@ -183,12 +178,12 @@ class AdminController extends StudipController
                 $stoodle->setOptions($this->options);
 
                 $message = $new
-                         ? _('Der Eintrag wurde erfolgreich erstellt.')
-                         : _('Der Eintrag wurde erfolgreich bearbeitet.');
-                PageLayout::postMessage(MessageBox::success($message));
+                         ? $this->_('Der Eintrag wurde erfolgreich erstellt.')
+                         : $this->_('Der Eintrag wurde erfolgreich bearbeitet.');
+                PageLayout::postSuccess($message);
                 $this->redirect('admin');
             } else {
-                PageLayout::postMessage(MessageBox::error(_('Es sind Fehler aufgetreten:'), $errors));
+                PageLayout::postError($this->_('Es sind Fehler aufgetreten:'), $errors);
             }
         }
 
@@ -238,7 +233,7 @@ class AdminController extends StudipController
         $stoodle->end_date = time() - 1;
         $stoodle->store();
 
-        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde beendet.')));
+        PageLayout::postSuccess($this->_('Die Umfrage wurde beendet.'));
         $this->redirect('admin');
     }
 
@@ -248,7 +243,7 @@ class AdminController extends StudipController
         $stoodle->end_date = null;
         $stoodle->store();
 
-        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde fortgesetzt.')));
+        PageLayout::postSuccess($this->_('Die Umfrage wurde fortgesetzt.'));
         $this->redirect('admin');
     }
 
@@ -257,7 +252,7 @@ class AdminController extends StudipController
         $stoodle = Stoodle::find($id);
 
         if ($stoodle->evaluated !== null) {
-            PageLayout::postMessage(MessageBox::error(_('Die Umfrage wurde bereits ausgewertet.')));
+            PageLayout::postError($this->_('Die Umfrage wurde bereits ausgewertet.'));
             $this->redirect('admin');
         }
 
@@ -275,7 +270,7 @@ class AdminController extends StudipController
             }
 
             if (!empty($results) && Request::int('create_appointments')
-                && in_array($stoodle->type, words('datetime range')))
+                && in_array($stoodle->type, ['datetime', 'range']))
             {
                 $target = Request::option('appointments_for');
                 if ($target === 'valid') {
@@ -327,11 +322,17 @@ class AdminController extends StudipController
                 // Rebind course parameter since Calendar::getInstance() removes it
                 URLHelper::addLinkParam('cid', $this->range_id);
 
-                $details[] = sprintf(_('Es wurden %u Termin(e) für %u Person(en) eingetragen.'),
-                                     count($targets) * count($results), count($results));
+                $details[] = sprintf(
+                    $this->_('Es wurden %u Termin(e) für %u Person(en) eingetragen.'),
+                    count($targets) * count($results),
+                    count($results)
+                );
             }
 
-            Pagelayout::postMessage(MessageBox::success(_('Die Umfrage wurde ausgewertet.'), $details));
+            Pagelayout::postSuccess(
+                $this->_('Die Umfrage wurde ausgewertet.'),
+                $details
+            );
             $this->redirect('admin');
             return;
         }
@@ -354,7 +355,7 @@ class AdminController extends StudipController
         $stoodle = Stoodle::find($id);
         $stoodle->delete();
 
-        PageLayout::postMessage(MessageBox::success(_('Die Umfrage wurde erfolgreich gelöscht.')));
+        PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelöscht.'));
         $this->redirect('admin');
     }
 
@@ -368,7 +369,7 @@ class AdminController extends StudipController
 
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
-            PageLayout::postMessage(MessageBox::error(_('Sie haben keine Empfänger ausgewählt.')));
+            PageLayout::postError($this->_('Sie haben keine Empfänger ausgewählt.'));
             $this->relocate('admin/edit/' . $id);
             return;
         }
@@ -390,7 +391,7 @@ class AdminController extends StudipController
         }
 
         if (empty($mail_to)) {
-            PageLayout::postMessage(MessageBox::error(_('Es wurden keine gültigen Empfänger gefunden.')));
+            PageLayout::postError($this->_('Es wurden keine gültigen Empfänger gefunden.'));
             $this->relocate('admin/edit/' . $id);
             return;
         }

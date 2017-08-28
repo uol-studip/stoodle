@@ -7,8 +7,10 @@
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @version 0.9.6.5
  **/
-class StoodlePlugin extends StudIPPlugin implements StandardPlugin
+class StoodlePlugin extends UOL\Plugin implements StandardPlugin
 {
+    const GETTEXT_DOMAIN = 'stoodle';
+
     protected static $icon_mapping = [
         'clickable'    => 'blue',
         'accept'       => 'green',
@@ -21,15 +23,21 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 
     public function getTabNavigation($course_id)
     {
-        $navigation = new Navigation(_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
+        $navigation = new Navigation($this->_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
         $navigation->setImage($this->getIcon('assessment', 'info_alt'));
         $navigation->setActiveImage($this->getIcon('assessment', 'info'));
 
         if ($GLOBALS['perm']->have_studip_perm('tutor', $course_id)) {
-            $navigation->addSubNavigation('index', new Navigation(_('Übersicht'), PluginEngine::GetLink('stoodleplugin/stoodle/index')));
-            $navigation->addSubNavigation('administration', new Navigation(_('Verwaltung'), PluginEngine::GetLink('stoodleplugin/admin')));
+            $navigation->addSubNavigation('index', new Navigation(
+                $this->_('Übersicht'),
+                PluginEngine::getLink($this, [], 'stoodle/index')
+            ));
+            $navigation->addSubNavigation('administration', new Navigation(
+                $this->_('Verwaltung'),
+                PluginEngine::GetLink($this, [], 'admin')
+            ));
         }
-        return array('stoodle' => $navigation);
+        return ['stoodle' => $navigation];
     }
 
     public function getIconNavigation($course_id, $last_visit, $user_id)
@@ -82,8 +90,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         URLHelper::addLinkParam('cid', $range_id);
 
         $dispatcher = new Trails_Dispatcher($app_path, $app_url, 'stoodle');
-        $dispatcher->plugin   = $this;
-        $dispatcher->range_id = $range_id;
+        $dispatcher->current_plugin = $this;
+        $dispatcher->range_id       = $range_id;
         $dispatcher->dispatch($unconsumed_path);
     }
 
