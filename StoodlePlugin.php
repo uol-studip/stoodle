@@ -65,7 +65,7 @@ class StoodlePlugin extends UOL\Plugin implements StandardPlugin
         require 'bootstrap.php';
 
         $manifest = $this->getMetadata();
-        Helpbar::get()->addPlainText(_('Informationen'), $manifest['description']);
+        Helpbar::get()->addPlainText($this->_('Informationen'), $manifest['description']);
 
         StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes');
         StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes/stoodle', 'Stoodle');

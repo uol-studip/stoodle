@@ -1,3 +1,4 @@
+
 <table class="default">
     <caption><?= $_('Aktuelle Umfragen') ?></caption>
     <thead>
@@ -43,7 +44,7 @@
                         $stoodle->userParticipated() ? 'test' : 'vote',
                         'clickable',
                         array_merge(
-                            tooltip2($$_('An der Umfrage teilnehmen')),
+                            tooltip2($_('An der Umfrage teilnehmen')),
                             ['class' => 'text-top']
                         )
                     ) ?>
