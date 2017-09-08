@@ -1,0 +1,483 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2017-09-08T10:19:39+02:00\n"
+"PO-Revision-Date: 2017-09-08T10:19:39+02:00\n"
+"Language: \n"
+
+msgid "Stoodle"
+msgstr "Stoodle"
+
+msgid "Sie haben keinen Zugriff auf diesen Bereich."
+msgstr "You do not have access to this area."
+
+msgid "Neue Umfrage erstellen"
+msgstr "Create new survey"
+
+msgid "Bitte geben Sie einen Titel an"
+msgstr "Please enter a title."
+
+msgid "Das Enddatum muss vor dem Startdatum liegen."
+msgstr "The end date must lie before the start date."
+
+msgid "Bitte geben Sie mindestens eine Antwortmöglichkeit ein."
+msgstr "Please enter at least one response option."
+
+msgid "Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum)."
+msgstr "You have not entered all periods correctly (missing start date or end date)."
+
+msgid "Der Eintrag wurde erfolgreich erstellt."
+msgstr "The entry was created successfully."
+
+msgid "Der Eintrag wurde erfolgreich bearbeitet."
+msgstr "The entry was processed successfully."
+
+msgid "Es sind Fehler aufgetreten:"
+msgstr "Errors occurred:"
+
+msgid "Die Umfrage wurde beendet."
+msgstr "The survey was ended."
+
+msgid "Die Umfrage wurde fortgesetzt."
+msgstr "The survey was continued."
+
+msgid "Die Umfrage wurde bereits ausgewertet."
+msgstr "The survey has already been evaluated."
+
+msgid "Es wurden %u Termin(e) für %u Person(en) eingetragen."
+msgstr "%u appointments have been entered for %u attendee(s)."
+
+msgid "Die Umfrage wurde ausgewertet."
+msgstr "The survey has been evaluated."
+
+msgid "Die Umfrage wurde erfolgreich gelöscht."
+msgstr "The survey has been deleted successfully."
+
+msgid "Sie haben keine Empfänger ausgewählt."
+msgstr "You have not selected a recipient."
+
+msgid "Es wurden keine gültigen Empfänger gefunden."
+msgstr "No valid recipients were found."
+
+msgid "Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen."
+msgstr "The survey has not yet started. You cannot participate yet."
+
+msgid "Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen."
+msgstr "The survey is already finished. You cannot participate any more."
+
+msgid "Ihre Teilnahme wurde gespeichert."
+msgstr "Your participation has been saved."
+
+msgid "Sie können keinen leeren Kommentar hinzufügen."
+msgstr "You cannot add a blank comment."
+
+msgid "Der Kommentar konnte nicht gespeichert werden."
+msgstr "The comment could not be saved."
+
+msgid "Bitte versuchen Sie es später noch einmal."
+msgstr "Please try again later."
+
+msgid "Der Kommentar wurde hinzugefügt."
+msgstr "The comment has been added."
+
+msgid "Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist"
+msgstr "You cannot delete comments by other users"
+
+msgid "Fehler beim Löschen des Kommentars."
+msgstr "Failed to delete the comment."
+
+msgid "Der Kommentar wurde gelöscht."
+msgstr "The comment has been successfully deleted."
+
+msgid "Ungültige Stoodle-ID."
+msgstr "Invalid Stoodle ID."
+
+msgid "Die Umfrage ist noch nicht ausgewertet."
+msgstr "The survey has not been evaluated yet."
+
+msgid "Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage."
+msgstr "The survey is not public. You do not have access to this survey."
+
+msgid "Informationen"
+msgstr "Information"
+
+msgid "Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden."
+msgstr "Please note that non-public surveys are not displayed."
+
+msgid "Start"
+msgstr "Start"
+
+msgid "offen"
+msgstr "Open"
+
+msgid "Ende"
+msgstr "End"
+
+msgid "Die Ergebnisse der Umfrage sind öffentlich einsehbar."
+msgstr "The results of the survey are publicly available."
+
+msgid "Die Ergebnisse der Umfrage sind nicht öffentlich einsehbar."
+msgstr "The results of the survey are not publicly available."
+
+msgid "Die Umfrage ist anonym."
+msgstr "The survey is anonymous."
+
+msgid "Legende"
+msgstr "Legend"
+
+msgid "Zusage"
+msgstr "Accept"
+
+msgid "Ungewiss"
+msgstr "Uncertain"
+
+msgid "Absage"
+msgstr "Decline"
+
+msgid "Teilnehmer"
+msgstr "Participants"
+
+msgid "Die Umfrage war <em>%s</em> und <em>%s</em>."
+msgstr "The survey was <em>%s</em> and <em>%s</em>."
+
+msgid "öffentlich"
+msgstr "public"
+
+msgid "nicht öffentlich"
+msgstr "not public"
+
+msgid "anonym"
+msgstr "anonymous"
+
+msgid "nicht anonym"
+msgstr "not anonymous"
+
+msgid "Eine Angabe von \"vielleicht\" war erlaubt."
+msgstr "The response \"maybe\" was allowed."
+
+msgid "Kommentare waren erlaubt."
+msgstr "Comments were allowed."
+
+msgid "Datum"
+msgstr "Date"
+
+msgid "Uhrzeit"
+msgstr "Time"
+
+msgid "Datum und Uhrzeit"
+msgstr "Date and time"
+
+msgid "Zeitspanne"
+msgstr "Period"
+
+msgid "Freitext"
+msgstr "Text"
+
+msgid "%d.%m.%Y"
+msgstr "%d.%m.%Y"
+
+msgid "%H:%M Uhr"
+msgstr "%H:%M"
+
+msgid "%d.%m.%Y %H:%M"
+msgstr "%d.%m.%Y %H:%M"
+
+msgid "Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt."
+msgstr "JavaScript is deactivated. This affects how this page works."
+
+msgid "Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in vollem Umfang bearbeiten."
+msgstr "This survey already has %u participants. Therefore, you cannot complete it in full."
+
+msgid "Der Typ der Umfrage kann nicht mehr verändert werden."
+msgstr "The type of the survey cannot be changed."
+
+msgid "Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr verändert werden."
+msgstr "Response options which have already been answered by participants cannot be changed."
+
+msgid "Umfrage bearbeiten"
+msgstr "Edit survey"
+
+msgid "Grunddaten"
+msgstr "Personal details"
+
+msgid "Titel"
+msgstr "Title"
+
+msgid "Beschreibung"
+msgstr "Description"
+
+msgid "Typ"
+msgstr "Type"
+
+msgid "Der Typ einer Umfrage kann im Nachhinein nicht mehr geändert werden"
+msgstr "The type of the survey cannot be changed."
+
+msgid "Laufzeit der Umfrage"
+msgstr "Duration of the survey"
+
+msgid "Wenn Sie keinen festen Startzeitpunkt angeben möchten, können Sie den Haken bei \"offen\" setzen, um die Umfrage unverzüglich zu starten."
+msgstr "If you do not want to specify a fixed start time, you can tick the \"open\" checkbox to start the survey immediately."
+
+msgid "Offen"
+msgstr "Open"
+
+msgid "bzw."
+msgstr "Or"
+
+msgid "Wenn Sie keinen festen Endzeitpunkt angeben möchten, können Sie den Haken bei \"offen\" setzen, um die Umfrage unbegrenzt laufen zu lassen. Sie muss dann manuell in der Verwaltung beendet werden."
+msgstr "If you do not want to specify the end time, you can tick the \"open\" checkbox for an unlimited survey duration. You will then need to end the survey manually in the administration view."
+
+msgid "Optionen"
+msgstr "Options"
+
+msgid "Kommentare erlauben"
+msgstr "Allow comments"
+
+msgid "Für alle einsehbar"
+msgstr "Visible to all"
+
+msgid "Die gegebenen Antworten der Teilnehmer sowie das Ergebnis der Umfrage sind für andere Teilnehmer sichtbar."
+msgstr "The participants? responses and results of the survey are visible to other participants."
+
+msgid "Anonyme Teilnahme"
+msgstr "Anonymous participation"
+
+msgid "Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar."
+msgstr "The names of the participants are not visible to other participants."
+
+msgid "\"Vielleicht\""
+msgstr "?Maybe\""
+
+msgid "Teilnehmer können auch \"Vielleicht\" als Antwort geben."
+msgstr "Participants can choose \"maybe\" as an answer."
+
+msgid "Antwortmöglichkeiten"
+msgstr "Response options"
+
+msgid "bis"
+msgstr "to"
+
+msgid "bereits %u Mal gewählt"
+msgstr "Already chosen %u times"
+
+msgid "Antwort nach oben verschieben"
+msgstr "Move response up"
+
+msgid "Antwort nach unten verschieben"
+msgstr "Move response down"
+
+msgid "Antwort löschen"
+msgstr "Delete response"
+
+msgid "Markierte Einträge entfernen"
+msgstr "Remove selected entries"
+
+msgid "Weitere Antwortmöglichkeit(en) hinzufügen"
+msgstr "Add additional response options"
+
+msgid "Speichern"
+msgstr "Save"
+
+msgid "Abbrechen"
+msgstr "Cancel"
+
+msgid "Teilnehmerliste"
+msgstr "Participant lists"
+
+msgid "Nachricht verschicken"
+msgstr "Send message"
+
+msgid "Auswahl zurücksetzen"
+msgstr "Clear selection"
+
+msgid "Auswertung der Umfrage"
+msgstr "Evaluate survey"
+
+msgid "Laufzeit"
+msgstr "Display period"
+
+msgid "Antwort"
+msgstr "Response"
+
+msgid "Kopfzahl: Zugesagt"
+msgstr "Head count: Accepted"
+
+msgid "Kopfzahl: Vielleicht"
+msgstr "Head count: Maybe"
+
+msgid "Kopfzahl: Abgesagt"
+msgstr "Head count: Declined"
+
+msgid "Termine eintragen:"
+msgstr "Enter appointment:"
+
+msgid "für <u>alle</u> Teilnehmer dieser Veranstaltung"
+msgstr "For <u>all</u> participants of this course"
+
+msgid "Dies beinhaltet Tutoren und Dozenten"
+msgstr "This includes tutors and lecturers"
+
+msgid "für alle Teilnehmer dieser Umfrage"
+msgstr "For all participants in this survey"
+
+msgid "für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt"
+msgstr "For all participants in this survey who have accepted the appointment"
+
+msgid "Dauer in Stunden"
+msgstr "Duration in hours"
+
+msgid "Auswerten"
+msgstr "Evaluate"
+
+msgid "Aktuelle Umfragen"
+msgstr "Current surveys"
+
+msgid "Ausgewertete Umfragen"
+msgstr "Evaluated surveys"
+
+msgid "Anzahl der Teilnehmer"
+msgstr "Number of participants"
+
+msgid "Anzahl der Kommentare"
+msgstr "Number of comments"
+
+msgid "Öffentlich"
+msgstr "Public"
+
+msgid "Anonym"
+msgstr "Anonymous"
+
+msgid "Vielleicht"
+msgstr "Maybe"
+
+msgid "Es liegen keine Umfragen vor."
+msgstr "There are no surveys."
+
+msgid "Ergebnisse ansehen"
+msgstr "View results"
+
+msgid "Umfrage auswerten"
+msgstr "Evaluate survey"
+
+msgid "Umfrage fortsetzen"
+msgstr "Continue survey"
+
+msgid "Umfrage beenden"
+msgstr "End survey"
+
+msgid "Umfrage löschen"
+msgstr "Delete survey"
+
+msgid "Kommentare"
+msgstr "Comments"
+
+msgid "%u Kommentare"
+msgstr "%u comments"
+
+msgid "1 Kommentar"
+msgstr "1 comment"
+
+msgid "Kommentar hinzufügen"
+msgstr "Add comment"
+
+msgid "Kommentar speichern"
+msgstr "Save comment"
+
+msgid "Kommentar löschen"
+msgstr "Delete comment"
+
+msgid "1 weiterer Kommentar"
+msgstr "1 other comment"
+
+msgid "%u weitere Kommentare..."
+msgstr "%u other comments..."
+
+msgid "Umfrage"
+msgstr "Survey"
+
+msgid "Auswahl speichern"
+msgstr "Save selection"
+
+msgid "Verbleibende Zeit"
+msgstr "Remaining time"
+
+msgid "Teilgenommen?"
+msgstr "Have you taken part?"
+
+msgid "Es liegen keine aktuellen Umfragen vor."
+msgstr "Currently there are no surveys available."
+
+msgid "unbegrenzt"
+msgstr "Unlimited"
+
+msgid "An der Umfrage teilnehmen"
+msgstr "Participate in the survey"
+
+msgid "Teilnehmen"
+msgstr "Participate"
+
+msgid "Auswertung:"
+msgstr "Evaluation:"
+
+msgid "Ausgewähltes Ergebnis"
+msgstr "Selected result"
+
+msgid "Übersicht der Umfrage"
+msgstr "Survey overview"
+
+msgid "Die Antworten der Teilnehmer sind nicht öffentlich einsehbar."
+msgstr "The participants? responses are not publicly available."
+
+msgid "Teilnehmer #%u"
+msgstr "Participants #%u"
+
+msgid "Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:"
+msgstr "Send message to all participants in this survey who chose the following option(s):"
+
+msgid "Alle Teilnehmer"
+msgstr "All participants"
+
+msgid "1 Sekunde"
+msgstr "1 second"
+
+msgid "%u Sekunden"
+msgstr "%u seconds"
+
+msgid "1 Minute"
+msgstr "1 minute"
+
+msgid "%u Minuten"
+msgstr "%u minutes"
+
+msgid "1 Stunde"
+msgstr "1 hour"
+
+msgid "%u Stunden"
+msgstr "%u hours"
+
+msgid "1 Tag"
+msgstr "1 day"
+
+msgid "%u Tage"
+msgstr "%u days"
+
+msgid "%d.%m."
+msgstr "%d.%m."
+
+msgid "%d.%m. %H:%M Uhr"
+msgstr "%d.%m. %H:%M"
+
+msgid "%H:%M"
+msgstr "%H:%M"
+
+msgid "Übersicht"
+msgstr "Overview"
+
+msgid "Verwaltung"
+msgstr "University Administration"
