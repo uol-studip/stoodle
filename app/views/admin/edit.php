@@ -7,7 +7,7 @@
         'text'     => $_('Freitext'),
     ];
 
-    $formatValue = function ($type, $value) {
+    $formatValue = function ($type, $value) use ($_) {
         if ($type === 'text') {
             return 'value="' . htmlReady($value) . '"';
         }
