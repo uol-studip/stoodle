@@ -14,7 +14,7 @@
     <form action="<?= $controller->url_for('stoodle/comment', $stoodle->stoodle_id) ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <fieldset>
-            <legend><?= $_('Kommentar hinzufügen') ?></legend>
+            <legend><?= $_('Kommentar hinzufÃ¼gen') ?></legend>
 
             <div class="type-text">
                 <textarea class="add_toolbar" name="comment"></textarea>
@@ -57,7 +57,7 @@
                     ?>
                         <li>
                             <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
-                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
+                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2($_('Kommentar lÃ¶schen'))) ?>
                             </a>
                         </li>
                     <? endif; ?>

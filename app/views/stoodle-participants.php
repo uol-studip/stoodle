@@ -3,7 +3,7 @@
         <td class="blank">&nbsp;</td>
         <td class="blank">&nbsp;</td>
         <td colspan="<?= count($stoodle->options) ?>">
-            <?= MessageBox::info($_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
+            <?= MessageBox::info($_('Die Antworten der Teilnehmer sind nicht Ã¶ffentlich einsehbar.')) ?>
         </td>
     </tr>
 <? endif; ?>
@@ -55,7 +55,7 @@
 <? if (@$show_mail): ?>
     <tr>
         <th colspan="<?= 2 + count($stoodle->options) ?>" style="text-align: center;">
-            <?= $_('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:') ?>
+            <?= $_('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewÃ¤hlt haben:') ?>
         </th>
     </tr>
     <tr>

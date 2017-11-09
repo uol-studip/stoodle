@@ -106,12 +106,12 @@ class StoodleController extends StudipController
         $this->comments = ($comments === 'all');
 
         if ($this->stoodle->start_date && $this->stoodle->start_date > time()) {
-            PageLayout::postError($this->_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.'));
+            PageLayout::postError($this->_('Die Umfrage wurde noch nicht gestartet. Sie kÃ¶nnen noch nicht teilnehmen.'));
             $this->redirect('stoodle');
             return;
         }
         if ($this->stoodle->end_date && $this->stoodle->end_date < time()) {
-            PageLayout::postError($this->_('Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen.'));
+            PageLayout::postError($this->_('Die Umfrage ist bereits beendet. Sie kÃ¶nnen nicht mehr teilnehmen.'));
             $this->redirect('stoodle');
             return;
         }
@@ -149,16 +149,16 @@ class StoodleController extends StudipController
 
         if (empty($comment->comment)) {
             $message =  MessageBox::info(
-                $this->_('Sie können keinen leeren Kommentar hinzufügen.')
+                $this->_('Sie kÃ¶nnen keinen leeren Kommentar hinzufÃ¼gen.')
             );
         } elseif ($comment->store() === false) {
             $message = MessageBox::error(
                 $this->_('Der Kommentar konnte nicht gespeichert werden.') . ' '
-                . $this->_('Bitte versuchen Sie es später noch einmal.')
+                . $this->_('Bitte versuchen Sie es spÃ¤ter noch einmal.')
             );
         } else {
             $message = MessageBox::success(
-                $this->_('Der Kommentar wurde hinzugefügt.')
+                $this->_('Der Kommentar wurde hinzugefÃ¼gt.')
             );
         }
         PageLayout::postMessage($message);
@@ -177,16 +177,16 @@ class StoodleController extends StudipController
             && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id))
         {
             $message = MessageBox::error(
-                $this->_('Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist')
+                $this->_('Sie dÃ¼rfen diesen Kommentar nicht lÃ¶schen, da es nicht Ihrer ist')
             );
         } elseif (!$comment->delete()) {
             $message = MessageBox::error(
-                $this->_('Fehler beim Löschen des Kommentars.') . ' '
-                . $this->_('Bitte versuchen Sie es später noch einmal.')
+                $this->_('Fehler beim LÃ¶schen des Kommentars.') . ' '
+                . $this->_('Bitte versuchen Sie es spÃ¤ter noch einmal.')
             );
         } else {
             $message = MessageBox::success(
-                $this->_('Der Kommentar wurde gelöscht.')
+                $this->_('Der Kommentar wurde gelÃ¶scht.')
             );
         }
 
@@ -201,7 +201,7 @@ class StoodleController extends StudipController
     {
         $this->stoodle = new Stoodle($id);
         if (!$this->stoodle) {
-            PageLayout::postError($this->_('Ungültige Stoodle-ID.'));
+            PageLayout::postError($this->_('UngÃ¼ltige Stoodle-ID.'));
             $this->redirect('stoodle');
             return;
         }
@@ -214,7 +214,7 @@ class StoodleController extends StudipController
 
         if (!$this->stoodle->is_public && !$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
             PageLayout::postError(
-                $this->_('Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage.')
+                $this->_('Die Umfrage ist nicht Ã¶ffentlich. Sie haben keinen Zugriff auf diese Umfrage.')
             );
             $this->redirect('stoodle');
             return;
@@ -250,7 +250,7 @@ class StoodleController extends StudipController
             $widget = new ListWidget();
             $widget->setTitle($this->_('Informationen'));
             $widget->addElement($this->sidebarElement(
-                $this->_('Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht angezeigt werden.'),
+                $this->_('Bitte beachten Sie, dass Auswertungen nicht-Ã¶ffentlicher Umfragen nicht angezeigt werden.'),
                 $this->plugin->getIcon('info-circle', 'info')
             ));
             $sidebar->addWidget($widget);
@@ -278,8 +278,8 @@ class StoodleController extends StudipController
 
             $widget->addElement($this->sidebarElement(
                 $stoodle->is_public
-                    ? $this->_('Die Ergebnisse der Umfrage sind öffentlich einsehbar.')
-                    : $this->_('Die Ergebnisse der Umfrage sind nicht öffentlich einsehbar.')
+                    ? $this->_('Die Ergebnisse der Umfrage sind Ã¶ffentlich einsehbar.')
+                    : $this->_('Die Ergebnisse der Umfrage sind nicht Ã¶ffentlich einsehbar.')
             ));
             if ($stoodle->is_anonymous) {
                 $widget->addElement($this->sidebarElement($this->_('Die Umfrage ist anonym.')));
@@ -345,7 +345,7 @@ class StoodleController extends StudipController
 
             $info = sprintf(
                 $this->_('Die Umfrage war <em>%s</em> und <em>%s</em>.'),
-                $stoodle->is_public ? $this->_('öffentlich') : $this->_('nicht öffentlich'),
+                $stoodle->is_public ? $this->_('Ã¶ffentlich') : $this->_('nicht Ã¶ffentlich'),
                 $stoodle->is_anonymous ? $this->_('anonym') : $this->_('nicht anonym')
             );
             $widget->addElement($this->sidebarElement(

@@ -20,7 +20,7 @@
             <th><?= _('Ende') ?></th>
             <th><abbr title="<?= $_('Anzahl der Teilnehmer') ?>">#</abbr></th>
             <th><?= $plugin->getIcon('comment', 'info', tooltip2($_('Anzahl der Kommentare'))) ?></th>
-            <th><?= $plugin->getIcon('visibility-visible', 'info', tooltip2($_('Öffentlich'))) ?></th>
+            <th><?= $plugin->getIcon('visibility-visible', 'info', tooltip2($_('Ã–ffentlich'))) ?></th>
             <th><?= $plugin->getIcon('visibility-invisible', 'info', tooltip2($_('Anonym'))) ?></th>
             <th><?= $plugin->getIcon('question', 'info', tooltip2($_('Vielleicht'))) ?></th>
             <th>&nbsp;</th>
@@ -64,7 +64,7 @@
                 </a>
         <? endif; ?>
                 <a href="<?= $controller->url_for('admin/delete', $stoodle->stoodle_id) ?>">
-                    <?= $plugin->getIcon('trash', 'clickable', tooltip2($_('Umfrage löschen'))) ?>
+                    <?= $plugin->getIcon('trash', 'clickable', tooltip2($_('Umfrage lÃ¶schen'))) ?>
                 </a>
             </td>
         </tr>

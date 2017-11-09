@@ -78,7 +78,7 @@ class AdminController extends StudipController
         // We need this since the messaging section of Stud.IP still uses the old
         // mechanism to display messages
         if (!empty($_SESSION['sms_msg'])) {
-            $msgs = array_chunk(explode('§', $_SESSION['sms_msg']), 2);
+            $msgs = array_chunk(explode('Â§', $_SESSION['sms_msg']), 2);
             foreach ($msgs as $msg) {
                 if ($msg[0] === 'msg') {
                     $type = 'success';
@@ -196,11 +196,11 @@ class AdminController extends StudipController
 
             $this->options = $this->reduceOptions($this->options, $invalid);
             if (count($this->options) < 1) {
-                $errors[] = $this->_('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
+                $errors[] = $this->_('Bitte geben Sie mindestens eine AntwortmÃ¶glichkeit ein.');
             }
 
             if (count($invalid) > 0) {
-                $errors[] = $this->_('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
+                $errors[] = $this->_('Sie haben nicht alle Zeitspannen gÃ¼ltig ausgefÃ¼llt (fehlendes Start- bzw. Enddatum).');
             }
 
             if (empty($errors)) {
@@ -370,7 +370,7 @@ class AdminController extends StudipController
                 URLHelper::addLinkParam('cid', $this->range_id);
 
                 $details[] = sprintf(
-                    $this->_('Es wurden %u Termin(e) für %u Person(en) eingetragen.'),
+                    $this->_('Es wurden %u Termin(e) fÃ¼r %u Person(en) eingetragen.'),
                     count($targets) * count($results),
                     count($results)
                 );
@@ -402,7 +402,7 @@ class AdminController extends StudipController
         $stoodle = Stoodle::find($id);
         $stoodle->delete();
 
-        PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelöscht.'));
+        PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelÃ¶scht.'));
         $this->redirect('admin');
     }
 
@@ -416,7 +416,7 @@ class AdminController extends StudipController
 
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
-            PageLayout::postError($this->_('Sie haben keine Empfänger ausgewählt.'));
+            PageLayout::postError($this->_('Sie haben keine EmpfÃ¤nger ausgewÃ¤hlt.'));
             $this->relocate('admin/edit/' . $id);
             return;
         }
@@ -438,7 +438,7 @@ class AdminController extends StudipController
         }
 
         if (empty($mail_to)) {
-            PageLayout::postError($this->_('Es wurden keine gültigen Empfänger gefunden.'));
+            PageLayout::postError($this->_('Es wurden keine gÃ¼ltigen EmpfÃ¤nger gefunden.'));
             $this->relocate('admin/edit/' . $id);
             return;
         }
