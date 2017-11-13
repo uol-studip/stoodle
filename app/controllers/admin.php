@@ -453,7 +453,7 @@ class AdminController extends StudipController
             'subject'   => sprintf('Stoodle "%s"', $stoodle->title),
             'sms_source_page' => $url,
         ];
-        $url = URLHelper::getURL('sms_send.php', $parameters);
+        $url = URLHelper::getURL('dispatch.php/messages/write', $parameters);
 
         $this->redirect($url);
     }
