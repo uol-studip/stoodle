@@ -62,7 +62,6 @@ class AdminController extends StudipController
     {
         parent::before_filter($action, $args);
 
-        PageLayout::setTitle($this->_('Stoodle'));
         Navigation::activateItem('/course/stoodle/administration');
 
         $layout = $this->get_template_factory()->open('layout.php');

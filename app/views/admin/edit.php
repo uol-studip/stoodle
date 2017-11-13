@@ -40,8 +40,10 @@
 <? endif; ?>
 
 <form action="<?= $controller->url_for('admin/edit', $id) ?>" method="post">
-<h3 class="topic"><?= $id ? $_('Umfrage bearbeiten') : $_('Neue Umfrage erstellen') ?></h3>
 <table class="default stoodle">
+    <caption>
+        <?= $id ? $_('Umfrage bearbeiten') : $_('Neue Umfrage erstellen') ?>
+    </caption>
     <colgroup>
         <col width="200">
         <col>
@@ -296,8 +298,10 @@
             </td>
         </tr>
     <? $index += 1; endforeach; ?>
+    </tbody>
+    <tfoot>
         <tr>
-            <td colspan="4" class="printhead">
+            <td colspan="4">
                 <?= Studip\Button::createCancel($_('Markierte Einträge entfernen'), 'remove') ?>
                 <div style="float: right;">
                     <select name="add-quantity">
@@ -309,23 +313,21 @@
                 </div>
             </td>
         </tr>
-    </tbody>
+    </tfoot>
 </table>
 
-<div style="text-align: center;">
-    <div class="button-group">
+<div style="text-align: center">
         <?= Studip\Button::createAccept($_('Speichern'), 'store') ?>
         <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->url_for('admin')) ?>
-    </div>
 </div>
 </form>
 
-<? if (count($answers)): ?>
-<h3 class="topic">
-    <?= _('Teilnehmerliste') ?>
-</h3>
+<? if (count($answers) > 0): ?>
 <form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post" data-dialog>
 <table class="default stoodle-list">
+    <caption>
+        <?= $_('Teilnehmerliste') ?>
+    </caption>
     <thead>
         <tr>
             <td colspan="2">&nbsp;</td>

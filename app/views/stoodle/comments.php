@@ -56,7 +56,7 @@
 
                     ?>
                         <li>
-                            <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
+                            <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>" data-confirm="<?= $_('Soll der Kommentar wirklich gelöscht werden?') ?>">
                                 <?= Icon::create('trash')->asImg(['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
                             </a>
                         </li>

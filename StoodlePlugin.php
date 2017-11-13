@@ -5,7 +5,7 @@
  * Shameless doodle clone
  *
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
- * @version 0.9.6.5
+ * @version 2.0
  **/
 class StoodlePlugin extends StudIPPlugin implements StandardPlugin
 {
@@ -75,6 +75,11 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         return $result;
     }
 
+    public function getTitle()
+    {
+        return $this->_('Stoodle');
+    }
+
     public function getTabNavigation($course_id)
     {
         $navigation = new Navigation($this->_('Stoodle'), PluginEngine::getURL('stoodleplugin/stoodle/index'));
@@ -118,6 +123,8 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
     {
         require 'bootstrap.php';
 
+        PageLayout::setTitle(Context::get()->getFullname() . ' - ' . $this->getTitle());
+
         $manifest = $this->getMetadata();
         Helpbar::get()->addPlainText($this->_('Informationen'), $manifest['description']);
 
@@ -125,9 +132,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         StudipAutoloader::addAutoloadPath($this->getPluginPath() . '/classes/stoodle', 'Stoodle');
 
         $this->addStylesheet('assets/jquery-timepicker/jquery-ui-timepicker-addon.css');
-        $this->addStylesheet(
-            $this->isLegacy() ? 'assets/stoodle-3.3.less' : 'assets/stoodle.less'
-        );
+        $this->addStylesheet('assets/stoodle.less');
 
         PageLayout::addScript($this->getPluginURL() . '/assets/date-js/date-de-DE.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/jquery-timepicker/jquery-ui-timepicker-addon.js');
@@ -135,7 +140,7 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle.js');
         PageLayout::addScript($this->getPluginURL() . '/assets/stoodle-config.js');
 
-        $range_id = Request::option('cid', $GLOBALS['SessSemName'][1]);
+        $range_id = Request::option('cid', Context::get()->id);
 
         $app_path = $this->getPluginPath() . '/app';
 
@@ -147,10 +152,5 @@ class StoodlePlugin extends StudIPPlugin implements StandardPlugin
         $dispatcher->current_plugin = $this;
         $dispatcher->range_id       = $range_id;
         $dispatcher->dispatch($unconsumed_path);
-    }
-
-    private function isLegacy()
-    {
-        return !class_exists('ActionMenu');
     }
 }

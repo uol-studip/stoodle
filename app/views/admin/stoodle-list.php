@@ -41,7 +41,7 @@
             <td><?= Icon::create('checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
-            <td class)"actions">
+            <td class="actions">
         <? if ($stoodle->evaluated): ?>
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
                     <?= Icon::create('stat')->asImg(tooltip2(_('Ergebnisse ansehen'))) ?>
