@@ -33,7 +33,7 @@
                 </td>
                 <td>
                     <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $GLOBALS['user']->username, ['cid' => null]) ?>">
-                        <?= $GLOBALS['user']->getFullName() ?>
+                        <?= htmlReady($GLOBALS['user']->getFullName()) ?>
                     </a>
                 </td>
             <? $answers = $stoodle->getAnswers();

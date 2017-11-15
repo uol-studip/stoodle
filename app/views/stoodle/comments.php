@@ -47,7 +47,7 @@
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
                             <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
-                                <?= $user->getFullName() ?>
+                                <?= htmlReady($user->getFullName()) ?>
                             </a>
                         </li>
                     <? if ($comment->user_id == $GLOBALS['user']->id
