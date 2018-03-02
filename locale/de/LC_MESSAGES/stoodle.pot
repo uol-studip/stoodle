@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the StoodlePlugin package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,531 +10,515 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-02 13:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Jan-Hendrik Willms <tleilax@gmail.com>, 2017\n"
-"Language-Team: English (https://www.transifex.com/uol-it/teams/52597/en/)\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid ""
 "Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen."
-msgstr "The survey has not yet started. You cannot participate yet."
+msgstr ""
 
 msgid "Die Umfrage ist bereits beendet. Sie können nicht mehr teilnehmen."
-msgstr "The survey is already finished. You cannot participate any more."
+msgstr ""
 
 msgid "Ihre Teilnahme wurde gespeichert."
-msgstr "Your participation has been saved."
+msgstr ""
 
 msgid "Sie können keinen leeren Kommentar hinzufügen."
-msgstr "You cannot add a blank comment."
+msgstr ""
 
 msgid "Der Kommentar konnte nicht gespeichert werden."
-msgstr "The comment could not be saved."
+msgstr ""
 
 msgid "Bitte versuchen Sie es später noch einmal."
-msgstr "Please try again later."
+msgstr ""
 
 msgid "Der Kommentar wurde hinzugefügt."
-msgstr "The comment has been added."
+msgstr ""
 
 msgid "Sie dürfen diesen Kommentar nicht löschen, da es nicht Ihrer ist"
-msgstr "You cannot delete comments by other users"
+msgstr ""
 
 msgid "Fehler beim Löschen des Kommentars."
-msgstr "Failed to delete the comment."
+msgstr ""
 
 msgid "Der Kommentar wurde gelöscht."
-msgstr "The comment has been successfully deleted."
+msgstr ""
 
 msgid "Ungültige Stoodle-ID."
-msgstr "Invalid Stoodle ID."
+msgstr ""
 
 msgid "Die Umfrage ist noch nicht ausgewertet."
-msgstr "The survey has not been evaluated yet."
+msgstr ""
 
 msgid ""
-"Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese "
-"Umfrage."
-msgstr "The survey is not public. You do not have access to this survey."
+"Die Umfrage ist nicht öffentlich. Sie haben keinen Zugriff auf diese Umfrage."
+msgstr ""
 
 msgid "Informationen"
-msgstr "Information"
+msgstr ""
 
 msgid ""
 "Bitte beachten Sie, dass Auswertungen nicht-öffentlicher Umfragen nicht "
 "angezeigt werden."
-msgstr "Please note that non-public surveys are not displayed."
+msgstr ""
 
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 msgid "offen"
-msgstr "Open"
+msgstr ""
 
 msgid "Ende"
-msgstr "End"
+msgstr ""
 
 msgid "Die Ergebnisse der Umfrage sind öffentlich einsehbar."
-msgstr "The results of the survey are publicly available."
+msgstr ""
 
 msgid "Die Ergebnisse der Umfrage sind nicht öffentlich einsehbar."
-msgstr "The results of the survey are not publicly available."
+msgstr ""
 
 msgid "Die Umfrage ist anonym."
-msgstr "The survey is anonymous."
+msgstr ""
 
 msgid "Legende"
-msgstr "Legend"
+msgstr ""
 
 msgid "Zusage"
-msgstr "Accept"
+msgstr ""
 
 msgid "Ungewiss"
-msgstr "Uncertain"
+msgstr ""
 
 msgid "Absage"
-msgstr "Decline"
+msgstr ""
 
 msgid "Teilnehmer"
-msgstr "Participants"
+msgstr ""
 
 #, php-format
 msgid "Die Umfrage war <em>%s</em> und <em>%s</em>."
-msgstr "The survey was <em>%s</em> and <em>%s</em>."
+msgstr ""
 
 msgid "öffentlich"
-msgstr "public"
+msgstr ""
 
 msgid "nicht öffentlich"
-msgstr "not public"
+msgstr ""
 
 msgid "anonym"
-msgstr "anonymous"
+msgstr ""
 
 msgid "nicht anonym"
-msgstr "not anonymous"
+msgstr ""
 
 msgid "Eine Angabe von \"vielleicht\" war erlaubt."
-msgstr "The response \"maybe\" was allowed."
+msgstr ""
 
 msgid "Kommentare waren erlaubt."
-msgstr "Comments were allowed."
+msgstr ""
 
 msgid "Neue Umfrage erstellen"
-msgstr "Create new survey"
+msgstr ""
 
 msgid "Bitte geben Sie einen Titel an"
-msgstr "Please enter a title."
+msgstr ""
 
 msgid "Das Enddatum muss vor dem Startdatum liegen."
-msgstr "The end date must lie before the start date."
+msgstr ""
 
 msgid "Bitte geben Sie mindestens eine Antwortmöglichkeit ein."
-msgstr "Please enter at least one response option."
+msgstr ""
 
 msgid ""
 "Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. "
 "Enddatum)."
 msgstr ""
-"You have not entered all periods correctly (missing start date or end date)."
 
 msgid "Der Eintrag wurde erfolgreich erstellt."
-msgstr "The entry was created successfully."
+msgstr ""
 
 msgid "Der Eintrag wurde erfolgreich bearbeitet."
-msgstr "The entry was processed successfully."
+msgstr ""
 
 msgid "Es sind Fehler aufgetreten:"
-msgstr "Errors occurred:"
+msgstr ""
 
 msgid "Die Umfrage wurde beendet."
-msgstr "The survey was ended."
+msgstr ""
 
 msgid "Die Umfrage wurde fortgesetzt."
-msgstr "The survey was continued."
+msgstr ""
 
 msgid "Die Umfrage wurde bereits ausgewertet."
-msgstr "The survey has already been evaluated."
+msgstr ""
 
 #, php-format
 msgid "Es wurden %u Termin(e) für %u Person(en) eingetragen."
-msgstr "%u appointments have been entered for %u attendee(s)."
+msgstr ""
 
 msgid "Die Umfrage wurde ausgewertet."
-msgstr "The survey has been evaluated."
+msgstr ""
 
 msgid "Die Umfrage wurde erfolgreich gelöscht."
-msgstr "The survey has been deleted successfully."
+msgstr ""
 
 msgid "Sie haben keine Empfänger ausgewählt."
-msgstr "You have not selected a recipient."
+msgstr ""
 
 msgid "Es wurden keine gültigen Empfänger gefunden."
-msgstr "No valid recipients were found."
+msgstr ""
 
 msgid "Aktuelle Umfragen"
-msgstr "Current surveys"
+msgstr ""
 
 msgid "Ausgewertete Umfragen"
-msgstr "Evaluated surveys"
+msgstr ""
 
 msgid "Titel"
-msgstr "Title"
+msgstr ""
 
 msgid "Anzahl der Teilnehmer"
-msgstr "Number of participants"
+msgstr ""
 
 msgid "Anzahl der Kommentare"
-msgstr "Number of comments"
+msgstr ""
 
 msgid "Öffentlich"
-msgstr "Public"
+msgstr ""
 
 msgid "Anonym"
-msgstr "Anonymous"
+msgstr ""
 
 msgid "Vielleicht"
-msgstr "Maybe"
+msgstr ""
 
 msgid "Es liegen keine Umfragen vor."
-msgstr "There are no surveys."
+msgstr ""
 
 msgid "Ergebnisse ansehen"
-msgstr "View results"
+msgstr ""
 
 msgid "Umfrage auswerten"
-msgstr "Evaluate survey"
+msgstr ""
 
 msgid "Umfrage fortsetzen"
-msgstr "Continue survey"
+msgstr ""
 
 msgid "Umfrage beenden"
-msgstr "End survey"
+msgstr ""
 
 msgid "Umfrage bearbeiten"
-msgstr "Edit survey"
+msgstr ""
 
 msgid "Umfrage löschen"
-msgstr "Delete survey"
+msgstr ""
 
 msgid "Auswertung der Umfrage"
-msgstr "Evaluate survey"
+msgstr ""
 
 msgid "Laufzeit"
-msgstr "Display period"
+msgstr ""
 
 msgid "Antwort"
-msgstr "Response"
+msgstr ""
 
 msgid "Kopfzahl: Zugesagt"
-msgstr "Head count: Accepted"
+msgstr ""
 
 msgid "Kopfzahl: Vielleicht"
-msgstr "Head count: Maybe"
+msgstr ""
 
 msgid "Kopfzahl: Abgesagt"
-msgstr "Head count: Declined"
+msgstr ""
 
 msgid "Teilnehmerliste"
-msgstr "Participant lists"
+msgstr ""
 
 msgid "Optionen"
-msgstr "Options"
+msgstr ""
 
 msgid "Termine eintragen:"
-msgstr "Enter appointment:"
+msgstr ""
 
 msgid "für <u>alle</u> Teilnehmer dieser Veranstaltung"
-msgstr "For <u>all</u> participants of this course"
+msgstr ""
 
 msgid "Dies beinhaltet Tutoren und Dozenten"
-msgstr "This includes tutors and lecturers"
+msgstr ""
 
 msgid "für alle Teilnehmer dieser Umfrage"
-msgstr "For all participants in this survey"
+msgstr ""
 
 msgid "für alle Teilnehmer dieser Umfrage, denen der Termin laut Angabe passt"
-msgstr "For all participants in this survey who have accepted the appointment"
+msgstr ""
 
 msgid "Dauer in Stunden"
-msgstr "Duration in hours"
+msgstr ""
 
 msgid "Auswerten"
-msgstr "Evaluate"
+msgstr ""
 
 msgid "Abbrechen"
-msgstr "Cancel"
+msgstr ""
 
 msgid "Datum"
-msgstr "Date"
+msgstr ""
 
 msgid "Uhrzeit"
-msgstr "Time"
+msgstr ""
 
 msgid "Datum und Uhrzeit"
-msgstr "Date and time"
+msgstr ""
 
 msgid "Zeitspanne"
-msgstr "Period"
+msgstr ""
 
 msgid "Freitext"
-msgstr "Text"
+msgstr ""
 
 msgid "%d.%m.%Y"
-msgstr "%d.%m.%Y"
+msgstr ""
 
 msgid "%H:%M Uhr"
-msgstr "%H:%M"
+msgstr ""
 
 msgid "%d.%m.%Y %H:%M"
-msgstr "%d.%m.%Y %H:%M"
+msgstr ""
 
 msgid ""
 "Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser "
 "Seite beeinträchtigt."
-msgstr "JavaScript is deactivated. This affects how this page works."
+msgstr ""
 
 #, php-format
 msgid ""
 "Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in "
 "vollem Umfang bearbeiten."
 msgstr ""
-"This survey already has %u participants. Therefore, you cannot complete it "
-"in full."
 
 msgid "Der Typ der Umfrage kann nicht mehr verändert werden."
-msgstr "The type of the survey cannot be changed."
+msgstr ""
 
 msgid ""
 "Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr "
 "verändert werden."
 msgstr ""
-"Response options which have already been answered by participants cannot be "
-"changed."
 
 msgid "Grunddaten"
-msgstr "Personal details"
+msgstr ""
 
 msgid "Beschreibung"
-msgstr "Description"
+msgstr ""
 
 msgid "Typ"
-msgstr "Type"
+msgstr ""
 
 msgid "Der Typ einer Umfrage kann im Nachhinein nicht mehr geändert werden"
-msgstr "The type of the survey cannot be changed."
+msgstr ""
 
 msgid "Laufzeit der Umfrage"
-msgstr "Duration of the survey"
+msgstr ""
 
 msgid ""
 "Wenn Sie keinen festen Startzeitpunkt angeben möchten, können Sie den Haken "
 "bei \"offen\" setzen, um die Umfrage unverzüglich zu starten."
 msgstr ""
-"If you do not want to specify a fixed start time, you can tick the \"open\" "
-"checkbox to start the survey immediately."
 
 msgid "Offen"
-msgstr "Open"
+msgstr ""
 
 msgid "bzw."
-msgstr "Or"
+msgstr ""
 
 msgid ""
 "Wenn Sie keinen festen Endzeitpunkt angeben möchten, können Sie den Haken "
 "bei \"offen\" setzen, um die Umfrage unbegrenzt laufen zu lassen. Sie muss "
 "dann manuell in der Verwaltung beendet werden."
 msgstr ""
-"If you do not want to specify the end time, you can tick the \"open\" "
-"checkbox for an unlimited survey duration. You will then need to end the "
-"survey manually in the administration view."
 
 msgid "Kommentare erlauben"
-msgstr "Allow comments"
+msgstr ""
 
 msgid "Für alle einsehbar"
-msgstr "Visible to all"
+msgstr ""
 
 msgid ""
 "Die gegebenen Antworten der Teilnehmer sowie das Ergebnis der Umfrage sind "
 "für andere Teilnehmer sichtbar."
 msgstr ""
-"The participants? responses and results of the survey are visible to other "
-"participants."
 
 msgid "Anonyme Teilnahme"
-msgstr "Anonymous participation"
+msgstr ""
 
 msgid "Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar."
-msgstr "The names of the participants are not visible to other participants."
+msgstr ""
 
 msgid "\"Vielleicht\""
-msgstr "?Maybe\""
+msgstr ""
 
 msgid "Teilnehmer können auch \"Vielleicht\" als Antwort geben."
-msgstr "Participants can choose \"maybe\" as an answer."
+msgstr ""
 
 msgid "Antwortmöglichkeiten"
-msgstr "Response options"
+msgstr ""
 
 msgid "bis"
-msgstr "to"
+msgstr ""
 
 #, php-format
 msgid "bereits %u Mal gewählt"
-msgstr "Already chosen %u times"
+msgstr ""
 
 msgid "Antwort nach oben verschieben"
-msgstr "Move response up"
+msgstr ""
 
 msgid "Antwort nach unten verschieben"
-msgstr "Move response down"
+msgstr ""
 
 msgid "Antwort löschen"
-msgstr "Delete response"
+msgstr ""
 
 msgid "Markierte Einträge entfernen"
-msgstr "Remove selected entries"
+msgstr ""
 
 msgid "Weitere Antwortmöglichkeit(en) hinzufügen"
-msgstr "Add additional response options"
+msgstr ""
 
 msgid "Speichern"
-msgstr "Save"
+msgstr ""
 
 msgid "Nachricht verschicken"
-msgstr "Send message"
+msgstr ""
 
 msgid "Auswahl zurücksetzen"
-msgstr "Clear selection"
+msgstr ""
 
 msgid "Verbleibende Zeit"
-msgstr "Remaining time"
+msgstr ""
 
 msgid "Teilgenommen?"
-msgstr "Have you taken part?"
+msgstr ""
 
 msgid "Es liegen keine aktuellen Umfragen vor."
-msgstr "Currently there are no surveys available."
+msgstr ""
 
 msgid "unbegrenzt"
-msgstr "Unlimited"
+msgstr ""
 
 msgid "An der Umfrage teilnehmen"
-msgstr "Participate in the survey"
+msgstr ""
 
 msgid "Teilnehmen"
-msgstr "Participate"
+msgstr ""
 
 msgid "Kommentare"
-msgstr "Comments"
+msgstr ""
 
 #, php-format
 msgid "%u Kommentare"
-msgstr "%u comments"
+msgstr ""
 
 msgid "1 Kommentar"
-msgstr "1 comment"
+msgstr ""
 
 msgid "Kommentar hinzufügen"
-msgstr "Add comment"
+msgstr ""
 
 msgid "Kommentar speichern"
-msgstr "Save comment"
+msgstr ""
 
 msgid "Soll der Kommentar wirklich gelöscht werden?"
-msgstr "Do you really want to delete this comment?"
+msgstr ""
 
 msgid "Kommentar löschen"
-msgstr "Delete comment"
+msgstr ""
 
 msgid "1 weiterer Kommentar"
-msgstr "1 other comment"
+msgstr ""
 
 #, php-format
 msgid "%u weitere Kommentare..."
-msgstr "%u other comments..."
+msgstr ""
 
 msgid "Auswertung:"
-msgstr "Evaluation:"
+msgstr ""
 
 msgid "Ausgewählte Ergebnisse"
-msgstr "Selected results"
+msgstr ""
 
 msgid "Ausgewähltes Ergebnis"
-msgstr "Selected result"
+msgstr ""
 
 msgid "Übersicht der Umfrage"
-msgstr "Survey overview"
+msgstr ""
 
 msgid "Umfrage"
-msgstr "Survey"
+msgstr ""
 
 msgid "Auswahl speichern"
-msgstr "Save selection"
+msgstr ""
 
 msgid "Die Antworten der Teilnehmer sind nicht öffentlich einsehbar."
-msgstr "The participants? responses are not publicly available."
+msgstr ""
 
 #, php-format
 msgid "Teilnehmer #%u"
-msgstr "Participants #%u"
+msgstr ""
 
 msgid ""
-"Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n)"
-" Option(en) gewählt haben:"
+"Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) "
+"Option(en) gewählt haben:"
 msgstr ""
-"Send message to all participants in this survey who chose the following "
-"option(s):"
 
 msgid "Alle Teilnehmer"
-msgstr "All participants"
+msgstr ""
 
 msgid "%d.%m."
-msgstr "%d.%m."
+msgstr ""
 
 msgid "%d.%m. %H:%M Uhr"
-msgstr "%d.%m. %H:%M"
+msgstr ""
 
 msgid "%H:%M"
-msgstr "%H:%M"
+msgstr ""
 
 msgid "1 Sekunde"
-msgstr "1 second"
+msgstr ""
 
 #, php-format
 msgid "%u Sekunden"
-msgstr "%u seconds"
+msgstr ""
 
 msgid "1 Minute"
-msgstr "1 minute"
+msgstr ""
 
 #, php-format
 msgid "%u Minuten"
-msgstr "%u minutes"
+msgstr ""
 
 msgid "1 Stunde"
-msgstr "1 hour"
+msgstr ""
 
 #, php-format
 msgid "%u Stunden"
-msgstr "%u hours"
+msgstr ""
 
 msgid "1 Tag"
-msgstr "1 day"
+msgstr ""
 
 #, php-format
 msgid "%u Tage"
-msgstr "%u days"
+msgstr ""
 
 msgid "Stoodle"
-msgstr "Stoodle"
+msgstr ""
 
 msgid "Übersicht"
-msgstr "Overview"
+msgstr ""
 
 msgid "Verwaltung"
-msgstr "University Administration"
+msgstr ""
