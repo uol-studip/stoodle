@@ -41,9 +41,9 @@
             <td class="actions">
                 <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
                     <?= Icon::create($stoodle->userParticipated() ? 'test' : 'vote')->asImg(
-                        tooltip2(_('An der Umfrage teilnehmen')), ['class' => 'text-top']
+                        tooltip2($_('An der Umfrage teilnehmen')), ['class' => 'text-top']
                     ) ?>
-                    <?= _('Teilnehmen') ?>
+                    <?= $_('Teilnehmen') ?>
                 </a>
             </td>
         </tr>

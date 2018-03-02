@@ -148,10 +148,10 @@ class Stoodle extends SimpleORMap
     public function formatOption($option_id, $raw = false)
     {
         $templates = [
-            'date'       => _('%d.%m.'),
-            'datetime'   => _('%d.%m. %H:%M Uhr'),
-            'time'       => _('%H:%M Uhr'),
-            'short-time' => _('%H:%M')
+            'date'       => dgettext(StoodlePlugin::GETTEXT_DOMAIN, '%d.%m.'),
+            'datetime'   => dgettext(StoodlePlugin::GETTEXT_DOMAIN, '%d.%m. %H:%M Uhr'),
+            'time'       => dgettext(StoodlePlugin::GETTEXT_DOMAIN, '%H:%M Uhr'),
+            'short-time' => dgettext(StoodlePlugin::GETTEXT_DOMAIN, '%H:%M')
         ];
 
         $value = $this->options[$option_id];

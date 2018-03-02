@@ -15,9 +15,9 @@
             <th class="topic" colspan="9"><?= $title ?: '???' ?></th>
         </tr>
         <tr>
-            <th><?= _('Titel') ?></th>
-            <th><?= _('Start') ?></th>
-            <th><?= _('Ende') ?></th>
+            <th><?= $_('Titel') ?></th>
+            <th><?= $_('Start') ?></th>
+            <th><?= $_('Ende') ?></th>
             <th><abbr title="<?= $_('Anzahl der Teilnehmer') ?>">#</abbr></th>
             <th><?= Icon::create('comment', Icon::ROLE_INFO)->asImg(tooltip2($_('Anzahl der Kommentare'))) ?></th>
             <th><?= Icon::create('visibility-visible', Icon::ROLE_INFO)->asImg(tooltip2($_('Öffentlich'))) ?></th>
@@ -44,7 +44,7 @@
             <td class="actions">
         <? if ($stoodle->evaluated): ?>
                 <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
-                    <?= Icon::create('stat')->asImg(tooltip2(_('Ergebnisse ansehen'))) ?>
+                    <?= Icon::create('stat')->asImg(tooltip2($_('Ergebnisse ansehen'))) ?>
                 </a>
         <? else: ?>
             <? if ($stoodle->end_date && $stoodle->end_date < time()): ?>
