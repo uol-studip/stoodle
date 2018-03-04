@@ -6,6 +6,7 @@ use DBManager;
 use Institute;
 use PDO;
 use SimpleORMap;
+use StoodlePlugin;
 
 class Stoodle extends SimpleORMap
 {
