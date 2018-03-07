@@ -3,7 +3,7 @@
         <td class="blank">&nbsp;</td>
         <td class="blank">&nbsp;</td>
         <td colspan="<?= count($stoodle->options) ?>">
-            <?= MessageBox::info($_('Die Antworten der Teilnehmer sind nicht öffentlich einsehbar.')) ?>
+            <?= MessageBox::info($_('Die Antworten der Teilnehmer sind nicht Ã¶ffentlich einsehbar.')) ?>
         </td>
     </tr>
 <? endif; ?>
@@ -35,18 +35,18 @@
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
         <? if ($stoodle->allow_maybe && in_array($id, $options['maybes'])): ?>
-            <?= $plugin->getIcon('question', 'clickable') ?>
+            <?= Icon::create('question') ?>
         <? elseif (in_array($id, $options['selection'])): ?>
-            <?= $plugin->getIcon('accept', 'accept') ?>
+            <?= Icon::create('accept', Icon::ROLE_STATUS_GREEN) ?>
         <? else: ?>
-            <?= $plugin->getIcon('decline', 'attention') ?>
+            <?= Icon::create('decline', Icon::ROLE_STATUS_RED) ?>
         <? endif; ?>
         </td>
     <? endforeach; ?>
 <? else: ?>
     <? foreach (array_keys($stoodle->options) as $id): ?>
         <td>
-            <?= $plugin->getIcon('question', 'inactive') ?>
+            <?= Icon::create('question', Icon::ROLE_INACTIVE) ?>
         </td>
     <? endforeach; ?>
 <? endif; ?>
@@ -55,7 +55,7 @@
 <? if (@$show_mail): ?>
     <tr>
         <th colspan="<?= 2 + count($stoodle->options) ?>" style="text-align: center;">
-            <?= $_('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewählt haben:') ?>
+            <?= $_('Nachricht verschicken an alle Teilnehmer dieser Umfrage, die die folgende(n) Option(en) gewÃ¤hlt haben:') ?>
         </th>
     </tr>
     <tr>

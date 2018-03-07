@@ -27,21 +27,23 @@
 ?>
 
 <noscript>
-    <?= MessageBox::error($_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?>
+    <?= MessageBox::error($_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeintrÃ¤chtigt.')) ?>
 </noscript>
 
 <? if (array_sum($options_count)): ?>
 <?= MessageBox::info(
-        sprintf($_('Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
+        sprintf($_('Diese Umfrage hat bereits %u Teilnehmer. Sie kÃ¶nnen sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
         [
-            $_('Der Typ der Umfrage kann nicht mehr verändert werden.'),
-            $_('Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr verändert werden.')
+            $_('Der Typ der Umfrage kann nicht mehr verÃ¤ndert werden.'),
+            $_('Von Teilnehmern bereits gewÃ¤hlte AntwortmÃ¶glichkeiten kÃ¶nnen nicht mehr verÃ¤ndert werden.')
         ], true) ?>
 <? endif; ?>
 
 <form action="<?= $controller->url_for('admin/edit', $id) ?>" method="post">
-<h3 class="topic"><?= $id ? $_('Umfrage bearbeiten') : $_('Neue Umfrage erstellen') ?></h3>
 <table class="default stoodle">
+    <caption>
+        <?= $id ? $_('Umfrage bearbeiten') : $_('Neue Umfrage erstellen') ?>
+    </caption>
     <colgroup>
         <col width="200">
         <col>
@@ -85,7 +87,7 @@
                 <? endforeach; ?>
                 </select>
             <? if (!$stoodle->isNew()): ?>
-                <?= tooltipIcon($_('Der Typ einer Umfrage kann im Nachhinein nicht mehr geändert werden'), true) ?>
+                <?= tooltipIcon($_('Der Typ einer Umfrage kann im Nachhinein nicht mehr geÃ¤ndert werden'), true) ?>
                 <input type="hidden" name="type" value="<?= $type ?>">
             <? endif; ?>
             </td>
@@ -109,9 +111,9 @@
             <td>
                 <label for="start_date">
                     <?= $_('Start') ?>
-                    <?= tooltipicon($_('Wenn Sie keinen festen Startzeitpunkt angeben möchten, '
-                                    . 'können Sie den Haken bei "offen" setzen, um die '
-                                    . 'Umfrage unverzüglich zu starten.')) ?>
+                    <?= tooltipicon($_('Wenn Sie keinen festen Startzeitpunkt angeben mÃ¶chten, '
+                                    . 'kÃ¶nnen Sie den Haken bei "offen" setzen, um die '
+                                    . 'Umfrage unverzÃ¼glich zu starten.')) ?>
                 </label>
             </td>
             <td colspan="2">
@@ -133,8 +135,8 @@
             <td>
                 <label for="end_date">
                     <?= $_('Ende') ?>
-                    <?= tooltipicon($_('Wenn Sie keinen festen Endzeitpunkt angeben möchten, '
-                                    . 'können Sie den Haken bei "offen" setzen, um die '
+                    <?= tooltipicon($_('Wenn Sie keinen festen Endzeitpunkt angeben mÃ¶chten, '
+                                    . 'kÃ¶nnen Sie den Haken bei "offen" setzen, um die '
                                     . 'Umfrage unbegrenzt laufen zu lassen. Sie muss dann '
                                     . 'manuell in der Verwaltung beendet werden.')) ?>
                 </label>
@@ -181,14 +183,14 @@
         </tr>
         <tr>
             <td>
-                <label for="is_public"><?= $_('Für alle einsehbar') ?></label>
+                <label for="is_public"><?= $_('FÃ¼r alle einsehbar') ?></label>
             </td>
             <td colspan="2">
                 <input type="hidden" name="is_public" value="0">
                 <input type="checkbox" name="is_public" id="is_public" value="1"
                        <? if ($is_public) echo 'checked'; ?>>
                 <?= tooltipicon($_('Die gegebenen Antworten der Teilnehmer sowie '
-                                 .'das Ergebnis der Umfrage sind für andere Teilnehmer '
+                                 .'das Ergebnis der Umfrage sind fÃ¼r andere Teilnehmer '
                                  .'sichtbar.')) ?>
             </td>
         </tr>
@@ -200,7 +202,7 @@
                 <input type="hidden" name="is_anonymous" value="0">
                 <input type="checkbox" name="is_anonymous" id="is_anonymous" value="1"
                        <? if ($is_anonymous) echo 'checked'; ?>>
-                <?= tooltipicon($_('Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
+                <?= tooltipicon($_('Die Namen der Teilnehmer sind fÃ¼r andere Teilnehmer nicht sichtbar.')) ?>
             </td>
         </tr>
         <tr>
@@ -211,7 +213,7 @@
                 <input type="hidden" name="allow_maybe" value="0">
                 <input type="checkbox" name="allow_maybe" id="allow_maybe" value="1"
                        <? if ($allow_maybe) echo 'checked'; ?>>
-                <?= tooltipicon($_('Teilnehmer können auch "Vielleicht" als Antwort geben.')) ?>
+                <?= tooltipicon($_('Teilnehmer kÃ¶nnen auch "Vielleicht" als Antwort geben.')) ?>
             </td>
         </tr>
     </tbody>
@@ -229,7 +231,7 @@
             <th>
                 <input type="checkbox" name="ids[]" value="all" data-proxyfor=".options :checkbox[name='ids[]']">
             </th>
-            <th colspan="3"><?= $_('Antwortmöglichkeiten') ?></th>
+            <th colspan="3"><?= $_('AntwortmÃ¶glichkeiten') ?></th>
         </tr>
     </thead>
     <tbody class="options">
@@ -262,70 +264,70 @@
                         <?= $formatValue($type, $additional) ?>>
                 </span>
             <? if ($options_count[$id]): ?>
-                <small>(<?= sprintf($_('bereits %u Mal gewählt'), $options_count[$id]) ?>)</small>
+                <small>(<?= sprintf($_('bereits %u Mal gewÃ¤hlt'), $options_count[$id]) ?>)</small>
             <? endif; ?>
             </td>
             <td class="actions">
             <? if ($index > 0): ?>
                 <button name="move[up]" value="<?= $index ?>" title="<?= $_('Antwort nach oben verschieben') ?>">
-                    <?= $plugin->getIcon('arr_2up', 'sort', tooltip2($_('Antwort nach oben verschieben'))) ?>
+                    <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach oben verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= $plugin->getIcon('arr_2up', 'inactive') ?>
+                    <?= Icon::create('arr_2up', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? endif; ?>
             <? if ($index < count($options) - 1): ?>
                 <button name="move[down]" value="<?= $index ?>" title="<?= $_('Antwort nach unten verschieben') ?>">
-                    <?= $plugin->getIcon('arr_2down', 'sort', tooltip2($_('Antwort nach unten verschieben'))) ?>
+                    <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach unten verschieben'))) ?>
                 </button>
             <? else: ?>
                 <button disabled>
-                    <?= $plugin->getIcon('arr_2down', 'inactive') ?>
+                    <?= Icon::create('arr_2down', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? endif; ?>
             <? if ($options_count[$id]): ?>
                 <button disabled>
-                    <?= $plugin->getIcon('trash', 'inactive') ?>
+                    <?= Icon::create('trash', Icon::ROLE_INACTIVE) ?>
                 </button>
             <? else: ?>
-                <button name="remove" value="<?= $id ?>" title="<?= $_('Antwort löschen') ?>">
-                    <?= $plugin->getIcon('trash', 'clickable', tooltip2($_('Antwort löschen'))) ?>
+                <button name="remove" value="<?= $id ?>" title="<?= $_('Antwort lÃ¶schen') ?>">
+                    <?= Icon::create('trash')->asImg(tooltip2($_('Antwort lÃ¶schen'))) ?>
                 </button>
             <? endif; ?>
             </td>
         </tr>
     <? $index += 1; endforeach; ?>
+    </tbody>
+    <tfoot>
         <tr>
-            <td colspan="4" class="printhead">
-                <?= Studip\Button::createCancel($_('Markierte Einträge entfernen'), 'remove') ?>
+            <td colspan="4">
+                <?= Studip\Button::createCancel($_('Markierte EintrÃ¤ge entfernen'), 'remove') ?>
                 <div style="float: right;">
                     <select name="add-quantity">
                     <? for ($i = 1; $i <= 10; $i += 1): ?>
                         <option><?= $i ?></option>
                     <? endfor; ?>
                     </select>
-                    <?= Studip\Button::create($_('Weitere Antwortmöglichkeit(en) hinzufügen'), 'add') ?>
+                    <?= Studip\Button::create($_('Weitere AntwortmÃ¶glichkeit(en) hinzufÃ¼gen'), 'add') ?>
                 </div>
             </td>
         </tr>
-    </tbody>
+    </tfoot>
 </table>
 
-<div style="text-align: center;">
-    <div class="button-group">
+<div style="text-align: center">
         <?= Studip\Button::createAccept($_('Speichern'), 'store') ?>
         <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->url_for('admin')) ?>
-    </div>
 </div>
 </form>
 
-<? if (count($answers)): ?>
-<h3 class="topic">
-    <?= _('Teilnehmerliste') ?>
-</h3>
+<? if (count($answers) > 0): ?>
 <form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post" data-dialog>
 <table class="default stoodle-list">
+    <caption>
+        <?= $_('Teilnehmerliste') ?>
+    </caption>
     <thead>
         <tr>
             <td colspan="2">&nbsp;</td>
@@ -335,14 +337,14 @@
         </tr>
     </thead>
     <tbody>
-        <?= $this->render_partial('stoodle-participants', array('show_mail' => !$stoodle->is_anonymous, 'admin' => true)) ?>
+        <?= $this->render_partial('stoodle-participants', ['show_mail' => !$stoodle->is_anonymous, 'admin' => true]) ?>
     </tbody>
 <? if (!$stoodle->is_anonymous): ?>
     <tfoot>
         <tr>
             <td colspan="<?= 2 + count($stoodle->options) ?>">
                 <?= Studip\Button::createAccept($_('Nachricht verschicken')) ?>
-                <?= Studip\ResetButton::create($_('Auswahl zurücksetzen')) ?>
+                <?= Studip\ResetButton::create($_('Auswahl zurÃ¼cksetzen')) ?>
             </td>
         </tr>
     </tfoot>

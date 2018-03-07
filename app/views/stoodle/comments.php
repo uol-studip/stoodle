@@ -14,7 +14,7 @@
     <form action="<?= $controller->url_for('stoodle/comment', $stoodle->stoodle_id) ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <fieldset>
-            <legend><?= $_('Kommentar hinzufügen') ?></legend>
+            <legend><?= $_('Kommentar hinzufÃ¼gen') ?></legend>
 
             <div class="type-text">
                 <textarea class="add_toolbar" name="comment"></textarea>
@@ -47,7 +47,7 @@
                         <li><?= date('d.m.y H:i', $comment->mkdate) ?></li>
                         <li>
                             <a href="<?= URLHelper::getURL('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
-                                <?= $user->getFullName() ?>
+                                <?= htmlReady($user->getFullName()) ?>
                             </a>
                         </li>
                     <? if ($comment->user_id == $GLOBALS['user']->id
@@ -56,8 +56,8 @@
 
                     ?>
                         <li>
-                            <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>">
-                                <?= $plugin->getIcon('trash', 'clickable', ['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
+                            <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>" data-confirm="<?= $_('Soll der Kommentar wirklich gelÃ¶scht werden?') ?>">
+                                <?= Icon::create('trash')->asImg(['class' => 'text-top'] + tooltip2($_('Kommentar lÃ¶schen'))) ?>
                             </a>
                         </li>
                     <? endif; ?>
@@ -69,7 +69,7 @@
             <tr class="more-comments">
                 <td colspan="2" class="topic">
                     <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id, 'all') ?>#comments">
-                        <?= $plugin->getIcon('arr_1down', 'info_alt') ?>
+                        <?= Icon::create('arr_1down', Icon::ROLE_INFO_ALT) ?>
                         <? if ($spillover == 1): ?>
                             <?= $_('1 weiterer Kommentar') ?>
                         <? else: ?>

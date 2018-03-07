@@ -62,7 +62,6 @@ class AdminController extends StudipController
     {
         parent::before_filter($action, $args);
 
-        PageLayout::setTitle($this->_('Stoodle'));
         Navigation::activateItem('/course/stoodle/administration');
 
         $layout = $this->get_template_factory()->open('layout.php');
@@ -78,7 +77,7 @@ class AdminController extends StudipController
         // We need this since the messaging section of Stud.IP still uses the old
         // mechanism to display messages
         if (!empty($_SESSION['sms_msg'])) {
-            $msgs = array_chunk(explode('§', $_SESSION['sms_msg']), 2);
+            $msgs = array_chunk(explode('Â§', $_SESSION['sms_msg']), 2);
             foreach ($msgs as $msg) {
                 if ($msg[0] === 'msg') {
                     $type = 'success';
@@ -105,7 +104,7 @@ class AdminController extends StudipController
         $actions->addLink(
             $this->_('Neue Umfrage erstellen'),
             $this->url_for('admin/edit'),
-            $this->plugin->getIcon('add', 'clickable')
+            Icon::create('add')
         );
         Sidebar::get()->addWidget($actions);
     }
@@ -151,7 +150,7 @@ class AdminController extends StudipController
             if (empty($index)) {
                 $ids = Request::optionArray('ids');
                 if (in_array('all', $ids)) {
-                    $this->options = array();
+                    $this->options = [];
                 } else {
                     foreach ($ids as $id) {
                         unset($this->options[$id]);
@@ -184,8 +183,8 @@ class AdminController extends StudipController
                 $this->options[Option::getNewId()] = $value;
             }
             $this->focussed = count($this->options);
-        } elseif (Request::submitted('store')) {
-            $errors = array();
+        } else if (Request::submitted('store')) {
+            $errors = [];
 
             if (empty($this->title)) {
                 $errors[] = $this->_('Bitte geben Sie einen Titel an');
@@ -196,11 +195,11 @@ class AdminController extends StudipController
 
             $this->options = $this->reduceOptions($this->options, $invalid);
             if (count($this->options) < 1) {
-                $errors[] = $this->_('Bitte geben Sie mindestens eine Antwortmöglichkeit ein.');
+                $errors[] = $this->_('Bitte geben Sie mindestens eine AntwortmÃ¶glichkeit ein.');
             }
 
             if (count($invalid) > 0) {
-                $errors[] = $this->_('Sie haben nicht alle Zeitspannen gültig ausgefüllt (fehlendes Start- bzw. Enddatum).');
+                $errors[] = $this->_('Sie haben nicht alle Zeitspannen gÃ¼ltig ausgefÃ¼llt (fehlendes Start- bzw. Enddatum).');
             }
 
             if (empty($errors)) {
@@ -235,14 +234,14 @@ class AdminController extends StudipController
         }
 
         if (empty($this->options)) {
-            $this->options = array('');
+            $this->options = [''];
         }
         $this->stoodle = $stoodle;
     }
 
-    private function extractOptions($defaults = array(), $include_additional = false)
+    private function extractOptions($defaults = [], $include_additional = false)
     {
-        $options = Request::getArray('options') ?: $defaults ?: array(Option::getNewId() => '');
+        $options = Request::getArray('options') ?: $defaults ?: [Option::getNewId() => ''];
 
         if ($include_additional && isset($_REQUEST['options'], $_REQUEST['additional'])) {
             $additional = Request::getArray('additional');
@@ -259,9 +258,9 @@ class AdminController extends StudipController
         return $options;
     }
 
-    private function reduceOptions($options, &$invalid = array())
+    private function reduceOptions($options, &$invalid = [])
     {
-        $result = $invalid = array();
+        $result = $invalid = [];
         foreach ($options as $id => $option) {
             if (empty($option) || ($this->type === 'range' && $option === '-')) {
                 continue;
@@ -304,7 +303,7 @@ class AdminController extends StudipController
         }
 
         if (Request::submitted('evaluate')) {
-            $details = array();
+            $details = [];
 
             $stoodle->evaluated     = time();
             $stoodle->evaluated_uid = $GLOBALS['user']->id;
@@ -322,7 +321,7 @@ class AdminController extends StudipController
                 $target = Request::option('appointments_for');
                 if ($target === 'valid') {
                     $answers = $stoodle->getAnswers();
-                    $targets = array();
+                    $targets = [];
 
                     foreach ($answers as $user_id => $answer) {
                         $temp = array_merge($answer['selection'], $answer['maybes']);
@@ -334,7 +333,7 @@ class AdminController extends StudipController
                     $answers = $stoodle->getAnswers();
                     $targets = array_keys($answers);
                 } else {
-                    $targets = array();
+                    $targets = [];
                     foreach (['', 'autor', 'tutor', 'dozent'] as $type) {
                         $temp    = $stoodle->getRangeMembers($type);
                         $ids     = array_keys($temp);
@@ -361,7 +360,7 @@ class AdminController extends StudipController
                         $calendar->event->setProperty('STUDIP_CATEGORY', 1);
                         $calendar->event->setProperty('CATEGORIES', '');
                         $calendar->event->setProperty('CLASS', 'PRIVATE');
-                        $calendar->event->setRepeat(array('rtype' => 'SINGLE', 'expire' => Calendar::CALENDAR_END));
+                        $calendar->event->setRepeat(['rtype' => 'SINGLE', 'expire' => Calendar::CALENDAR_END]);
                         $calendar->event->save();
                     }
                 }
@@ -370,7 +369,7 @@ class AdminController extends StudipController
                 URLHelper::addLinkParam('cid', $this->range_id);
 
                 $details[] = sprintf(
-                    $this->_('Es wurden %u Termin(e) für %u Person(en) eingetragen.'),
+                    $this->_('Es wurden %u Termin(e) fÃ¼r %u Person(en) eingetragen.'),
                     count($targets) * count($results),
                     count($results)
                 );
@@ -402,7 +401,7 @@ class AdminController extends StudipController
         $stoodle = Stoodle::find($id);
         $stoodle->delete();
 
-        PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelöscht.'));
+        PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelÃ¶scht.'));
         $this->redirect('admin');
     }
 
@@ -416,19 +415,19 @@ class AdminController extends StudipController
 
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
-            PageLayout::postError($this->_('Sie haben keine Empfänger ausgewählt.'));
+            PageLayout::postError($this->_('Sie haben keine EmpfÃ¤nger ausgewÃ¤hlt.'));
             $this->relocate('admin/edit/' . $id);
             return;
         }
 
         foreach ($mail_to as $value) {
             if ($value === 'all') {
-                $mail_to = array('all');
+                $mail_to = ['all'];
                 break;
             }
         }
 
-        $recipients = array();
+        $recipients = [];
         foreach ($mail_to as $option_id) {
             if ($option_id === 'all') {
                 $recipients = array_keys($stoodle->getAnswers());
@@ -438,17 +437,24 @@ class AdminController extends StudipController
         }
 
         if (empty($mail_to)) {
-            PageLayout::postError($this->_('Es wurden keine gültigen Empfänger gefunden.'));
-            $this->relocate('admin/edit/' . $id);
+            PageLayout::postError($this->_('Es wurden keine gÃ¼ltigen EmpfÃ¤nger gefunden.'));
+            $this->relocate("admin/edit/{$id}");
             return;
         }
 
         $recipients = array_filter(array_map('get_username', $recipients));
-        $parameters = array(
+        $url = $this->url_for('admin/edit', $id);
+        if (mb_strlen(dirname($_SERVER['SCRIPT_NAME'])) > 1) {
+            $url = str_replace(dirname($_SERVER['SCRIPT_NAME']), '', $url);
+        }
+        $url = ltrim($url, '/');
+        $parameters = [
             'rec_uname' => $recipients,
-            'default_subject'   => sprintf('Stoodle "%s"', $stoodle->title),
-        );
+            'subject'   => sprintf('Stoodle "%s"', $stoodle->title),
+            'sms_source_page' => $url,
+        ];
         $url = URLHelper::getURL('dispatch.php/messages/write', $parameters);
+
         $this->redirect($url);
     }
 }
