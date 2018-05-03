@@ -243,7 +243,9 @@
         <tr>
             <td>
                 <input type="checkbox" name="ids[]" value="<?= $id ?>"
-                       <? if ($options_count[$id]) echo 'disabled'; ?>>
+                       <?= $options_count[$id]
+                         ? 'readonly'
+                         : '' ?>>
             </td>
             <td>
                 #<?= $index + 1 ?>
@@ -252,7 +254,9 @@
                 <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                        name="options[<?= $id ?>]"
                        data-type="<?= $type ?>"
-                    <? if ($options_count[$id]) echo 'disabled'; ?>
+                       <?= $options_count[$id]
+                         ? 'readonly'
+                         : '' ?>
                     <?= $formatValue($type, $value) ?>
                     <? if (isset($focussed) && $focussed == $index) echo 'autofocus'; ?>>
                 <span class="type-range">
@@ -260,7 +264,9 @@
                     <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                         data-type="<?= $type ?>"
                         name="additional[<?= $id ?>]"
-                        <? if ($options_count[$id]) echo 'disabled'; ?>
+                           <?= $options_count[$id]
+                             ? 'readonly'
+                             : '' ?>
                         <?= $formatValue($type, $additional) ?>>
                 </span>
             <? if ($options_count[$id]): ?>
