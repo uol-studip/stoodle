@@ -79,7 +79,7 @@
                 <label for="type"><?= $_('Typ') ?></label>
             </td>
             <td colspan="2">
-                <select id="type" name="type" <? if (!$stoodle->isNew()) echo 'disabled'; ?>>
+                <select id="type" name="type" <? if (!$stoodle->isNew()) echo 'readonly'; ?>>
                 <? foreach ($types as $t => $n): ?>
                     <option value="<?= $t ?>" <? if ($type == $t) echo 'selected'; ?>>
                         <?= htmlReady($n) ?>
@@ -243,7 +243,7 @@
         <tr>
             <td>
                 <input type="checkbox" name="ids[]" value="<?= $id ?>"
-                       <? if ($options_count[$id]) echo 'disabled'; ?>>
+                       <? if ($options_count[$id]) echo 'readonly'; ?>>
             </td>
             <td>
                 #<?= $index + 1 ?>
@@ -252,7 +252,7 @@
                 <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                        name="options[<?= $id ?>]"
                        data-type="<?= $type ?>"
-                    <? if ($options_count[$id]) echo 'disabled'; ?>
+                    <? if ($options_count[$id]) echo 'readonly'; ?>
                     <?= $formatValue($type, $value) ?>
                     <? if (isset($focussed) && $focussed == $index) echo 'autofocus'; ?>>
                 <span class="type-range">
@@ -260,7 +260,7 @@
                     <input type="<?= in_array($type, ['range', 'time', 'date', 'datetime']) ? 'text' : $type ?>"
                         data-type="<?= $type ?>"
                         name="additional[<?= $id ?>]"
-                        <? if ($options_count[$id]) echo 'disabled'; ?>
+                        <? if ($options_count[$id]) echo 'readonly'; ?>
                         <?= $formatValue($type, $additional) ?>>
                 </span>
             <? if ($options_count[$id]): ?>
