@@ -269,31 +269,34 @@
             </td>
             <td class="actions">
             <? if ($index > 0): ?>
-                <button name="move[up]" value="<?= $index ?>" title="<?= $_('Antwort nach oben verschieben') ?>">
-                    <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach oben verschieben'))) ?>
-                </button>
+                <?= Icon::create('arr_2up', Icon::ROLE_SORT)->asInput(tooltip2($_('Antwort nach oben verschieben')) + [
+                    'name'  => 'move[up]',
+                    'value' => $index,
+                ]) ?>
             <? else: ?>
-                <button disabled>
-                    <?= Icon::create('arr_2up', Icon::ROLE_INACTIVE) ?>
-                </button>
+                <?= Icon::create('arr_2up', Icon::ROLE_INACTIVE)->asInput([
+                    'disabled' => '',
+                ]) ?>
             <? endif; ?>
             <? if ($index < count($options) - 1): ?>
-                <button name="move[down]" value="<?= $index ?>" title="<?= $_('Antwort nach unten verschieben') ?>">
-                    <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asImg(tooltip2($_('Antwort nach unten verschieben'))) ?>
-                </button>
+                <?= Icon::create('arr_2down', Icon::ROLE_SORT)->asInput(tooltip2($_('Antwort nach unten verschieben')) + [
+                    'name'  => 'move[down]',
+                    'value' => $index,
+                ]) ?>
             <? else: ?>
-                <button disabled>
-                    <?= Icon::create('arr_2down', Icon::ROLE_INACTIVE) ?>
-                </button>
+                <?= Icon::create('arr_2down', Icon::ROLE_INACTIVE)->asInput([
+                    'disabled' => '',
+                ]) ?>
             <? endif; ?>
             <? if ($options_count[$id]): ?>
-                <button disabled>
-                    <?= Icon::create('trash', Icon::ROLE_INACTIVE) ?>
-                </button>
+                <?= Icon::create('trash', Icon::ROLE_INACTIVE)->asInput([
+                    'disabled' => '',
+                ]) ?>
             <? else: ?>
-                <button name="remove" value="<?= $id ?>" title="<?= $_('Antwort löschen') ?>">
-                    <?= Icon::create('trash')->asImg(tooltip2($_('Antwort löschen'))) ?>
-                </button>
+                <?= Icon::create('trash')->asInput(tooltip2($_('Antwort löschen')) + [
+                    'name'  => 'remove',
+                    'value' => $id,
+                ]) ?>
             <? endif; ?>
             </td>
         </tr>

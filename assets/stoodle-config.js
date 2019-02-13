@@ -113,6 +113,8 @@
 jQuery(function ($) {
     'use strict';
 
+    var transparent_gif = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+
     function pad(what, length, padding) {
         var str = (typeof what === 'number') ? what.toFixed(0) : what;
         while (str.length < length) {
@@ -130,10 +132,28 @@ jQuery(function ($) {
     //     $(this).parent().siblings('.datetime').attr('disabled', true);
     // });
     //
-    $('.stoodle').on('click', 'button[name=remove]', function () {
-        var $that    = $(this).attr('disabled', true),
-            value    = $that.val(),
-            row      = $that.closest('tr'),
+    $('.stoodle').on('click', 'tfoot button[name=remove]', function () {
+        var form     = $(this).closest('form'),
+            action   = form.attr('action'),
+            formdata = form.serializeArray();
+
+        $(this).removeClass('cancel').attr('disabled', true);
+        $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
+
+        formdata.push({name: 'remove', value: ''});
+        $.post(action, formdata).done(function (response, status, xhr) {
+            var options = $('.options', response);
+            $('.options', form).replaceWith(options);
+
+            $('select#type').change();
+        }).always(function () {
+            $(this).attr('disabled', false).addClass('cancel').find('span.ajaxing').remove();
+        }.bind(this));
+
+        return false;
+    }).on('click', 'tbody.options input[name=remove]', function () {
+        var value    = $(this).val(),
+            row      = $(this).closest('tr'),
             form     = row.closest('form'),
             action   = form.attr('action'),
             formdata = form.serializeArray();
@@ -143,10 +163,13 @@ jQuery(function ($) {
             return false;
         }
 
-        $that.find('img').replaceWith('<span class="ajaxing"/>');
+        $(this).attr({
+            disabled: true,
+            src: transparent_gif
+        }).addClass('ajaxing');
 
         formdata.push({name: 'remove', value: value});
-        $.post(action, formdata, function (response, status, xhr) {
+        $.post(action, formdata).done(function (response, status, xhr) {
             var options = $('.options', response);
             $('.options', form).replaceWith(options);
 
@@ -158,23 +181,23 @@ jQuery(function ($) {
         });
 
         return false;
-    });
-
-    $('.stoodle').on('click', 'button[name=add]', function () {
-        var $that    = $(this).attr('disabled', true),
-            form     = $that.closest('form'),
+    }).on('click', 'button[name=add]', function () {
+        var form     = $(this).closest('form'),
             action   = form.attr('action'),
             formdata = form.serializeArray();
 
-        $('<span/>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo($that);
+        $(this).attr('disabled', true);
+        $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
 
         formdata.push({name: 'add', value: ''});
-        $.post(action, formdata, function (response, status, xhr) {
+        $.post(action, formdata).done(function (response, status, xhr) {
             var options = $('.options', response);
             $('.options', form).replaceWith(options);
 
             $('select#type').change();
-        });
+        }).always(function () {
+            $(this).attr('disabled', false).find('span.ajaxing').remove();
+        }.bind(this));
 
         return false;
     });
