@@ -244,7 +244,7 @@ jQuery(function ($) {
 
             if (!$('.type-range', this).toggle(type === 'range').data('stoodled')) {
                 $('.type-range', this).data('stoodled', true);
-                $('.type-range input:not([type=hidden])', this).init_input('datetime');
+                $('.type-range input[data-type]:not([type=hidden])', this).init_input('datetime');
             }
         });
     }).change();

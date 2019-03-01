@@ -13,7 +13,7 @@
             <tr>
                 <td colspan="2">&nbsp;</td>
             <? foreach ($stoodle->options as $id => $option): ?>
-                <th><?= $stoodle->formatOption($id) ?></th>
+                <th><?= htmlReady($stoodle->formatOption($id), true, true) ?></th>
             <? endforeach; ?>
             </tr>
         </thead>
@@ -23,7 +23,9 @@
             <tr>
                 <td colspan="2">&nbsp;</td>
             <? foreach ($stoodle->options as $id => $option): ?>
-                <th style="text-align: center;"><?= $stoodle->formatOption($id) ?></th>
+                <th style="text-align: center;">
+                    <?= htmlReady($stoodle->formatOption($id), true, true) ?>
+                </th>
             <? endforeach; ?>
             </tr>
         <? endif; ?>

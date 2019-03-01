@@ -80,8 +80,6 @@ class StoodleController extends StudipController
         $layout = $this->get_template_factory()->open('layout.php');
         $layout->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         $this->set_layout($layout);
-
-        $this->range_id = $this->dispatcher->range_id;
     }
 
     /**
@@ -100,8 +98,8 @@ class StoodleController extends StudipController
      */
     public function display_action($id, $comments = null)
     {
-        $this->stoodle  = new Stoodle($id);
-        $this->comments = ($comments === 'all');
+        $this->stoodle  = Stoodle::find($id);
+        $this->comments = $comments === 'all';
 
         if ($this->stoodle->start_date && $this->stoodle->start_date > time()) {
             PageLayout::postError($this->_('Die Umfrage wurde noch nicht gestartet. Sie können noch nicht teilnehmen.'));

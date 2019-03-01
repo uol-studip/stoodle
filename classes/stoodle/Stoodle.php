@@ -159,11 +159,16 @@ class Stoodle extends SimpleORMap
 
         switch ($raw ?: $this->type) {
             case 'range':
-                list($start, $end) = explode('-', $value);
+                list($start, $end, $comment) = explode('-', $value);
                 $same_day = (date('Ymd', $start) === date('Ymd', $end));
-                return strftime($same_day ? $templates['date'] . ' ' . $templates['short-time'] : $templates['datetime'], $start)
-                     . ' - '
-                     . strftime($same_day ? $templates['time'] : $templates['datetime'], $end);
+                $result = implode(' - ', [
+                    strftime($same_day ? $templates['date'] . ' ' . $templates['short-time'] : $templates['datetime'], $start),
+                    strftime($same_day ? $templates['time'] : $templates['datetime'], $end),
+                ]);
+                if ($comment) {
+                    $result .= "\n({$comment})";
+                }
+                return $result;
             case 'date':
             case 'time':
             case 'datetime':

@@ -245,11 +245,15 @@ class AdminController extends StudipController
 
         if ($include_additional && isset($_REQUEST['options'], $_REQUEST['additional'])) {
             $additional = Request::getArray('additional');
+            $comments   = Request::getArray('comment');
             foreach ($options as $id => $value) {
                 if (isset($additional[$id]) and $additional[$id] and $additional[$id] < $value) {
                     $value = $additional[$id] . '-' . $value;
                 } else {
-                    $value .= '-' . $additional[$id];
+                    $value .= "-{$additional[$id]}";
+                }
+                if (isset($comments[$id])) {
+                    $value .= "-{$comments[$id]}";
                 }
                 $options[$id] = $value;
             }

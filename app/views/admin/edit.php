@@ -237,7 +237,7 @@
     <tbody class="options">
     <? $index = 0; foreach ($options as $id => $value):
            if ($type === 'range') {
-               list($value, $additional) = explode('-', $value);
+               list($value, $additional, $comment) = explode('-', $value);
            }
     ?>
         <tr>
@@ -262,6 +262,11 @@
                         name="additional[<?= $id ?>]"
                         <? if ($options_count[$id]) echo 'readonly'; ?>
                         <?= $formatValue($type, $additional) ?>>
+                    <?= $_('Kommentar') ?>
+                    <input type="text"
+                           name="comment[<?= $id ?>]"
+                           value="<?= htmlReady($comment) ?>"
+                           <? if ($options_count[$id]) echo 'readonly'; ?>>
                 </span>
             <? if ($options_count[$id]): ?>
                 <small>(<?= sprintf($_('bereits %u Mal gewählt'), $options_count[$id]) ?>)</small>
