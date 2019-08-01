@@ -30,11 +30,12 @@
     <?= MessageBox::error($_('Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser Seite beeinträchtigt.')) ?>
 </noscript>
 
-<? if (array_sum($options_count)): ?>
+<? if (!$editable): ?>
 <?= MessageBox::info(
         sprintf($_('Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
         [
             $_('Der Typ der Umfrage kann nicht mehr verändert werden.'),
+            $_('Die Umfrage kann nicht mehr auf "nicht anonym" gestellt werden, falls sie "anonym" war.'),
             $_('Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr verändert werden.')
         ], true) ?>
 <? endif; ?>
@@ -201,7 +202,8 @@
             <td colspan="2">
                 <input type="hidden" name="is_anonymous" value="0">
                 <input type="checkbox" name="is_anonymous" id="is_anonymous" value="1"
-                       <? if ($is_anonymous) echo 'checked'; ?>>
+                       <? if ($is_anonymous) echo 'checked'; ?>
+                       <? if (!$editable && $is_anonymous) echo 'disabled'; ?>>
                 <?= tooltipicon($_('Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
             </td>
         </tr>

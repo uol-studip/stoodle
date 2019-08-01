@@ -130,8 +130,12 @@ class AdminController extends StudipController
         $this->options        = $this->extractOptions($stoodle->options, $this->type === 'range');
         $this->options_count  = $stoodle->getOptionsCount(null);
         $this->answers        = $stoodle->getAnswers();
+        $this->editable       = array_sum($this->options_count) === 0;
 
-#        echo '<pre>';var_dump($_REQUEST);die;
+        // Ensure anonymous cannot be changed when at least one answer has been given
+        if (!$this->editable && $stoodle->getPristineValue('is_anonymous') && !$this->is_anonymous) {
+            $this->is_anonymous = true;
+        }
 
         if (Request::submitted('move')) {
             list($direction, $index) = each(Request::getArray('move'));
@@ -183,7 +187,7 @@ class AdminController extends StudipController
                 $this->options[Option::getNewId()] = $value;
             }
             $this->focussed = count($this->options);
-        } else if (Request::submitted('store')) {
+        } elseif (Request::submitted('store')) {
             $errors = [];
 
             if (empty($this->title)) {

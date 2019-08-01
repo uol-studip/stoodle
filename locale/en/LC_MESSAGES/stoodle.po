@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the StoodlePlugin package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Stefan Osterloh <stefan.osterloh@uni-oldenburg.de>, 2019
+# Jan-Hendrik Willms <tleilax@gmail.com>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: StoodlePlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-02 13:30+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Jan-Hendrik Willms <tleilax@gmail.com>, 2017\n"
+"POT-Creation-Date: 2019-08-01 09:44+0200\n"
+"PO-Revision-Date: 2017-06-02 17:11+0000\n"
+"Last-Translator: Jan-Hendrik Willms <tleilax@gmail.com>, 2019\n"
 "Language-Team: English (https://www.transifex.com/uol-it/teams/52597/en/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,6 +126,9 @@ msgstr "The response \"maybe\" was allowed."
 
 msgid "Kommentare waren erlaubt."
 msgstr "Comments were allowed."
+
+msgid "Verwaltung"
+msgstr "University Administration"
 
 msgid "Neue Umfrage erstellen"
 msgstr "Create new survey"
@@ -283,14 +290,15 @@ msgstr "Period"
 msgid "Freitext"
 msgstr "Text"
 
-msgid "%d.%m.%Y"
-msgstr "%d.%m.%Y"
+#, php-format
+msgid "%x"
+msgstr "%x"
 
-msgid "%H:%M Uhr"
-msgstr "%H:%M"
+msgid "%R Uhr"
+msgstr "%R o'clock"
 
-msgid "%d.%m.%Y %H:%M"
-msgstr "%d.%m.%Y %H:%M"
+msgid "%x %R"
+msgstr "%x %R"
 
 msgid ""
 "Sie haben Javascript deaktiviert. Dadurch ist die Funktionsweise dieser "
@@ -307,6 +315,11 @@ msgstr ""
 
 msgid "Der Typ der Umfrage kann nicht mehr verändert werden."
 msgstr "The type of the survey cannot be changed."
+
+msgid ""
+"Die Umfrage kann nicht mehr auf \"nicht anonym\" gestellt werden, falls sie "
+"\"anonym\" war."
+msgstr "The survey can no longer be set to \"not anonymous\" if it was \"anonymous\"."
 
 msgid ""
 "Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr "
@@ -382,6 +395,9 @@ msgstr "Response options"
 
 msgid "bis"
 msgstr "to"
+
+msgid "Kommentar"
+msgstr "Comment"
 
 #, php-format
 msgid "bereits %u Mal gewählt"
@@ -499,6 +515,9 @@ msgstr "%d.%m."
 msgid "%d.%m. %H:%M Uhr"
 msgstr "%d.%m. %H:%M"
 
+msgid "%H:%M Uhr"
+msgstr "%H:%M"
+
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -536,5 +555,13 @@ msgstr "Stoodle"
 msgid "Übersicht"
 msgstr "Overview"
 
-msgid "Verwaltung"
-msgstr "University Administration"
+msgid "Stoodle: keine laufenden Umfragen"
+msgstr "Stoodle: no surveys available"
+
+#, php-format
+msgid "%u laufende Umfrage(n)"
+msgstr "%u ongoing survey(s)"
+
+#, php-format
+msgid "an %u noch nicht teilgenommen"
+msgstr "not yet participated in %u"

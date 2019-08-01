@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: StoodlePlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-02 13:30+0100\n"
+"POT-Creation-Date: 2019-08-01 09:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,6 +119,9 @@ msgid "Eine Angabe von \"vielleicht\" war erlaubt."
 msgstr ""
 
 msgid "Kommentare waren erlaubt."
+msgstr ""
+
+msgid "Verwaltung"
 msgstr ""
 
 msgid "Neue Umfrage erstellen"
@@ -280,13 +283,14 @@ msgstr ""
 msgid "Freitext"
 msgstr ""
 
-msgid "%d.%m.%Y"
+#, php-format
+msgid "%x"
 msgstr ""
 
-msgid "%H:%M Uhr"
+msgid "%R Uhr"
 msgstr ""
 
-msgid "%d.%m.%Y %H:%M"
+msgid "%x %R"
 msgstr ""
 
 msgid ""
@@ -301,6 +305,11 @@ msgid ""
 msgstr ""
 
 msgid "Der Typ der Umfrage kann nicht mehr verändert werden."
+msgstr ""
+
+msgid ""
+"Die Umfrage kann nicht mehr auf \"nicht anonym\" gestellt werden, falls sie "
+"\"anonym\" war."
 msgstr ""
 
 msgid ""
@@ -367,6 +376,9 @@ msgid "Antwortmöglichkeiten"
 msgstr ""
 
 msgid "bis"
+msgstr ""
+
+msgid "Kommentar"
 msgstr ""
 
 #, php-format
@@ -483,6 +495,9 @@ msgstr ""
 msgid "%d.%m. %H:%M Uhr"
 msgstr ""
 
+msgid "%H:%M Uhr"
+msgstr ""
+
 msgid "%H:%M"
 msgstr ""
 
@@ -520,5 +535,13 @@ msgstr ""
 msgid "Übersicht"
 msgstr ""
 
-msgid "Verwaltung"
+msgid "Stoodle: keine laufenden Umfragen"
+msgstr ""
+
+#, php-format
+msgid "%u laufende Umfrage(n)"
+msgstr ""
+
+#, php-format
+msgid "an %u noch nicht teilgenommen"
 msgstr ""
