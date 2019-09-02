@@ -30,7 +30,7 @@
                 <?= $_('unbegrenzt') ?>
             <? endif; ?>
             </td>
-            <td><?= count($stoodle->getAnswers()) ?></td>
+            <td><?= count($stoodle->answers) ?></td>
             <td>
             <? if ($stoodle->userParticipated()): ?>
             <?= Icon::create('checkbox-checked', Icon::ROLE_INFO) ?>
@@ -39,7 +39,7 @@
             <? endif; ?>
             </td>
             <td class="actions">
-                <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->display($stoodle) ?>">
                     <?= Icon::create($stoodle->userParticipated() ? 'test' : 'vote')->asImg(
                         tooltip2($_('An der Umfrage teilnehmen')), ['class' => 'text-top']
                     ) ?>
@@ -76,7 +76,7 @@
             <? endif; ?>
             </td>
             <td class="actions">
-                <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->result($stoodle) ?>">
                     <?= Icon::create('stat')->asImg(tooltip2($_('Ergebnisse ansehen'))) ?>
                 </a>
             </td>

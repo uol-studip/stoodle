@@ -13,9 +13,9 @@
         }
 
         $templates = [
-            'date'     => $_('%d.%m.%Y'),
-            'time'     => $_('%H:%M Uhr'),
-            'datetime' => $_('%d.%m.%Y %H:%M'),
+            'date'     => $_('%x'),
+            'time'     => $_('%R Uhr'),
+            'datetime' => $_('%x %R'),
         ];
 
         if ($type === 'range') {
@@ -32,18 +32,19 @@
 
 <? if (!$editable): ?>
 <?= MessageBox::info(
-        sprintf($_('Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
+        sprintf($_('Diese Umfrage hat bereits %u Teilnehmende. Sie können sie daher nicht mehr in vollem Umfang bearbeiten.'), count($answers)),
         [
             $_('Der Typ der Umfrage kann nicht mehr verändert werden.'),
             $_('Die Umfrage kann nicht mehr auf "nicht anonym" gestellt werden, falls sie "anonym" war.'),
-            $_('Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr verändert werden.')
+            $_('Das Antwortlimit kann ggf. nicht mehr frei gewählt werden.'),
+            $_('Von Teilnehmenden bereits gewählte Antwortmöglichkeiten können nicht mehr verändert werden.')
         ], true) ?>
 <? endif; ?>
 
-<form action="<?= $controller->url_for('admin/edit', $id) ?>" method="post">
+<form action="<?= $controller->edit($stoodle) ?>" method="post">
 <table class="default stoodle">
     <caption>
-        <?= $id ? $_('Umfrage bearbeiten') : $_('Neue Umfrage erstellen') ?>
+        <?= $stoodle->isNew() ? $_('Neue Umfrage erstellen') : $_('Umfrage bearbeiten') ?>
     </caption>
     <colgroup>
         <col width="200">
@@ -80,7 +81,10 @@
                 <label for="type"><?= $_('Typ') ?></label>
             </td>
             <td colspan="2">
-                <select id="type" name="type" <? if (!$stoodle->isNew()) echo 'readonly'; ?>>
+            <? if (!$stoodle->isNew()): ?>
+                <input type="hidden" name="type" value="<?= htmlReady($type) ?>">
+            <? endif; ?>
+                <select id="type" name="type" <? if (!$stoodle->isNew()) echo 'disabled'; ?>>
                 <? foreach ($types as $t => $n): ?>
                     <option value="<?= $t ?>" <? if ($type == $t) echo 'selected'; ?>>
                         <?= htmlReady($n) ?>
@@ -190,8 +194,8 @@
                 <input type="hidden" name="is_public" value="0">
                 <input type="checkbox" name="is_public" id="is_public" value="1"
                        <? if ($is_public) echo 'checked'; ?>>
-                <?= tooltipicon($_('Die gegebenen Antworten der Teilnehmer sowie '
-                                 .'das Ergebnis der Umfrage sind für andere Teilnehmer '
+                <?= tooltipIcon($_('Die gegebenen Antworten der Teilnehmenden sowie '
+                                 .'das Ergebnis der Umfrage sind für andere Teilnehmende '
                                  .'sichtbar.')) ?>
             </td>
         </tr>
@@ -204,7 +208,7 @@
                 <input type="checkbox" name="is_anonymous" id="is_anonymous" value="1"
                        <? if ($is_anonymous) echo 'checked'; ?>
                        <? if (!$editable && $is_anonymous) echo 'disabled'; ?>>
-                <?= tooltipicon($_('Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar.')) ?>
+                <?= tooltipIcon($_('Die Namen der Teilnehmenden sind für andere Teilnehmende nicht sichtbar.')) ?>
             </td>
         </tr>
         <tr>
@@ -215,7 +219,23 @@
                 <input type="hidden" name="allow_maybe" value="0">
                 <input type="checkbox" name="allow_maybe" id="allow_maybe" value="1"
                        <? if ($allow_maybe) echo 'checked'; ?>>
-                <?= tooltipicon($_('Teilnehmer können auch "Vielleicht" als Antwort geben.')) ?>
+                <?= tooltipIcon($_('Teilnehmende können auch "Vielleicht" als Antwort geben.')) ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="max_answers"><?= $_('Antwortlimit') ?></label>
+            </td>
+            <td colspan="2">
+                <select name="max_answers" id="max_answers">
+                    <option value=""><?= $_('Kein Limit') ?></option>
+                <? for ($i = 1; $i <= 255; $i += 1): ?>
+                    <option value="<?= $i ?>" <? if ($i == $max_answers) echo 'selected'; ?> <? if ($i < $max_answered) echo 'disabled'; ?>>
+                        <?= $i ?>
+                    </option>
+                <? endfor; ?>
+                </select>
+                <?= tooltipIcon($_('Teilnehmende können aus den vorhandenen Antwortmöglichkeiten nur eine bestimmte Anzahl auswählen')) ?>
             </td>
         </tr>
     </tbody>
@@ -328,15 +348,15 @@
 
 <div style="text-align: center">
         <?= Studip\Button::createAccept($_('Speichern'), 'store') ?>
-        <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->url_for('admin')) ?>
+        <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->indexURL()) ?>
 </div>
 </form>
 
 <? if (count($answers) > 0): ?>
-<form action="<?= $controller->url_for('admin/mail', $stoodle->stoodle_id) ?>" method="post" data-dialog>
+<form action="<?= $controller->mail($stoodle) ?>" method="post" data-dialog>
 <table class="default stoodle-list">
     <caption>
-        <?= $_('Teilnehmerliste') ?>
+        <?= $_('Liste der Teilnehmenden') ?>
     </caption>
     <thead>
         <tr>

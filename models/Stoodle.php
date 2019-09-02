@@ -14,36 +14,45 @@ class Stoodle extends SimpleORMap
     {
         $config['db_table'] = 'stoodle';
 
+        $config['has_many']['comments'] = [
+            'class_name'        => Comment::class,
+            'assoc_foreign_key' => 'stoodle_id',
+            'on_delete'         => 'delete',
+        ];
+        $config['has_many']['opts'] = [
+            'class_name'        => Option::class,
+            'assoc_foreign_key' => 'stoodle_id',
+            'on_delete'         => 'delete',
+            'order_by'          => 'ORDER BY position ASC',
+        ];
+
+        $config['additional_fields']['answers'] = [
+            'get' => function (Stoodle $stoodle) {
+                return Answer::getByStoodleId($stoodle->id);
+            },
+        ];
+
+        $config['registered_callbacks']['before_create'][] = function (Stoodle $stoodle) {
+            $stoodle->position = self::getMaxPosition($stoodle->range_id);
+        };
+        $config['registered_callbacks']['after_initialize'][] = function (Stoodle $stoodle) {
+            foreach ($stoodle->opts as $option) {
+                $stoodle->options[$option->id] = $option->value;
+                if ($option->result) {
+                    $stoodle->results[$option->id] = $option->value;
+                }
+            }
+        };
+
+        $config['registered_callbacks']['after_delete'][] = function (Stoodle $stoodle) {
+            Answer::deleteByStoodle_id($stoodle->id);
+        };
+
         parent::configure($config);
     }
 
     public $options  = [];
     public $results  = [];
-    public $comments = [];
-
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        if (!$this->isNew()) {
-            foreach (Option::findByStoodle($id) as $option) {
-                $this->options[$option->option_id] = $option->value;
-                if ($option->result) {
-                    $this->results[$option->option_id] = $option->value;
-                }
-            }
-            $this->comments = Comment::findByStoodle($id);
-        }
-    }
-
-    public function store()
-    {
-        if ($this->isNew()) {
-            $this->position = self::getMaxPosition($this->range_id);
-        }
-
-        return parent::store();
-    }
 
     public function setOptions($opts)
     {
@@ -73,47 +82,21 @@ class Stoodle extends SimpleORMap
         }
     }
 
-    public function delete()
-    {
-        if (!$this->isNew()) {
-            foreach (array_keys($this->options) as $id) {
-                $option = new Option($id);
-                $option->delete();
-            }
-            foreach ($this->comments as $comment) {
-                $comment->delete();
-            }
-
-            Answer::removeByStoodleId($this->stoodle_id);
-        }
-        parent::delete();
-    }
-
-    protected $answers = null;
-    public function getAnswers()
-    {
-        if ($this->isNew()) {
-            return [];
-        }
-
-        if ($this->answers === null) {
-            $this->answers = Answer::getByStoodleId($this->stoodle_id);
-        }
-
-        return $this->answers;
-    }
-
     public function getAnsweredOptions()
     {
-        $answers = $this->getAnswers();
-
         $options = [];
-        foreach ($answers as $user_id => $answer) {
+        foreach ($this->answers as $user_id => $answer) {
             foreach ($answer['selection'] as $option_id) {
-                @$options[$option_id][] = $user_id;
+                if (!isset($options[$option_id])) {
+                    $options[$option_id] = [];
+                }
+                $options[$option_id][] = $user_id;
             }
             foreach ($answer['maybes'] as $option_id) {
-                @$options[$option_id][] = $user_id;
+                if (!isset($options[$option_id])) {
+                    $options[$option_id] = [];
+                }
+                $options[$option_id][] = $user_id;
             }
         }
         return $options;
@@ -122,7 +105,7 @@ class Stoodle extends SimpleORMap
     public function getOptionsCount($maybe = false)
     {
         $count = array_fill_keys(array_keys($this->options), 0);
-        foreach ($this->getAnswers() as $user_id => $options) {
+        foreach ($this->answers as $user_id => $options) {
             if ($maybe === null) {
                 $options = array_merge($options['maybes'], $options['selection']);
             } elseif ($maybe) {
@@ -140,10 +123,8 @@ class Stoodle extends SimpleORMap
 
     public function userParticipated($user_id = null)
     {
-        $answers = self::getAnswers();
-
         $user_id = $user_id ?: $GLOBALS['user']->id;
-        return isset($answers[$user_id]);
+        return isset($this->answers[$user_id]);
     }
 
     public function formatOption($option_id, $raw = false)

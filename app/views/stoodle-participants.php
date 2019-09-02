@@ -8,7 +8,7 @@
     </tr>
 <? endif; ?>
 <?  $count = 1;
-    foreach ($answers = $stoodle->getAnswers() as $user_id => $options):
+    foreach ($stoodle->answers as $user_id => $options):
        if ($user_id == $GLOBALS['user']->id && @$self === 'hide') continue;
        $user = User::find($user_id);
 ?>

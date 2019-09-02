@@ -67,14 +67,29 @@
         }
     });
 
+    $(document).on('change', '#stoodle-plugin .stoodle-list .self[data-max-answers]', function () {
+        var row = $(this).closest('.self');
+        var max = parseInt(row.data().maxAnswers, 10);
+        var checked = 0;
+
+        if (row.find(':checkbox').length > 0) {
+            checked = row.find(':checkbox').filter(':checked').length;
+            row.find(':checkbox').filter(':not(:checked)').attr('disabled', checked >= max);
+        } else {
+            checked = row.find(':radio:checked:not([value="0"])').length;
+            row.find('td:has(:radio:checked[value="0"])').find(':radio').attr('disabled', checked >= max);
+        }
+    }).find('');
+
     STUDIP.Stoodle = Stoodle;
 
     $(document).ready(function () {
         STUDIP.Stoodle.Comments.init();
         STUDIP.Stoodle.Result.init();
         STUDIP.Stoodle.Overview.init();
-    });
 
+        $('#stoodle-plugin .stoodle-list .self[data-max-answers]').find(':checkbox').first().change();
+    });
 
 
 
@@ -90,6 +105,8 @@
             $(disables).filter(':not([disabled])').focus();
         }
     }).ready(function () {
+        $(':checkbox[data-disables]').trigger('change');
+    }).on('dialog-update', function () {
         $(':checkbox[data-disables]').trigger('change');
     });
 

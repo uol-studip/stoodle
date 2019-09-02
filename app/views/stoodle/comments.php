@@ -11,7 +11,7 @@
     <? endif; ?>
     </h3>
 <? if (!$stoodle->end_date || $stoodle->end_date > time()): ?>
-    <form action="<?= $controller->url_for('stoodle/comment', $stoodle->stoodle_id) ?>" method="post">
+    <form action="<?= $controller->comment($stoodle) ?>" method="post">
         <?= CSRFProtection::tokenTag() ?>
         <fieldset>
             <legend><?= $_('Kommentar hinzufügen') ?></legend>
@@ -31,7 +31,7 @@
             <col>
         </colgroup>
         <tbody>
-        <? foreach (array_slice($stoodle->comments, 0, $limit) as $comment):
+        <? foreach ($stoodle->comments->limit(0, $limit) as $comment):
             $user = User::find($comment->user_id);
         ?>
             <tr>
@@ -56,7 +56,7 @@
 
                     ?>
                         <li>
-                            <a href="<?= $controller->url_for('stoodle/delete_comment', $comment->comment_id) ?>" data-confirm="<?= $_('Soll der Kommentar wirklich gelöscht werden?') ?>">
+                            <a href="<?= $controller->delete_comment($comment) ?>" data-confirm="<?= $_('Soll der Kommentar wirklich gelöscht werden?') ?>">
                                 <?= Icon::create('trash')->asImg(['class' => 'text-top'] + tooltip2($_('Kommentar löschen'))) ?>
                             </a>
                         </li>
@@ -68,7 +68,7 @@
         <? if (($spillover = count($stoodle->comments) - $limit) > 0): ?>
             <tr class="more-comments">
                 <td colspan="2" class="topic">
-                    <a href="<?= $controller->url_for('stoodle', $stoodle->stoodle_id, 'all') ?>#comments">
+                    <a href="<?= $controller->display($stoodle, 'all') ?>#comments">
                         <?= Icon::create('arr_1down', Icon::ROLE_INFO_ALT) ?>
                         <? if ($spillover == 1): ?>
                             <?= $_('1 weiterer Kommentar') ?>

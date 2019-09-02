@@ -2,19 +2,26 @@
     table {
         margin-bottom: 1em;
 
-        td, th {
+        td,
+        th {
             vertical-align: top;
             .transition(background-color 300ms);
         }
 
-        .empty td, td.empty {
+        .empty td,
+        td.empty {
             padding: 1em 0;
             text-align: center;
         }
 
         &.stoodle-list {
-            thead th, tfoot td { text-align: center; }
-            tbody td:not(:nth-child(2)) { text-align: center; }
+            thead th,
+            tfoot td {
+                text-align: center;
+            }
+            tbody td:not(:nth-child(2)) {
+                text-align: center;
+            }
             tbody tr.self td {
                 border-top: 1px solid #888;
                 &:nth-child(2) {
@@ -26,18 +33,26 @@
                 }
             }
             .highlighted {
-                background-color: #eda;
+                background-color: @yellow-40;
             }
-            tr:nth-child(2n+1) td.highlighted { background-color: #fec; }
+            tr:nth-child(2n+1) td.highlighted {
+                background-color: @activity-color-20;
+            }
             label {
-                border-top: 1px dotted #aaa;
+                border-top: 1px dotted @dark-gray-color-45;
                 display: block;
                 padding-right: 20px;
                 text-align: center;
 
-                &:first-child { border-top: 0; }
-                &:hover { background-color: fade(#fff, 50%); }
-                &.plain:hover { background-color: transparent; }
+                &:first-child {
+                    border-top: 0;
+                }
+                &:hover {
+                    background-color: fade(@white, 50%);
+                }
+                &.plain:hover {
+                    background-color: transparent;
+                }
             }
         }
 
@@ -53,12 +68,16 @@
         margin-top: 1em;
     }
 
-    .maybe-count { color: #888; }
+    .maybe-count {
+        color: @dark-gray-color-60;
+    }
     .private {
         color: transparent;
         overflow: hidden;
         vertical-align: middle;
-        &:hover { color: #888; }
+        &:hover {
+            color: @dark-gray-color-60;
+        }
     }
     .sum td {
         border-top: 1px solid #888;
@@ -68,26 +87,34 @@
     }
 
     .stoodle {
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             .box-sizing(border-box);
         }
     }
 
-    input[type=datetime], input[type=date], input[type=time] {
+    input[type=datetime],
+    input[type=date],
+    input[type=time] {
         position: relative;
         width: 8em;
 //        z-index: 10;
     }
-    input[type=datetime][disabled], input[type=date][disabled], input[type=text][disabled], select#type option[value=""] {
-        color: #888;
+    input[type=datetime][disabled],
+    input[type=date][disabled],
+    input[type=text][disabled],
+    select#type option[value=""] {
+        color: @dark-gray-color-60;
     }
 
     #comments {
         h3 {
-            border-top: 1px dotted #ccc;
+            border-top: 1px dotted @dark-gray-color-30;
             margin: 1em 0 0;
         }
-        fieldset, legend {
+        fieldset,
+        legend {
             border: 0;
             margin: 0;
             padding: 0;
@@ -100,23 +127,27 @@
             padding-left: 20px;
         }
         fieldset.closed {
-            > * { display: none; }
+            > * {
+                display: none;
+            }
             legend {
                 .background-icon('arr_1right', 'clickable');
                 display: block;
             }
         }
-        textarea[name=comment] { width: 100%; }
+        textarea[name=comment] {
+            width: 100%;
+        }
 
         ul.details {
-            border-top: 1px solid #ccc;
+            border-top: 1px solid @dark-gray-color-30;
             list-style: none;
             margin: 0.5em 0 0;
             padding: 0.5em 0 0;
 
             li {
-                border-left: 1px solid #888;
-                color: #666;
+                border-left: 1px solid @dark-gray-color-60;
+                color: @dark-gray-color-80;
                 display: inline-block;
                 padding: 0 0.5em;
 
@@ -124,7 +155,9 @@
                     border-left: 0;
                     padding-left: 0;
                 }
-                &:last-child { padding-right: 0; }
+                &:last-child {
+                    padding-right: 0;
+                }
             }
         }
         .more-comments a {
@@ -139,12 +172,20 @@
     .ui-datepicker-div {
         z-index: 100 !important;
 
-        .ui-widget-header { margin-bottom: 8px; }
+        .ui-widget-header {
+            margin-bottom: 8px;
+        }
 
-        td { font-size: 90%; }
+        td {
+            font-size: 90%;
+        }
 
-        dl { text-align: left; }
-        dd { margin: 0 10px 10px 65px; }
+        dl {
+            text-align: left;
+        }
+        dd {
+            margin: 0 10px 10px 65px;
+        }
         dt {
             height: 25px;
             margin-bottom: -25px;
@@ -161,22 +202,24 @@
         .clearfix;
         .bar {
             .box-sizing(border-box);
-            #gradient > .vertical(#1E9FC2, fade(#1E9FC2, 50%));
+            #gradient > .vertical(@petrol-80, fade(@petrol-80, 50%));
             float: left;
             opacity: 0.5;
             padding: 0 1em;
             text-align: right;
 
             &.max {
-                #gradient > .vertical(#3DC33B, fade(#3DC33B, 50%));
+                #gradient > .vertical(@dark-green-80, fade(@dark-green-80, 50%));
                 opacity: 1;
             }
             &.maybe {
-                #gradient > .vertical(#FEB313, fade(#FEB313, 50%));
+                #gradient > .vertical(@yellow, fade(@yellow, 50%));
             }
         }
     }
-    tr:hover > .bars .bar { opacity: 1; }
+    tr:hover > .bars .bar {
+        opacity: 1;
+    }
 
     blockquote {
         background: #eee;
@@ -208,9 +251,13 @@ dl.evaluation {
         float: left;
         width: 100px;
 
-        &:after { content:":"; }
+        &:after {
+            content: ":";
+        }
     }
-    dd { margin-left: 100px; }
+    dd {
+        margin-left: 100px;
+    }
 }
 
 .appointments > div {

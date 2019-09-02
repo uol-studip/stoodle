@@ -6,14 +6,14 @@
 <dl class="evaluation">
     <dt><?= $_('Teilnehmer') ?></dt>
     <dd>
-        <?= $answers = count($stoodle->getAnswers()) ?>
+        <?= $answers = count($stoodle->answers) ?>
         (<?= round($participants ? 100 * $answers / $participants : 0, 2) ?>%)
     </dd>
     <dt><?= $_('Laufzeit') ?></dt>
     <dd><?= spoken_time($stoodle->end_date - ($stoodle->start_date ?: $stoodle->mkdate)) ?></dd>
 </dl>
 
-<form action="<?= $controller->url_for('admin/evaluate/' . $stoodle->stoodle_id) ?>" method="post">
+<form action="<?= $controller->evaluate($stoodle) ?>" method="post">
 
     <table class="default">
         <colgroup>
@@ -122,6 +122,6 @@
 
     <div style="text-align: center;">
         <?= Studip\Button::createAccept($_('Auswerten'), 'evaluate') ?>
-        <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->url_for('admin/index')) ?>
+        <?= Studip\LinkButton::createCancel($_('Abbrechen'), $controller->indexURL()) ?>
     </div>
 </form>
