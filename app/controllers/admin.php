@@ -6,55 +6,8 @@ use Stoodle\Stoodle;
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @license GPL2 or any later version
  */
-class AdminController extends StudipController
+class AdminController extends \Stoodle\Controller
 {
-    /**
-     * Constructs the controller and provide translations methods.
-     *
-     * @param object $dispatcher
-     * @see https://stackoverflow.com/a/12583603/982902 if you need to overwrite
-     *      the constructor of the controller
-     */
-    public function __construct($dispatcher)
-    {
-        parent::__construct($dispatcher);
-
-        $this->plugin = $dispatcher->current_plugin;
-
-        // Localization
-        $this->_ = function ($string) use ($dispatcher) {
-            return call_user_func_array(
-                [$dispatcher->current_plugin, '_'],
-                func_get_args()
-            );
-        };
-
-        $this->_n = function ($string0, $tring1, $n) use ($dispatcher) {
-            return call_user_func_array(
-                [$dispatcher->current_plugin, '_n'],
-                func_get_args()
-            );
-        };
-    }
-
-    /**
-     * Intercepts all non-resolvable method calls in order to correctly handle
-     * calls to _ and _n.
-     *
-     * @param string $method
-     * @param array  $arguments
-     * @return mixed
-     * @throws RuntimeException when method is not found
-     */
-    public function __call($method, $arguments)
-    {
-        $variables = get_object_vars($this);
-        if (isset($variables[$method]) && is_callable($variables[$method])) {
-            return call_user_func_array($variables[$method], $arguments);
-        }
-        throw new RuntimeException("Method {$method} does not exist");
-    }
-
     /**
      *
      */
@@ -64,58 +17,33 @@ class AdminController extends StudipController
 
         Navigation::activateItem('/course/stoodle/administration');
 
-        $layout = $this->get_template_factory()->open('layout.php');
-        $layout->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-        $this->set_layout($layout);
-
         $this->range_id = $this->dispatcher->range_id;
 
         if (!$GLOBALS['perm']->have_studip_perm('tutor', $this->range_id)) {
             throw new AccessDeniedException();
         }
 
-        // We need this since the messaging section of Stud.IP still uses the old
-        // mechanism to display messages
-        if (!empty($_SESSION['sms_msg'])) {
-            $msgs = array_chunk(explode('§', $_SESSION['sms_msg']), 2);
-            foreach ($msgs as $msg) {
-                if ($msg[0] === 'msg') {
-                    $type = 'success';
-                } elseif ($msg[0] === 'error') {
-                    $type = 'error';
-                } else {
-                    $type = 'info';
-                }
-                PageLayout::postMessage(MessageBox::$type($msg[1]));
-            }
-            unset($_SESSION['sms_msg']);
-        }
+        $this->setPageTitle('Stoodle: ' . $this->_('Verwaltung'));
     }
 
-    /**
-     *
-     */
     public function index_action()
     {
         $this->stoodles  = Stoodle::findByRange($this->range_id);
         $this->evaluated = Stoodle::findEvaluatedByRange($this->range_id);
 
-        $actions = new ActionsWidget();
-        $actions->addLink(
+        Sidebar::get()->addWidget(new ActionsWidget())->addLink(
             $this->_('Neue Umfrage erstellen'),
             $this->url_for('admin/edit'),
             Icon::create('add')
         );
-        Sidebar::get()->addWidget($actions);
     }
 
     /**
      *
      */
-    public function edit_action($id = null)
+    public function edit_action(Stoodle $stoodle = null)
     {
-        $this->id = $id;
-        $stoodle = new Stoodle($id);
+        $this->id = $stoodle->id;
 
         $this->title          = trim(Request::get('title', $stoodle->title));
         $this->description    = trim(Request::get('description', $stoodle->description)) ?: null;
@@ -126,10 +54,14 @@ class AdminController extends StudipController
         $this->is_anonymous   = Request::int('is_anonymous', $stoodle->isNew() ? 0 : $stoodle->is_anonymous);
         $this->allow_maybe    = Request::int('allow_maybe', $stoodle->isNew() ? 0 : $stoodle->allow_maybe);
         $this->allow_comments = Request::int('allow_comments', $stoodle->isNew() ? 1 : $stoodle->allow_comments);
+        $this->max_answers    = Request::int('max_answers', $stoodle->isNew() ? null : $stoodle->max_answers);
         // Integrate additional
         $this->options        = $this->extractOptions($stoodle->options, $this->type === 'range');
         $this->options_count  = $stoodle->getOptionsCount(null);
-        $this->answers        = $stoodle->getAnswers();
+        $this->answers        = $stoodle->answers;
+        $this->max_answered   = $this->answers ? max(array_map(function ($answer) {
+                                    return count($answer['selection']) + count($answer['maybes']);
+                                }, $this->answers)) : 0;
         $this->editable       = array_sum($this->options_count) === 0;
 
         // Ensure anonymous cannot be changed when at least one answer has been given
@@ -217,6 +149,7 @@ class AdminController extends StudipController
                 $stoodle->is_anonymous   = $this->is_anonymous;
                 $stoodle->allow_maybe    = $this->allow_maybe;
                 $stoodle->allow_comments = $this->allow_comments;
+                $stoodle->max_answers    = $this->max_answers ?: null;
 
                 if ($new) {
                     $stoodle->type     = $this->type;
@@ -281,9 +214,8 @@ class AdminController extends StudipController
         return $result;
     }
 
-    public function stop_action($id)
+    public function stop_action(Stoodle $stoodle)
     {
-        $stoodle = Stoodle::find($id);
         $stoodle->end_date = time() - 1;
         $stoodle->store();
 
@@ -291,9 +223,8 @@ class AdminController extends StudipController
         $this->redirect('admin');
     }
 
-    public function resume_action($id)
+    public function resume_action(Stoodle $stoodle)
     {
-        $stoodle = Stoodle::find($id);
         $stoodle->end_date = null;
         $stoodle->store();
 
@@ -301,10 +232,8 @@ class AdminController extends StudipController
         $this->redirect('admin');
     }
 
-    public function evaluate_action($id)
+    public function evaluate_action(Stoodle $stoodle)
     {
-        $stoodle = Stoodle::find($id);
-
         if ($stoodle->evaluated !== null) {
             PageLayout::postError($this->_('Die Umfrage wurde bereits ausgewertet.'));
             $this->redirect('admin');
@@ -328,18 +257,15 @@ class AdminController extends StudipController
             {
                 $target = Request::option('appointments_for');
                 if ($target === 'valid') {
-                    $answers = $stoodle->getAnswers();
                     $targets = [];
-
-                    foreach ($answers as $user_id => $answer) {
+                    foreach ($stoodle->answers as $user_id => $answer) {
                         $temp = array_merge($answer['selection'], $answer['maybes']);
                         if (count(array_intersect($temp, $results))) {
                             $targets[] = $user_id;
                         }
                     }
                 } elseif ($target === 'stoodle') {
-                    $answers = $stoodle->getAnswers();
-                    $targets = array_keys($answers);
+                    $targets = array_keys($stoodle->answers);
                 } else {
                     $targets = [];
                     foreach (['', 'autor', 'tutor', 'dozent'] as $type) {
@@ -404,9 +330,8 @@ class AdminController extends StudipController
     /**
      *
      */
-    public function delete_action($id)
+    public function delete_action(Stoodle $stoodle)
     {
-        $stoodle = Stoodle::find($id);
         $stoodle->delete();
 
         PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelöscht.'));
@@ -416,15 +341,14 @@ class AdminController extends StudipController
     /**
      *
      **/
-    public function mail_action($id)
+    public function mail_action(Stoodle $stoodle)
     {
-        $stoodle = Stoodle::find($id);
         $answers = $stoodle->getAnsweredOptions();
 
         $mail_to = Request::optionArray('mail_to');
         if (empty($mail_to)) {
             PageLayout::postError($this->_('Sie haben keine Empfänger ausgewählt.'));
-            $this->relocate('admin/edit/' . $id);
+            $this->relocate('admin/edit/' . $stoodle->id);
             return;
         }
 
@@ -438,7 +362,7 @@ class AdminController extends StudipController
         $recipients = [];
         foreach ($mail_to as $option_id) {
             if ($option_id === 'all') {
-                $recipients = array_keys($stoodle->getAnswers());
+                $recipients = array_keys($stoodle->answers);
             } else {
                 $recipients = array_merge($recipients, (array)@$answers[$option_id]);
             }
@@ -446,12 +370,12 @@ class AdminController extends StudipController
 
         if (empty($mail_to)) {
             PageLayout::postError($this->_('Es wurden keine gültigen Empfänger gefunden.'));
-            $this->relocate("admin/edit/{$id}");
+            $this->relocate("admin/edit/{$stoodle->id}");
             return;
         }
 
         $recipients = array_filter(array_map('get_username', $recipients));
-        $url = $this->url_for('admin/edit', $id);
+        $url = $this->editURL($stoodle);
         if (mb_strlen(dirname($_SERVER['SCRIPT_NAME'])) > 1) {
             $url = str_replace(dirname($_SERVER['SCRIPT_NAME']), '', $url);
         }

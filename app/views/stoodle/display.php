@@ -6,7 +6,18 @@
 <blockquote><?= formatReady($stoodle->description) ?></blockquote><br>
 <? endif; ?>
 
-<form action="<?= $controller->url_for('stoodle/participate', $stoodle->stoodle_id) ?>" method="post">
+<? if ($stoodle->max_answers): ?>
+<?= MessageBox::info(
+    $stoodle->max_answers == 1
+        ? $_('Bitte beachten Sie, dass Sie nur eine Antwort auswählen können')
+        : sprintf(
+            $_('Bitte beachten Sie, dass Sie nur maximal %u Antworten auswählen können'),
+            $stoodle->max_answers
+            )
+)->hideClose() ?>
+<? endif; ?>
+
+<form action="<?= $controller->participate($stoodle) ?>" method="post">
     <?= CSRFProtection::tokenTag() ?>
     <table class="default stoodle-list">
         <thead>
@@ -19,7 +30,7 @@
         </thead>
         <tbody>
             <?= $this->render_partial('stoodle-participants', ['self' => 'hide']) ?>
-        <? if (count($stoodle->getAnswers()) >= 10): ?>
+        <? if (count($stoodle->answers) >= 10): ?>
             <tr>
                 <td colspan="2">&nbsp;</td>
             <? foreach ($stoodle->options as $id => $option): ?>
@@ -29,7 +40,7 @@
             <? endforeach; ?>
             </tr>
         <? endif; ?>
-            <tr class="self">
+            <tr class="self" <? if ($stoodle->max_answers && ($stoodle->allow_maybe || $stoodle->max_answers > 1)) printf('data-max-answers="%u"', $stoodle->max_answers) ?>>
                 <td>
                     <?= Avatar::getAvatar($GLOBALS['user']->id)->getImageTag(Avatar::SMALL) ?>
                 </td>
@@ -38,26 +49,33 @@
                         <?= htmlReady($GLOBALS['user']->getFullName()) ?>
                     </a>
                 </td>
-            <? $answers = $stoodle->getAnswers();
+            <? $answers = $stoodle->answers;
                $answer = $answers[$GLOBALS['user']->id] ?: false;
                 foreach (array_keys($stoodle->options) as $id): ?>
                 <td>
                 <? if ($stoodle->allow_maybe): ?>
                     <label>
-                        <input type="radio" name="selection[<?= $id ?>]" value="1" <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>>
+                        <input type="radio" name="selection[<?= $id ?>]" value="1"
+                               <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>>
                         <?= Icon::create('accept', Icon::ROLE_STATUS_GREEN) ?>
                     </label>
                     <label>
-                        <input type="radio" name="selection[<?= $id ?>]" value="maybe" <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>>
+                        <input type="radio" name="selection[<?= $id ?>]" value="maybe"
+                               <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>>
                         <?= Icon::create('question') ?>
                     </label>
                     <label>
-                        <input type="radio" name="selection[<?= $id ?>]" value="0" <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
+                        <input type="radio" name="selection[<?= $id ?>]" value="0"
+                               <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
                         <?= Icon::create('decline', Icon::ROLE_STATUS_RED) ?>
                     </label>
+                <? elseif ($stoodle->max_answers == 1): ?>
+                    <input type="radio" name="selection" value="<?= $id ?>"
+                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>>
                 <? else: ?>
                     <input type="hidden" name="selection[<?= $id ?>]" value="0">
-                    <input type="checkbox" name="selection[<?= $id ?>]" value="1" <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>>
+                    <input type="checkbox" name="selection[<?= $id ?>]" value="1"
+                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>>
                 <? endif; ?>
                 </td>
             <? endforeach; ?>

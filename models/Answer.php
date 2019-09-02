@@ -44,6 +44,17 @@ class Answer
         $statement->execute([$stoodle_id]);
     }
 
+    public static function removeByUserId($user_id)
+    {
+        $query = "DELETE FROM stoodle_answers WHERE user_id = ?";
+        $statement = DBManager::get()->prepare($query);
+        $statement->execute([$user_id]);
+
+        $query = "DELETE FROM stoodle_selection WHERE user_id = ?";
+        $statement = DBManager::get()->prepare($query);
+        $statement->execute([$user_id]);
+    }
+
     protected $stoodle_id;
     protected $user_id;
     protected $selection = [];

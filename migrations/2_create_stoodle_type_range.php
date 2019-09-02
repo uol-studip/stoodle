@@ -8,13 +8,19 @@ class CreateStoodleTypeRange extends Migration
 
     public function up()
     {
-        DBManager::get()->exec("ALTER TABLE `stoodle`
-                                MODIFY COLUMN `type` ENUM('text', 'date', 'time', 'datetime', 'range') NOT NULL DEFAULT 'date'");
+        $query = "ALTER TABLE `stoodle`
+                  MODIFY COLUMN `type` ENUM('text', 'date', 'time', 'datetime', 'range') NOT NULL DEFAULT 'date'";
+        DBManager::get()->exec($query);
+
+        SimpleORMap::expireTableScheme();
     }
 
     public function down()
     {
-        DBManager::get()->exec("ALTER TABLE `stoodle`
-                                MODIFY COLUMN `type` ENUM('text', 'date', 'time', 'datetime') NOT NULL DEFAULT 'date'");
+        $query = "ALTER TABLE `stoodle`
+                  MODIFY COLUMN `type` ENUM('text', 'date', 'time', 'datetime') NOT NULL DEFAULT 'date'";
+        DBManager::get()->exec($query);
+
+        SimpleORMap::expireTableScheme();
     }
 }

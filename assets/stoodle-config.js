@@ -4,8 +4,8 @@
     'use strict';
 
     function getTime(time) {
-        var fragments = time.split(':'),
-            date      = new Date();
+        var fragments = time.split(':');
+        var date      = new Date();
         date.setHours(parseInt(fragments[0], 10));
         date.setMinutes(parseInt(fragments[1], 10));
         return date;
@@ -30,49 +30,49 @@
                 return;
             }
 
-            var name = $(this).attr('name'),
-                hidden_input = $('<input type="hidden"/>').attr('name', name),
-                time,
-                options = {
-                    changeMonth: true,
-                    changeYear: true,
-                    minDate: new Date(),
-                    hourGrid: 2,
-                    minuteGrid: 5,
-                    numberOfMonths: 2,
-                    onSelect: function (picker) {
-                        var date, additional, time;
-                        if (type === 'time') {
-                            date = getTime(picker);
-                        } else {
-                            date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate');
+            var name = $(this).attr('name');
+            var hidden_input = $('<input type="hidden"/>').attr('name', name);
+            var time;
+            var options = {
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                hourGrid: 2,
+                minuteGrid: 5,
+                numberOfMonths: 2,
+                onSelect: function (picker) {
+                    var date, additional, time;
+                    if (type === 'time') {
+                        date = getTime(picker);
+                    } else {
+                        date = $(this)[(type === 'range' ? 'datetime' : type) + 'picker']('getDate');
+                    }
+                    if ($(this).is('[name^=option]') && type === 'range') {
+                        additional = $(this).siblings('span').find('input.hasDatepicker');
+                        if (!additional.data('changed')) {
+                            time = date.getTime() + 2 * 60 * 60 * 1000;
+                            additional.datepicker('setDate', new Date(time));
+                            additional.datepicker('option', 'minDate', date);
+                            additional.next().val(time / 1000);
                         }
-                        if ($(this).is('[name^=option]') && type === 'range') {
-                            additional = $(this).siblings('span').find('input.hasDatepicker');
-                            if (!additional.data('changed')) {
-                                time = date.getTime() + 2 * 60 * 60 * 1000;
-                                additional.datepicker('setDate', new Date(time));
-                                additional.datepicker('option', 'minDate', date);
-                                additional.next().val(time / 1000);
-                            }
-                        }
+                    }
 
-                        time = Math.floor(date.getTime() / 1000);
-                        $(this).next().val(time);
+                    time = Math.floor(date.getTime() / 1000);
+                    $(this).next().val(time);
 
-                        $(this).data('changed', true);
-                    },
-                    beforeShow: function (textbox, instance) {
-                        instance.dpDiv.css({
-                            marginTop: (-textbox.offsetHeight) + 'px',
-                            marginLeft: textbox.offsetWidth + 'px'
-                        });
-                    },
-                    timeOnly: type === 'time'
-                    // ,
-                    // addSliderAccess: true,
-                    // sliderAccessArgs: { touchonly: false }
-                };
+                    $(this).data('changed', true);
+                },
+                beforeShow: function (textbox, instance) {
+                    instance.dpDiv.css({
+                        marginTop: (-textbox.offsetHeight) + 'px',
+                        marginLeft: textbox.offsetWidth + 'px'
+                    });
+                },
+                timeOnly: type === 'time'
+                // ,
+                // addSliderAccess: true,
+                // sliderAccessArgs: { touchonly: false }
+            };
 
             options.minDate.setSeconds(0);
             options.minDate.setMinutes(0);
@@ -85,8 +85,8 @@
             }
 
             $(this)[(type === 'range' ? 'datetime' : type) + 'picker'](options).blur(function () {
-                var value = $(this).val(),
-                    date = Date.parse(value);
+                var value = $(this).val();
+                var date = Date.parse(value);
                 if (date !== null) {
                     hidden_input.val((date.getTime() / 1000).toFixed(0));
                 }
@@ -110,7 +110,7 @@
     };
 }(jQuery));
 
-jQuery(function ($) {
+jQuery(document).ready(function ($) {
     'use strict';
 
     var transparent_gif = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
@@ -133,17 +133,17 @@ jQuery(function ($) {
     // });
     //
     $('.stoodle').on('click', 'tfoot button[name=remove]', function () {
-        var form     = $(this).closest('form'),
-            action   = form.attr('action'),
-            formdata = form.serializeArray();
+        var form     = $(this).closest('form');
+        var action   = form.attr('action');
+        var formdata = form.serializeArray();
 
         $(this).removeClass('cancel').attr('disabled', true);
         $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
 
         formdata.push({name: 'remove', value: ''});
         $.post(action, formdata).done(function (response, status, xhr) {
-            var options = $('.options', response);
-            $('.options', form).replaceWith(options);
+            var options = $('table.stoodle tbody.options', response);
+            $('table.stoodle tbody.options', form).replaceWith(options);
 
             $('select#type').change();
         }).always(function () {
@@ -152,11 +152,11 @@ jQuery(function ($) {
 
         return false;
     }).on('click', 'tbody.options input[name=remove]', function () {
-        var value    = $(this).val(),
-            row      = $(this).closest('tr'),
-            form     = row.closest('form'),
-            action   = form.attr('action'),
-            formdata = form.serializeArray();
+        var value    = $(this).val();
+        var row      = $(this).closest('tr');
+        var form     = row.closest('form');
+        var action   = form.attr('action');
+        var formdata = form.serializeArray();
 
         if (row.siblings().length === 0) {
             row.find('input:not(:checkbox)').val('');
@@ -170,8 +170,8 @@ jQuery(function ($) {
 
         formdata.push({name: 'remove', value: value});
         $.post(action, formdata).done(function (response, status, xhr) {
-            var options = $('.options', response);
-            $('.options', form).replaceWith(options);
+            var options = $('table.stoodle tbody.options', response);
+            $('tbody.options', form).replaceWith(options);
 
             if (!value) {
                 $(':checkbox[name="ids[]"][value="all"]').attr('checked', false);
@@ -182,17 +182,17 @@ jQuery(function ($) {
 
         return false;
     }).on('click', 'button[name=add]', function () {
-        var form     = $(this).closest('form'),
-            action   = form.attr('action'),
-            formdata = form.serializeArray();
+        var form     = $(this).closest('form');
+        var action   = form.attr('action');
+        var formdata = form.serializeArray();
 
         $(this).attr('disabled', true);
         $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
 
         formdata.push({name: 'add', value: ''});
         $.post(action, formdata).done(function (response, status, xhr) {
-            var options = $('.options', response);
-            $('.options', form).replaceWith(options);
+            var options = $('table.stoodle tbody.options', response);
+            $('table.stoodle tbody.options', form).replaceWith(options);
 
             $('select#type').change();
         }).always(function () {
@@ -203,15 +203,15 @@ jQuery(function ($) {
     });
 
     $('select#type').change(function () {
-        var type     = $(this).val(),
-            elements = $('tbody.options tr');
+        var type     = $(this).val();
+        var elements = $('tbody.options tr');
 
         elements.each(function (index) {
-            var original     = $('input:not([type=hidden]):not(:checkbox)', this).first(),
-                orig_type    = original.data('type'),
-                value        = original.val(),
-                clone,
-                temp;
+            var original     = $('input:not([type=hidden]):not(:checkbox)', this).first();
+            var orig_type    = original.data('type');
+            var value        = original.val();
+            var clone;
+            var temp;
 
             try {
                 original[(orig_type === 'range' ? 'datetime' : orig_type) + 'picker']('destroy');

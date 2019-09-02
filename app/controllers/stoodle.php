@@ -7,58 +7,18 @@ use Stoodle\Stoodle;
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @license GPL2 or any later version
  */
-class StoodleController extends StudipController
+class StoodleController extends \Stoodle\Controller
 {
-    /**
-     * Constructs the controller and provide translations methods.
-     *
-     * @param object $dispatcher
-     */
-    public function __construct($dispatcher)
-    {
-        parent::__construct($dispatcher);
-
-        $this->plugin = $dispatcher->current_plugin;
-
-        // Localization
-        $this->_ = function ($string) use ($dispatcher) {
-            return call_user_func_array(
-                [$dispatcher->current_plugin, '_'],
-                func_get_args()
-            );
-        };
-
-        $this->_n = function ($string0, $tring1, $n) use ($dispatcher) {
-            return call_user_func_array(
-                [$dispatcher->current_plugin, '_n'],
-                func_get_args()
-            );
-        };
-    }
-
-    /**
-     * Intercepts all non-resolvable method calls in order to correctly handle
-     * calls to _ and _n.
-     *
-     * @param string $method
-     * @param array  $arguments
-     * @return mixed
-     * @throws RuntimeException when method is not found
-     */
-    public function __call($method, $arguments)
-    {
-        $variables = get_object_vars($this);
-        if (isset($variables[$method]) && is_callable($variables[$method])) {
-            return call_user_func_array($variables[$method], $arguments);
-        }
-        throw new RuntimeException("Method {$method} does not exist");
-    }
-
     /**
      *
      */
     public function before_filter(&$action, &$args)
     {
+        if (preg_match('/^[0-9a-f]{32}$/', $action)) {
+            array_unshift($args, $action);
+            $action = 'display';
+        }
+
         parent::before_filter($action, $args);
 
         $this->range_id = $this->dispatcher->range_id;
@@ -66,20 +26,11 @@ class StoodleController extends StudipController
             throw new CheckObjectException();
         }
 
-        if (preg_match('/^[0-9a-f]{32}$/', $action)) {
-            array_unshift($args, $action);
-            $action = 'display';
-        }
-
         if (Navigation::hasItem('/course/stoodle/index')) {
             Navigation::activateItem('/course/stoodle/index');
         } else {
             Navigation::activateItem('/course/stoodle');
         }
-
-        $layout = $this->get_template_factory()->open('layout.php');
-        $layout->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-        $this->set_layout($layout);
     }
 
     /**
@@ -96,9 +47,8 @@ class StoodleController extends StudipController
     /**
      *
      */
-    public function display_action($id, $comments = null)
+    public function display_action(Stoodle $stoodle, $comments = null)
     {
-        $this->stoodle  = Stoodle::find($id);
         $this->comments = $comments === 'all';
 
         if ($this->stoodle->start_date && $this->stoodle->start_date > time()) {
@@ -112,34 +62,50 @@ class StoodleController extends StudipController
             return;
         }
 
-        PageLayout::setTitle('Stoodle: ' . $this->stoodle->title);
+        $this->setPageTitle("Stoodle: {$this->stoodle->title}");
         $this->setupSidebar('display', $this->stoodle);
     }
 
-    public function participate_action($id)
+    public function participate_action(Stoodle $stoodle)
     {
-        $answer = new Answer($id);
+        if (!Request::isPost()) {
+            throw new MethodNotAllowedException();
+        }
 
+        $answer = new Answer($stoodle->id);
         $answer->clearSelection();
-        foreach (Request::optionArray('selection') as $option_id => $state) {
-            if ($state) {
-                $answer->addToSelection($option_id, $state === 'maybe');
+
+        if ($stoodle->max_answers == 1 && !$stoodle->allow_maybe) {
+            $selected = Request::option('selection');
+            if ($selected) {
+                $answer->addToSelection($selected);
+            }
+        } else {
+            $max_answers = $stoodle->max_answers;
+            foreach (Request::optionArray('selection') as $option_id => $state) {
+                if ($state) {
+                    $answer->addToSelection($option_id, $state === 'maybe');
+                }
+
+                if ($max_answers !== null && --$max_answers === 0) {
+                    break;
+                }
             }
         }
 
         $answer->store();
 
         PageLayout::postSuccess($this->_('Ihre Teilnahme wurde gespeichert.'));
-        $this->redirect($this->url_for('stoodle/display', $id));
+        $this->redirect($this->displayURL($stoodle->id));
     }
 
     /**
      *
      */
-    public function comment_action($id)
+    public function comment_action(Stoodle $stoodle)
     {
         $comment = new Comment();
-        $comment->stoodle_id = $id;
+        $comment->stoodle_id = $stoodle->id;
         $comment->user_id    = $GLOBALS['user']->id;
         $comment->comment    = trim(Request::get('comment'));
 
@@ -158,15 +124,14 @@ class StoodleController extends StudipController
             );
         }
         PageLayout::postMessage($message);
-        $this->redirect('stoodle/' . $id . '#comments');
+        $this->redirect("stoodle/{$stoodle->id}#comments");
     }
 
     /**
      *
      */
-    public function delete_comment_action($id)
+    public function delete_comment_action(Comment $comment)
     {
-        $comment = Comment::find($id);
         $stoodle_id = $comment->stoodle_id;
 
         if ($comment->user_id != $GLOBALS['user']->id
@@ -187,15 +152,14 @@ class StoodleController extends StudipController
         }
 
         PageLayout::postMessage($message);
-        $this->redirect('stoodle/' . $stoodle_id . '#comments');
+        $this->redirect("stoodle/{$comment->stoodle_id}#comments");
     }
 
     /**
      *
      */
-    public function result_action($id)
+    public function result_action(Stoodle $stoodle)
     {
-        $this->stoodle = new Stoodle($id);
         if (!$this->stoodle) {
             PageLayout::postError($this->_('Ungültige Stoodle-ID.'));
             $this->redirect('stoodle');
@@ -303,7 +267,7 @@ class StoodleController extends StudipController
 
             $sidebar->addWidget($legend);
         } elseif ($action === 'result') {
-            $answers      = count($this->stoodle->getAnswers());
+            $answers      = count($this->stoodle->answers);
             $participants = count($this->stoodle->getRangeMembers());
 
             $widget = new ListWidget();

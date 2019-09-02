@@ -12,7 +12,7 @@
     </colgroup>
     <thead>
         <tr>
-            <th class="topic" colspan="9"><?= $title ?: '???' ?></th>
+            <th class="topic" colspan="9"><?= htmlReady($title) ?: '???' ?></th>
         </tr>
         <tr>
             <th><?= $_('Titel') ?></th>
@@ -34,36 +34,36 @@
     <? foreach ($stoodles as $stoodle): ?>
         <tr>
             <td><?= htmlReady($stoodle->title) ?></td>
-            <td><?= $stoodle->start_date ? date('d.m.Y H:i', $stoodle->start_date) : $_('offen') ?></td>
-            <td><?= $stoodle->end_date ? date('d.m.Y H:i', $stoodle->end_date) : $_('offen') ?></td>
-            <td><?= count($stoodle->getAnswers()) ?></td>
+            <td><?= $stoodle->start_date ? strftime('%x %R', $stoodle->start_date) : $_('offen') ?></td>
+            <td><?= $stoodle->end_date ? strftime('%x %R', $stoodle->end_date) : $_('offen') ?></td>
+            <td><?= count($stoodle->answers) ?></td>
             <td><?= $stoodle->allow_comments ? count($stoodle->comments) : '-' ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->is_public ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->is_anonymous ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
             <td><?= Icon::create('checkbox-' . ($stoodle->allow_maybe ? 'checked' : 'unchecked'), Icon::ROLE_INFO) ?></td>
             <td class="actions">
         <? if ($stoodle->evaluated): ?>
-                <a href="<?= $controller->url_for('stoodle/result', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->link_for('stoodle/result', $stoodle->stoodle_id) ?>">
                     <?= Icon::create('stat')->asImg(tooltip2($_('Ergebnisse ansehen'))) ?>
                 </a>
         <? else: ?>
             <? if ($stoodle->end_date && $stoodle->end_date < time()): ?>
-                <a href="<?= $controller->url_for('admin/evaluate', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->evaluate($stoodle) ?>">
                     <?= Icon::create('test')->asImg(tooltip2($_('Umfrage auswerten'))) ?>
                 </a>
-                <a href="<?= $controller->url_for('admin/resume', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->resume($stoodle) ?>">
                     <?= Icon::create('lock-unlocked')->asImg(tooltip2($_('Umfrage fortsetzen'))) ?>
                 </a>
             <? else: ?>
-                <a href="<?= $controller->url_for('admin/stop', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->stop($stoodle) ?>">
                     <?= Icon::create('lock-locked')->asImg(tooltip2($_('Umfrage beenden'))) ?>
                 </a>
             <? endif; ?>
-                <a href="<?= $controller->url_for('admin/edit', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->edit($stoodle) ?>">
                     <?= Icon::create('edit')->asImg(tooltip2($_('Umfrage bearbeiten'))) ?>
                 </a>
         <? endif; ?>
-                <a href="<?= $controller->url_for('admin/delete', $stoodle->stoodle_id) ?>">
+                <a href="<?= $controller->delete($stoodle) ?>">
                     <?= Icon::create('trash')->asImg(tooltip2($_('Umfrage löschen'))) ?>
                 </a>
             </td>

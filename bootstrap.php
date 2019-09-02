@@ -39,3 +39,6 @@ if (!function_exists('spoken_time')) {
         return implode(', ', array_slice(array_reverse($result), 0, $max_displayed));
     }
 }
+
+StudipAutoloader::addAutoloadPath(__DIR__ . '/lib', 'Stoodle');
+StudipAutoloader::addAutoloadPath(__DIR__ . '/models', 'Stoodle');
