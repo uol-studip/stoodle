@@ -15,7 +15,7 @@ class Plugin extends \StudIPPlugin
         PageLayout::addScript($url);
     }
 
-    protected function getPluginVersion()
+    public function getPluginVersion()
     {
         static $manifest = null;
         if ($manifest === null) {
