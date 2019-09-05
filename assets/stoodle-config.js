@@ -136,18 +136,21 @@ jQuery(document).ready(function ($) {
         var form     = $(this).closest('form');
         var action   = form.attr('action');
         var formdata = form.serializeArray();
+        var question = $(this).data('confirm') || true;
 
-        $(this).removeClass('cancel').attr('disabled', true);
-        $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
+        STUDIP.Dialog.confirm(question).done(function () {
+            $(this).removeClass('cancel').attr('disabled', true);
+            $('<span>').addClass('ajaxing').css({verticalAlign: 'top'}).prependTo(this);
 
-        formdata.push({name: 'remove', value: ''});
-        $.post(action, formdata).done(function (response, status, xhr) {
-            var options = $('table.stoodle tbody.options', response);
-            $('table.stoodle tbody.options', form).replaceWith(options);
+            formdata.push({name: 'remove', value: ''});
+            $.post(action, formdata).done(function (response, status, xhr) {
+                var options = $('table.stoodle tbody.options', response);
+                $('table.stoodle tbody.options', form).replaceWith(options);
 
-            $('select#type').change();
-        }).always(function () {
-            $(this).attr('disabled', false).addClass('cancel').find('span.ajaxing').remove();
+                $('select#type').change();
+            }).always(function () {
+                $(this).attr('disabled', false).addClass('cancel').find('span.ajaxing').remove();
+            }.bind(this));
         }.bind(this));
 
         return false;
@@ -157,28 +160,31 @@ jQuery(document).ready(function ($) {
         var form     = row.closest('form');
         var action   = form.attr('action');
         var formdata = form.serializeArray();
+        var question = $(this).data('confirm') || true;
 
         if (row.siblings().length === 0) {
             row.find('input:not(:checkbox)').val('');
             return false;
         }
 
-        $(this).attr({
-            disabled: true,
-            src: transparent_gif
-        }).addClass('ajaxing');
+        STUDIP.Dialog.confirm(question).done(function () {
+            $(this).attr({
+                disabled: true,
+                src: transparent_gif
+            }).addClass('ajaxing');
 
-        formdata.push({name: 'remove', value: value});
-        $.post(action, formdata).done(function (response, status, xhr) {
-            var options = $('table.stoodle tbody.options', response);
-            $('tbody.options', form).replaceWith(options);
+            formdata.push({name: 'remove', value: value});
+            $.post(action, formdata).done(function (response, status, xhr) {
+                var options = $('table.stoodle tbody.options', response);
+                $('tbody.options', form).replaceWith(options);
 
-            if (!value) {
-                $(':checkbox[name="ids[]"][value="all"]').attr('checked', false);
-            }
+                if (!value) {
+                    $(':checkbox[name="ids[]"][value="all"]').attr('checked', false);
+                }
 
-            $('select#type').change();
-        });
+                $('select#type').change();
+            });
+        }.bind(this));
 
         return false;
     }).on('click', 'button[name=add]', function () {

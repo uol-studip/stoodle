@@ -264,8 +264,7 @@
     ?>
         <tr>
             <td>
-                <input type="checkbox" name="ids[]" value="<?= $id ?>"
-                       <? if ($options_count[$id]) echo 'readonly'; ?>>
+                <input type="checkbox" name="ids[]" value="<?= $id ?>">
             </td>
             <td>
                 #<?= $index + 1 ?>
@@ -316,8 +315,10 @@
                 ]) ?>
             <? endif; ?>
             <? if ($options_count[$id]): ?>
-                <?= Icon::create('trash', Icon::ROLE_INACTIVE)->asInput([
-                    'disabled' => '',
+                <?= Icon::create('trash')->asInput([
+                    'name'         => 'remove',
+                    'value'        => $id,
+                    'data-confirm' => _('Sind Sie sicher, dass Sie diese Antwortmöglichkeit entfernen wollen, ob wohl sie bereits gewählt wurde?'),
                 ]) ?>
             <? else: ?>
                 <?= Icon::create('trash')->asInput(tooltip2($_('Antwort löschen')) + [
@@ -332,7 +333,9 @@
     <tfoot>
         <tr>
             <td colspan="4">
-                <?= Studip\Button::createCancel($_('Markierte Einträge entfernen'), 'remove') ?>
+                <?= Studip\Button::createCancel($_('Markierte Einträge entfernen'), 'remove', [
+                    'data-confirm' => _('Wollen Sie die gewählten Antwortmöglichkeiten wirklich entfern?'),
+                ]) ?>
                 <div style="float: right;">
                     <select name="add-quantity">
                     <? for ($i = 1; $i <= 10; $i += 1): ?>
