@@ -45,7 +45,7 @@ class Stoodle extends SimpleORMap
         };
 
         $config['registered_callbacks']['after_delete'][] = function (Stoodle $stoodle) {
-            Answer::deleteByStoodle_id($stoodle->id);
+            Answer::removeByStoodleId($stoodle->id);
         };
 
         parent::configure($config);
