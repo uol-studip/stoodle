@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: StoodlePlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 09:44+0200\n"
+"POT-Creation-Date: 2019-10-21 17:51+0200\n"
 "PO-Revision-Date: 2017-06-02 17:11+0000\n"
 "Last-Translator: Jan-Hendrik Willms <tleilax@gmail.com>, 2019\n"
 "Language-Team: English (https://www.transifex.com/uol-it/teams/52597/en/)\n"
@@ -227,6 +227,9 @@ msgstr "Edit survey"
 msgid "Umfrage löschen"
 msgstr "Delete survey"
 
+msgid "Soll diese Umfrage wirklich gelöscht werden?"
+msgstr "Do you really want to delete this survey?"
+
 msgid "Auswertung der Umfrage"
 msgstr "Evaluate survey"
 
@@ -307,8 +310,8 @@ msgstr "JavaScript is deactivated. This affects how this page works."
 
 #, php-format
 msgid ""
-"Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in "
-"vollem Umfang bearbeiten."
+"Diese Umfrage hat bereits %u Teilnehmende. Sie können sie daher nicht mehr "
+"in vollem Umfang bearbeiten."
 msgstr ""
 "This survey already has %u participants. Therefore, you cannot complete it "
 "in full."
@@ -321,8 +324,11 @@ msgid ""
 "\"anonym\" war."
 msgstr "The survey can no longer be set to \"not anonymous\" if it was \"anonymous\"."
 
+msgid "Das Antwortlimit kann ggf. nicht mehr frei gewählt werden."
+msgstr "The response limit may no longer be freely selectable."
+
 msgid ""
-"Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr "
+"Von Teilnehmenden bereits gewählte Antwortmöglichkeiten können nicht mehr "
 "verändert werden."
 msgstr ""
 "Response options which have already been answered by participants cannot be "
@@ -372,23 +378,36 @@ msgid "Für alle einsehbar"
 msgstr "Visible to all"
 
 msgid ""
-"Die gegebenen Antworten der Teilnehmer sowie das Ergebnis der Umfrage sind "
-"für andere Teilnehmer sichtbar."
+"Die gegebenen Antworten der Teilnehmenden sowie das Ergebnis der Umfrage "
+"sind für andere Teilnehmende sichtbar."
 msgstr ""
-"The participants? responses and results of the survey are visible to other "
+"The participants responses and results of the survey are visible to other "
 "participants."
 
 msgid "Anonyme Teilnahme"
 msgstr "Anonymous participation"
 
-msgid "Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar."
+msgid ""
+"Die Namen der Teilnehmenden sind für andere Teilnehmende nicht sichtbar."
 msgstr "The names of the participants are not visible to other participants."
 
 msgid "\"Vielleicht\""
 msgstr "?Maybe\""
 
-msgid "Teilnehmer können auch \"Vielleicht\" als Antwort geben."
+msgid "Teilnehmende können auch \"Vielleicht\" als Antwort geben."
 msgstr "Participants can choose \"maybe\" as an answer."
+
+msgid "Antwortlimit"
+msgstr "Response limit"
+
+msgid "Kein Limit"
+msgstr "No limit"
+
+msgid ""
+"Teilnehmende können aus den vorhandenen Antwortmöglichkeiten nur eine "
+"bestimmte Anzahl auswählen"
+msgstr ""
+"Participants can only select a certain number of available answer options."
 
 msgid "Antwortmöglichkeiten"
 msgstr "Response options"
@@ -409,17 +428,30 @@ msgstr "Move response up"
 msgid "Antwort nach unten verschieben"
 msgstr "Move response down"
 
+msgid ""
+"Sind Sie sicher, dass Sie diese Antwortmöglichkeit entfernen wollen, obwohl "
+"sie bereits gewählt wurde?"
+msgstr ""
+"Are you sure you want to remove this answer option even though it has "
+"already been selected?"
+
 msgid "Antwort löschen"
 msgstr "Delete response"
 
 msgid "Markierte Einträge entfernen"
 msgstr "Remove selected entries"
 
+msgid "Wollen Sie die gewählten Antwortmöglichkeiten wirklich entfernen?"
+msgstr "Do you really want to remove the selected answer options?"
+
 msgid "Weitere Antwortmöglichkeit(en) hinzufügen"
 msgstr "Add additional response options"
 
 msgid "Speichern"
 msgstr "Save"
+
+msgid "Liste der Teilnehmenden"
+msgstr "Participants"
 
 msgid "Nachricht verschicken"
 msgstr "Send message"
@@ -488,6 +520,13 @@ msgstr "Survey overview"
 
 msgid "Umfrage"
 msgstr "Survey"
+
+msgid "Bitte beachten Sie, dass Sie nur eine Antwort auswählen können"
+msgstr "Please be aware that you can only select one answer"
+
+#, php-format
+msgid "Bitte beachten Sie, dass Sie nur maximal %u Antworten auswählen können"
+msgstr "Please note that you can only select a maximum of %u answers"
 
 msgid "Auswahl speichern"
 msgstr "Save selection"

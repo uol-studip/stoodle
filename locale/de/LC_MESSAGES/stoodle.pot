@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: StoodlePlugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 09:44+0200\n"
+"POT-Creation-Date: 2019-10-21 17:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,6 +220,9 @@ msgstr ""
 msgid "Umfrage löschen"
 msgstr ""
 
+msgid "Soll diese Umfrage wirklich gelöscht werden?"
+msgstr ""
+
 msgid "Auswertung der Umfrage"
 msgstr ""
 
@@ -300,8 +303,8 @@ msgstr ""
 
 #, php-format
 msgid ""
-"Diese Umfrage hat bereits %u Teilnehmer. Sie können sie daher nicht mehr in "
-"vollem Umfang bearbeiten."
+"Diese Umfrage hat bereits %u Teilnehmende. Sie können sie daher nicht mehr "
+"in vollem Umfang bearbeiten."
 msgstr ""
 
 msgid "Der Typ der Umfrage kann nicht mehr verändert werden."
@@ -312,8 +315,11 @@ msgid ""
 "\"anonym\" war."
 msgstr ""
 
+msgid "Das Antwortlimit kann ggf. nicht mehr frei gewählt werden."
+msgstr ""
+
 msgid ""
-"Von Teilnehmern bereits gewählte Antwortmöglichkeiten können nicht mehr "
+"Von Teilnehmenden bereits gewählte Antwortmöglichkeiten können nicht mehr "
 "verändert werden."
 msgstr ""
 
@@ -356,20 +362,32 @@ msgid "Für alle einsehbar"
 msgstr ""
 
 msgid ""
-"Die gegebenen Antworten der Teilnehmer sowie das Ergebnis der Umfrage sind "
-"für andere Teilnehmer sichtbar."
+"Die gegebenen Antworten der Teilnehmenden sowie das Ergebnis der Umfrage "
+"sind für andere Teilnehmende sichtbar."
 msgstr ""
 
 msgid "Anonyme Teilnahme"
 msgstr ""
 
-msgid "Die Namen der Teilnehmer sind für andere Teilnehmer nicht sichtbar."
+msgid ""
+"Die Namen der Teilnehmenden sind für andere Teilnehmende nicht sichtbar."
 msgstr ""
 
 msgid "\"Vielleicht\""
 msgstr ""
 
-msgid "Teilnehmer können auch \"Vielleicht\" als Antwort geben."
+msgid "Teilnehmende können auch \"Vielleicht\" als Antwort geben."
+msgstr ""
+
+msgid "Antwortlimit"
+msgstr ""
+
+msgid "Kein Limit"
+msgstr ""
+
+msgid ""
+"Teilnehmende können aus den vorhandenen Antwortmöglichkeiten nur eine "
+"bestimmte Anzahl auswählen"
 msgstr ""
 
 msgid "Antwortmöglichkeiten"
@@ -391,16 +409,27 @@ msgstr ""
 msgid "Antwort nach unten verschieben"
 msgstr ""
 
+msgid ""
+"Sind Sie sicher, dass Sie diese Antwortmöglichkeit entfernen wollen, obwohl "
+"sie bereits gewählt wurde?"
+msgstr ""
+
 msgid "Antwort löschen"
 msgstr ""
 
 msgid "Markierte Einträge entfernen"
 msgstr ""
 
+msgid "Wollen Sie die gewählten Antwortmöglichkeiten wirklich entfernen?"
+msgstr ""
+
 msgid "Weitere Antwortmöglichkeit(en) hinzufügen"
 msgstr ""
 
 msgid "Speichern"
+msgstr ""
+
+msgid "Liste der Teilnehmenden"
 msgstr ""
 
 msgid "Nachricht verschicken"
@@ -469,6 +498,13 @@ msgid "Übersicht der Umfrage"
 msgstr ""
 
 msgid "Umfrage"
+msgstr ""
+
+msgid "Bitte beachten Sie, dass Sie nur eine Antwort auswählen können"
+msgstr ""
+
+#, php-format
+msgid "Bitte beachten Sie, dass Sie nur maximal %u Antworten auswählen können"
 msgstr ""
 
 msgid "Auswahl speichern"

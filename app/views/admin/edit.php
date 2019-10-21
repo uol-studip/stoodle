@@ -319,7 +319,7 @@
                 <?= Icon::create('trash')->asInput([
                     'name'         => 'remove',
                     'value'        => $id,
-                    'data-confirm' => _('Sind Sie sicher, dass Sie diese Antwortmöglichkeit entfernen wollen, ob wohl sie bereits gewählt wurde?'),
+                    'data-confirm' => _('Sind Sie sicher, dass Sie diese Antwortmöglichkeit entfernen wollen, obwohl sie bereits gewählt wurde?'),
                 ]) ?>
             <? else: ?>
                 <?= Icon::create('trash')->asInput(tooltip2($_('Antwort löschen')) + [
@@ -335,7 +335,7 @@
         <tr>
             <td colspan="4">
                 <?= Studip\Button::createCancel($_('Markierte Einträge entfernen'), 'remove', [
-                    'data-confirm' => _('Wollen Sie die gewählten Antwortmöglichkeiten wirklich entfern?'),
+                    'data-confirm' => _('Wollen Sie die gewählten Antwortmöglichkeiten wirklich entfernen?'),
                 ]) ?>
                 <div style="float: right;">
                     <select name="add-quantity">
