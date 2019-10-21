@@ -203,10 +203,10 @@ class AdminController extends \Stoodle\Controller
     {
         $result = $invalid = [];
         foreach ($options as $id => $option) {
-            if (empty($option) || ($this->type === 'range' && $option === '-')) {
+            if (!$option || ($this->type === 'range' && $option === '-')) {
                 continue;
             }
-            if ($this->type === 'range' && ($option[0] === '-' || $option[strlen($option) - 1] === '-')) {
+            if ($this->type === 'range' && count(array_filter(array_slice(explode('-', $option), 0, 2))) !== 2) {
                 $invalid[] = $id;
             }
             $result[$id] = $option;
@@ -332,6 +332,10 @@ class AdminController extends \Stoodle\Controller
      */
     public function delete_action(Stoodle $stoodle)
     {
+        if (!Request::isPost()) {
+            throw new MethodNotAllowedException();
+        }
+
         $stoodle->delete();
 
         PageLayout::postSuccess($this->_('Die Umfrage wurde erfolgreich gelöscht.'));

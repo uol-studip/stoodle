@@ -1,3 +1,4 @@
+<form action="#" method="post">
 <table class="default stoodles">
     <colgroup>
         <col>
@@ -63,11 +64,13 @@
                     <?= Icon::create('edit')->asImg(tooltip2($_('Umfrage bearbeiten'))) ?>
                 </a>
         <? endif; ?>
-                <a href="<?= $controller->delete($stoodle) ?>">
-                    <?= Icon::create('trash')->asImg(tooltip2($_('Umfrage löschen'))) ?>
-                </a>
+                <?= Icon::create('trash')->asInput(tooltip2($_('Umfrage löschen')) + [
+                    'data-confirm' => $_('Soll diese Umfrage wirklich gelöscht werden?'),
+                    'formaction'   => $controller->deleteURL($stoodle),
+                ]) ?>
             </td>
         </tr>
     <? endforeach; ?>
     </tbody>
 </table>
+</form>

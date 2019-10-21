@@ -64,7 +64,8 @@
             <td colspan="2">
                 <input type="text" name="title" id="title"
                        required value="<?= htmlReady($title) ?>"
-                       style="width:99%">
+                       style="width:99%"
+                       <? if ($stoodle->isNew()) echo 'autofocus'; ?>>
             </td>
         </tr>
         <tr>
