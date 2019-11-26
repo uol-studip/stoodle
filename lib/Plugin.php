@@ -6,13 +6,13 @@ use URLHelper;
 
 class Plugin extends \StudIPPlugin
 {
-    protected function addScript($script)
+    protected function addScript($script, array $link_attr = [])
     {
         $script = ltrim($script, '/');
         $url = URLHelper::getURL(rtrim($this->getPluginURL(), '/') . "/{$script}", [
             'v' => $this->getPluginVersion(),
         ]);
-        PageLayout::addScript($url);
+        PageLayout::addScript($url, $link_attr);
     }
 
     public function getPluginVersion()
