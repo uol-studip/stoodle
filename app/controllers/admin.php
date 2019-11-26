@@ -393,4 +393,60 @@ class AdminController extends \Stoodle\Controller
 
         $this->redirect($url);
     }
+
+    public function bulk_action()
+    {
+        if (!Request::isPost()) {
+            throw new MethodNotAllowedException();
+        }
+
+        $ids = Request::optionArray('ids');
+        $stoodles = Stoodle::findMany($ids);
+
+        if (Request::submitted('delete')) {
+            $changed = 0;
+            foreach ($stoodles as $stoodle) {
+                $changed += (int) (bool) $stoodle->delete();
+            }
+            if ($changed > 0) {
+                PageLayout::postSuccess(ngettext(
+                    $this->_('Die Umfrage wurde erfolgreich gelöscht.'),
+                    $this->_('Die Umfragen wurden erfolgreich gelöscht.'),
+                    $changed
+                ));
+            }
+        } elseif (Request::submitted('resume')) {
+            $changed = 0;
+            foreach ($stoodles as $stoodle) {
+                if ($stoodle->end_date) {
+                    $stoodle->end_date = null;
+                    $changed += (int) (bool) $stoodle->store();
+                }
+            }
+            if ($changed > 0) {
+                PageLayout::postSuccess(ngettext(
+                    $this->_('Die Umfrage wurde fortgesetzt.'),
+                    $this->_('Die Umfragen wurden fortgesetzt.'),
+                    $changed
+                ));
+            }
+        } elseif (Request::submitted('stop')) {
+            $changed = 0;
+            foreach ($stoodles as $stoodle) {
+                if (!$stoodle->end_date || $stoodle->end_date > time()) {
+                    $stoodle->end_date = time() - 1;
+                    $changed += (int) (bool) $stoodle->store();
+                }
+            }
+            if ($changed > 0) {
+                PageLayout::postSuccess(ngettext(
+                    $this->_('Die Umfrage wurde beendet.'),
+                    $this->_('Die Umfragen wurden beendet.'),
+                    $changed
+                ));
+            }
+        }
+
+        $this->redirect('admin');
+    }
 }
