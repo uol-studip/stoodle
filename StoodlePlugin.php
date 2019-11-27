@@ -97,7 +97,7 @@ class StoodlePlugin extends Stoodle\Plugin implements StandardPlugin, PrivacyPlu
         if ($data['new'] > 0) {
             $icon = Icon::create('vote+new', Icon::ROLE_STATUS_RED, ['title' => $message]);
         } else {
-            $icon = Icon::create('vote', Icon::ROLE_CLICKABLE, ['title' => $message]);
+            $icon = Icon::create('vote', Icon::ROLE_NAVIGATION, ['title' => $message]);
         }
         $navigation->setImage($icon);
 
