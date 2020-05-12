@@ -1,3 +1,20 @@
+<?php
+$is_visible = function ($user_id) use ($range) {
+    if ($range instanceof Course) {
+        $visibility = $range->members->findOneBy('user_id', $user_id)->visible ?: 'unknown';
+
+        if ($visibility !== 'unknown') {
+            return $visibility === 'yes';
+        }
+    }
+    if ($range instanceof Institute) {
+        return (bool) $range->members->findOneBy('user_id', $user_id)->visible;
+    }
+
+    return get_visibility_by_id($user_id);
+}
+?>
+
 <? if (!$stoodle->is_public): ?>
     <tr class="no-highlight">
         <td class="blank">&nbsp;</td>
@@ -9,26 +26,28 @@
 <? endif; ?>
 <?  $count = 1;
     foreach ($stoodle->answers as $user_id => $options):
-       if ($user_id == $GLOBALS['user']->id && @$self === 'hide') continue;
+       if ($user_id === $GLOBALS['user']->id && @$self === 'hide') continue;
        $user = User::find($user_id);
+       $visible = $user->id === $GLOBALS['user']->id || $is_visible($user->id);
 ?>
     <tr>
         <td>
-        <? if ($stoodle->is_anonymous): ?>
+        <? if ($stoodle->is_anonymous || (!$visible && !$admin)): ?>
             <?= Avatar::getAvatar('nobody')->getImageTag(Avatar::SMALL) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile', ['username' => $user->username], true) ?>">
                 <?= Avatar::getAvatar($user_id)->getImageTag(Avatar::SMALL) ?>
             </a>
         <? endif; ?>
         </td>
         <td>
-        <? if ($stoodle->is_anonymous): ?>
+        <? if ($stoodle->is_anonymous || (!$visible && !$admin)): ?>
             <?= sprintf($_('Teilnehmer #%u'), $count++) ?>
         <? else: ?>
-            <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . $user->username, ['cid' => null]) ?>">
+            <a href="<?= URLHelper::getLink('dispatch.php/profile', ['username' => $user->username], true) ?>">
                 <?= htmlReady($user->getFullName()) ?>
             </a>
+            <? if (!$visible): ?>(<?= $_('unsichtbar') ?>)<? endif; ?>
         <? endif; ?>
         </td>
 <? if ($stoodle->is_public || $admin): ?>

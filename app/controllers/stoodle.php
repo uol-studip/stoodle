@@ -26,6 +26,13 @@ class StoodleController extends \Stoodle\Controller
             throw new CheckObjectException();
         }
 
+        $this->range = get_object_by_range_id($this->range_id);
+        if (!$this->range) {
+            throw new CheckObjectException();
+        }
+
+        $this->admin = $GLOBALS['perm']->have_studip_perm('tutor', $this->range_id);
+
         if (Navigation::hasItem('/course/stoodle/index')) {
             Navigation::activateItem('/course/stoodle/index');
         } else {
