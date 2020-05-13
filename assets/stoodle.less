@@ -243,6 +243,12 @@
     form .studip-checkbox:not(:checked) + label {
         text-decoration: line-through;
     }
+
+    .stoodle-list {
+        input[name^="selection"]:disabled + img {
+            filter: grayscale(100%) saturate(0%);
+        }
+    }
 }
 
 dl.evaluation {

@@ -89,9 +89,14 @@ class StoodleController extends \Stoodle\Controller
             }
         } else {
             $max_answers = $stoodle->max_answers;
+            $error = false;
             foreach (Request::optionArray('selection') as $option_id => $state) {
                 if ($state) {
-                    $answer->addToSelection($option_id, $state === 'maybe');
+                    if ($stoodle->userMayAnswerOption($option_id)) {
+                        $answer->addToSelection($option_id, $state === 'maybe');
+                    } else {
+                        $error = true;
+                    }
                 }
 
                 if ($max_answers !== null && --$max_answers === 0) {
@@ -102,7 +107,13 @@ class StoodleController extends \Stoodle\Controller
 
         $answer->store();
 
-        PageLayout::postSuccess($this->_('Ihre Teilnahme wurde gespeichert.'));
+        if ($error) {
+            PageLayout::postSuccess($this->_('Ihre Teilnahme wurde gespeichert.'), [
+                $this->_('Es konnten allerdings nicht alle Antworten gewählt werden, da zwischenzeitlich die maximale Teilnehmerzahl erreicht wurde.')
+            ]);
+        } else {
+            PageLayout::postSuccess($this->_('Ihre Teilnahme wurde gespeichert.'));
+        }
         $this->redirect($this->displayURL($stoodle->id));
     }
 

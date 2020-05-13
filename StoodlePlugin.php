@@ -9,7 +9,7 @@ require_once __DIR__ . '/bootstrap.php';
  * @author  Jan-Hendrik Willms <tleilax+studip@gmail.com>
  * @version 2.3
  **/
-class StoodlePlugin extends Stoodle\Plugin implements StandardPlugin, PrivacyPlugin
+class StoodlePlugin extends Stoodle\Plugin implements StandardPlugin, PrivacyPlugin, RESTAPIPlugin
 {
     const GETTEXT_DOMAIN = 'stoodle';
 
@@ -194,5 +194,12 @@ class StoodlePlugin extends Stoodle\Plugin implements StandardPlugin, PrivacyPlu
             'stoodle_selection',
             DBManager::get()->fetchAll("SELECT * FROM stoodle_selection WHERE user_id = ?", [$storage->user_id])
         );
+    }
+
+    public function getRouteMaps()
+    {
+        return [
+            new Stoodle\RouteMaps\Stoodle()
+        ];
     }
 }

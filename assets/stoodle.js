@@ -40,6 +40,18 @@
         }
     };
 
+    Stoodle.updateOptions = function (stoodleId, maxAnswerers) {
+        STUDIP.api.GET('/stoodle/' + stoodleId + '/options/count').done(result => {
+            Object.keys(result).forEach(function (optionId) {
+                var allowed = result[optionId];
+
+                $('[name="selection"][value="' + optionId + '"],[name="selection[' + optionId + ']"]')
+                    .filter(':not([type="hidden"])')
+                    .prop('disabled', !allowed)
+            });
+        });
+    }
+
     $(document).on('click', ':checkbox[name="mail_to[]"]', function () {
         if ($(this).val() === 'all') {
             $(':checkbox[name="mail_to[]"]:not(:disabled)').attr('checked', this.checked);
@@ -89,6 +101,18 @@
         STUDIP.Stoodle.Overview.init();
 
         $('#stoodle-plugin .stoodle-list .self[data-max-answers]').find(':checkbox').first().change();
+
+        $('.stoodle-list[data-stoodle-id]').each(function () {
+            var stoodleId = $(this).data().stoodleId;
+            var updater = function () {
+                setTimeout(function () {
+                    Stoodle.updateOptions(stoodleId);
+                    updater();
+                }, 10 * 1000);
+            };
+
+            updater();
+        });
     });
 
 

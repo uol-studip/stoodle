@@ -121,10 +121,30 @@ class Stoodle extends SimpleORMap
         return $count;
     }
 
-    public function userParticipated($user_id = null)
+    public function userParticipated($user_id = null, $option_id = null)
     {
         $user_id = $user_id ?: $GLOBALS['user']->id;
-        return isset($this->answers[$user_id]);
+        return $option_id
+             ? (isset($this->answers[$user_id]) && in_array($option_id, array_merge(
+                 $this->answers[$user_id]['selection'],
+                 $this->answers[$user_id]['maybes']
+               )))
+             : isset($this->answers[$user_id]);
+    }
+
+    public function userMayAnswerOption($option_id, $user_id = null)
+    {
+        $user_id = $user_id ?: $GLOBALS['user']->id;
+        if (!$this->max_answerers) {
+            return true;
+        }
+
+        if ($this->getOptionsCount()[$option_id] < $this->max_answerers) {
+            return true;
+        }
+
+        return isset($this->answers[$user_id])
+            && in_array($option_id, $this->answers[$user_id]['selection']);
     }
 
     public function formatOption($option_id, $raw = false)

@@ -19,7 +19,7 @@
 
 <form action="<?= $controller->participate($stoodle) ?>" method="post">
     <?= CSRFProtection::tokenTag() ?>
-    <table class="default stoodle-list">
+    <table class="default stoodle-list" <? if ($stoodle->max_answerers) printf('data-stoodle-id="%s" data-max-answerers="%u"', $stoodle->id, $stoodle->max_answerers) ?>>
         <thead>
             <tr>
                 <td colspan="2">&nbsp;</td>
@@ -49,33 +49,42 @@
                         <?= htmlReady($GLOBALS['user']->getFullName()) ?>
                     </a>
                 </td>
-            <? $answers = $stoodle->answers;
-               $answer = $answers[$GLOBALS['user']->id] ?: false;
-                foreach (array_keys($stoodle->options) as $id): ?>
+            <?  $answers = $stoodle->answers;
+                $answer = $answers[$GLOBALS['user']->id] ?: false;
+                $count = $stoodle->getOptionsCount();
+                foreach (array_keys($stoodle->options) as $id):
+                    $disabled = !$stoodle->userMayAnswerOption($id);
+            ?>
+
                 <td>
                 <? if ($stoodle->allow_maybe): ?>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="1"
-                               <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>>
+                               <? if ($answer && in_array($id, $answer['selection'])) echo 'checked'; ?>
+                               <? if ($disabled) echo 'disabled'; ?>>
                         <?= Icon::create('accept', Icon::ROLE_STATUS_GREEN) ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="maybe"
-                               <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>>
-                        <?= Icon::create('question') ?>
+                               <? if (!$answer || !in_array($id, $answer['selection']) || in_array($id, $answer['maybes'])) echo 'checked'; ?>
+                               <? if ($disabled) echo 'disabled'; ?>>
+                        <?= Icon::create('question', Icon::ROLE_CLICKABLE) ?>
                     </label>
                     <label>
                         <input type="radio" name="selection[<?= $id ?>]" value="0"
-                               <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>>
+                               <? if ($answer && !(in_array($id, $answer['selection']) || in_array($id, $answer['maybes']))) echo 'checked'; ?>
+                               <? if ($disabled) echo 'disabled'; ?>>
                         <?= Icon::create('decline', Icon::ROLE_STATUS_RED) ?>
                     </label>
                 <? elseif ($stoodle->max_answers == 1): ?>
                     <input type="radio" name="selection" value="<?= $id ?>"
-                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>>
+                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>
+                           <? if ($disabled) echo 'disabled'; ?>>
                 <? else: ?>
                     <input type="hidden" name="selection[<?= $id ?>]" value="0">
                     <input type="checkbox" name="selection[<?= $id ?>]" value="1"
-                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>>
+                           <? if (isset($answers[$GLOBALS['user']->id]) && in_array($id, $answers[$GLOBALS['user']->id]['selection'])) echo 'checked'; ?>
+                           <? if ($disabled) echo 'disabled'; ?>>
                 <? endif; ?>
                 </td>
             <? endforeach; ?>

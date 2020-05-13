@@ -55,14 +55,19 @@ class AdminController extends \Stoodle\Controller
         $this->allow_maybe    = Request::int('allow_maybe', $stoodle->isNew() ? 0 : $stoodle->allow_maybe);
         $this->allow_comments = Request::int('allow_comments', $stoodle->isNew() ? 1 : $stoodle->allow_comments);
         $this->max_answers    = Request::int('max_answers', $stoodle->isNew() ? null : $stoodle->max_answers);
+        $this->max_answerers  = Request::int('max_answerers', $stoodle->isNew() ? null : $stoodle->max_answerers);
         // Integrate additional
         $this->options        = $this->extractOptions($stoodle->options, $this->type === 'range');
         $this->options_count  = $stoodle->getOptionsCount(null);
         $this->answers        = $stoodle->answers;
-        $this->max_answered   = $this->answers ? max(array_map(function ($answer) {
-                                    return count($answer['selection']) + count($answer['maybes']);
-                                }, $this->answers)) : 0;
         $this->editable       = array_sum($this->options_count) === 0;
+
+        $this->max_answered = $this->answers ? max(array_map(function ($answer) {
+            return count($answer['selection']) + count($answer['maybes']);
+        }, $this->answers)) : 0;
+        $this->max_answerers_count = $this->answers ? max(array_count_values(array_reduce($this->answers, function ($carry, $answer) {
+            return array_merge($carry, $answer['selection']);
+        }, []))) : 0;
 
         // Ensure anonymous cannot be changed when at least one answer has been given
         if (!$this->editable && $stoodle->getPristineValue('is_anonymous') && !$this->is_anonymous) {
@@ -150,6 +155,7 @@ class AdminController extends \Stoodle\Controller
                 $stoodle->allow_maybe    = $this->allow_maybe;
                 $stoodle->allow_comments = $this->allow_comments;
                 $stoodle->max_answers    = $this->max_answers ?: null;
+                $stoodle->max_answerers  = $this->max_answerers ?: null;
 
                 if ($new) {
                     $stoodle->type     = $this->type;

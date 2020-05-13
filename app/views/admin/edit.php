@@ -239,6 +239,22 @@
                 <?= tooltipIcon($_('Teilnehmende können aus den vorhandenen Antwortmöglichkeiten nur eine bestimmte Anzahl auswählen')) ?>
             </td>
         </tr>
+        <tr>
+            <td>
+                <label for="max_answerers"><?= $_('Maxmimale Anzahl an Antworten pro Antwortmöglichkeit') ?></label>
+            </td>
+            <td colspan="2">
+                <select name="max_answerers" id="max_answerers">
+                    <option value=""><?= $_('Kein Limit') ?></option>
+                <? for ($i = 1; $i <= 255; $i += 1): ?>
+                    <option value="<?= $i ?>" <? if ($i == $max_answerers) echo 'selected'; ?> <? if ($i < $max_answerers_count) echo 'disabled'; ?>>
+                        <?= $i ?>
+                    </option>
+                <? endfor; ?>
+                </select>
+                <?= tooltipIcon($_('Über diese Option kann angegeben werden, dass nur die angegebene Anzahl von Person die gleiche Antwortmöglichkeit wählen kann')) ?>
+            </td>
+        </tr>
     </tbody>
 </table>
 
