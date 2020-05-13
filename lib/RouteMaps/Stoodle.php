@@ -15,8 +15,11 @@ class Stoodle extends RouteMap
             $this->notFound("Stoodle with id {$stoodle_id} does not exist");
         }
 
-        return array_map(function ($option) use ($stoodle) {
-            return $stoodle->userMayAnswerOption($option->id);
-        }, $stoodle->options);
+        return array_combine(
+            array_keys($stoodle->options),
+            array_map(function ($option_id) use ($stoodle) {
+                return $stoodle->userMayAnswerOption($option_id);
+            }, array_keys($stoodle->options))
+        );
     }
 }
