@@ -75,9 +75,7 @@ class StoodleController extends \Stoodle\Controller
 
     public function participate_action(Stoodle $stoodle)
     {
-        if (!Request::isPost()) {
-            throw new MethodNotAllowedException();
-        }
+        CSRFProtection::verifyUnsafeRequest();
 
         $answer = new Answer($stoodle->id);
         $answer->clearSelection();
@@ -99,7 +97,7 @@ class StoodleController extends \Stoodle\Controller
                     }
                 }
 
-                if ($max_answers !== null && --$max_answers === 0) {
+                if ($max_answers !== null && $state && --$max_answers === 0) {
                     break;
                 }
             }

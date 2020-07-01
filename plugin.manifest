@@ -1,7 +1,7 @@
 pluginname=Stoodle
 pluginclassname=StoodlePlugin
 origin=UOL
-version=2.3.4
+version=2.3.5
 studipMinVersion=4.3
 summary=Terminfindung wie bei Doodle
 description=Lehrende können in Stoodle in einer Umfrage mehrere Termine vorschlagen, über die Teilnehmende und Lehrende der Veranstaltungen abstimmen können. Teilnehmende können nur dann die Auswertung einer Umfrage einsehen, wenn diese öffentlich ist.
