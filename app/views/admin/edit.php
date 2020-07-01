@@ -209,7 +209,7 @@
                 <input type="checkbox" name="is_anonymous" id="is_anonymous" value="1"
                        <? if ($is_anonymous) echo 'checked'; ?>
                        <? if (!$editable && $is_anonymous) echo 'disabled'; ?>>
-                <?= tooltipIcon($_('Die Namen der Teilnehmenden sind für andere Teilnehmende nicht sichtbar.')) ?>
+                <?= tooltipIcon($_('Die Namen der Teilnehmenden sind für andere Teilnehmende, Mitwirkende und Lehrende nicht sichtbar.')) ?>
             </td>
         </tr>
         <tr>
